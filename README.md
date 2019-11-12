@@ -14,7 +14,7 @@ Open source desktop application for the personal VPN server.
 ### Providers
 
 * [DigitalOcean](https://www.digitalocean.com/)
-* [CryptoServers](http://cryptoservers.net/) - accepted Bitcoin
+* [CryptoServers](https://cryptoservers.net/) - accepted Bitcoin
 
 We plan to expand the list!
 
@@ -39,3 +39,7 @@ npm install
 npm run dev
 
 ```
+
+### Official Website
+
+[www.myvpn.run](http://myvpn.run/) (russian language)
