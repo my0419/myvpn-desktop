@@ -57,7 +57,7 @@
     }
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "digitalocean": "^1.2.0",
     "element-ui": "^2.8.2",
     "keypair": "^1.0.1",
