@@ -1,0 +1,60 @@
+@import "scroll.scss";
+
+.app-page {
+    padding: 20px;
+    -webkit-user-select: none;
+}
+.el-steps {
+    -webkit-user-select: none;
+    cursor: default;
+}
+.el-collapse {
+    border: none !important;
+}
+.selectable {
+    -webkit-user-select: initial;
+}
+.cell, h3, .el-alert__content {
+    cursor: default;
+}
+.m-top {
+    margin-top: 15px;
+}
+h3 {
+    font-weight: bold;
+}
+.action-journal textarea {
+    resize: none;
+    background: #F5F7FA;
+    color: #6a6a6a;
+    border: none;
+    border-radius: 0;
+    height: 150px;
+    padding: 5px;
+}
+.text-center {
+    text-align: center;
+}
+.logo__image {
+    height: 80px;
+}
+.text-warning {
+    color: #dd7b00;
+}
+.left-menu-vertical {
+    height: 100%;
+}
+
+.menu-badge .el-badge__content {
+    padding: 4px;
+    margin-top: 20px;
+    width: 10px;
+    height: 10px;
+    font-size: 9px;
+    line-height: 10px;
+}
+
+.app-version {
+    position: absolute;
+    bottom: 0;
+}

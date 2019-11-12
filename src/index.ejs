@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>MyVPN</title>
+    <% if (htmlWebpackPlugin.options.nodeModules) { %>
+      <!-- Add `node_modules/` to global paths so `require` works properly in development -->
+      <script>
+        require('module').globalPaths.push('<%= htmlWebpackPlugin.options.nodeModules.replace(/\\/g, '\\\\') %>')
+      </script>
+    <% } %>
+    <style>
+      #app, html, body {
+        height: 100%;
+        padding: 0px;
+        margin: 0px;
+      }
+      .loading-logo {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .loading-logo img {
+        display: block;
+        width: 60vw;
+      }
+
+      body .loader-wrapper {
+        position: relative;
+        top: 83px;
+        left: 10px;
+      }
+      body .loader {
+        display: flex;
+        font-size: 2em;
+      }
+      body .loader .dots {
+        display: flex;
+        position: relative;
+        top: 20px;
+        left: -10px;
+        width: 100px;
+        animation: dots 2s ease infinite 1s;
+      }
+      body .loader .dots div {
+        position: relative;
+        width: 10px;
+        height: 10px;
+        margin-right: 10px;
+        border-radius: 100%;
+        background-color: #0086d8;
+      }
+      body .loader .dots div:nth-child(1) {
+        width: 0px;
+        height: 0px;
+        margin: 5px;
+        margin-right: 15px;
+        animation: show-dot 2s ease-out infinite 1s;
+      }
+      body .loader .dots div:nth-child(4) {
+        background-color: transparent;
+        animation: dot-fall-left 2s linear infinite 1s;
+      }
+      body .loader .dots div:nth-child(4):before {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        margin-right: 10px;
+        border-radius: 100%;
+        background-color: #0086d8;
+        content: '';
+        animation: dot-fall-top 2s cubic-bezier(0.46, 0.02, 0.94, 0.54) infinite 1s;
+      }
+      @keyframes dots {
+        0% {
+          left: -10px;
+        }
+        20%, 100% {
+          left: 10px;
+        }
+      }
+      @keyframes show-dot {
+        0%, 20% {
+          width: 0px;
+          height: 0px;
+          margin: 5px;
+          margin-right: 15px;
+        }
+        30%, 100% {
+          width: 10px;
+          height: 10px;
+          margin: 0px;
+          margin-right: 10px;
+        }
+      }
+      @keyframes dot-fall-left {
+        0%, 5% {
+          left: 0px;
+        }
+        100% {
+          left: 200px;
+        }
+      }
+      @keyframes dot-fall-top {
+        0%, 5% {
+          top: 0px;
+        }
+        30%, 100% {
+          top: 40vh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="loading-logo">
+        <div>
+        <img src="static/img/logo.svg" />
+        </div>
+        <div class="loader-wrapper">
+          <div class="loader">
+            <div class="dots">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- Set `__static` path to static files in production -->
+    <% if (!process.browser) { %>
+      <script>
+        if (process.env.NODE_ENV !== 'development') window.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+      </script>
+    <% } %>
+
+    <!-- webpack builds are automatically injected -->
+  </body>
+</html>
