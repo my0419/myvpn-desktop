@@ -6,19 +6,19 @@
       <el-aside width="80px">
         <el-menu class="left-menu-vertical" height="100vh" :collapse="true">
           <el-menu-item  @click="handleGoToWebsite" index="0">
-            <img class="menu-icon-logo" src="/static/img/logo-small.png" />
+            <img class="menu-icon-logo" src="static/img/logo-small.png" />
           </el-menu-item>
           <el-menu-item @click="handleDroplets" index="1" :disabled="!configuredSuccess || dropletsLoading">
             <el-badge class="menu-badge" :value="dropletsCount" type="primary" v-if="dropletsExists">
-                <img class="menu-icon" src="/static//img/icons/server.svg" />
+                <img class="menu-icon" src="static//img/icons/server.svg" />
                 <span slot="title">{{ $t('Servers') }}</span>
             </el-badge>
-            <img class="menu-icon" src="/static/img/icons/server.svg" v-if="dropletsExists === false" />
+            <img class="menu-icon" src="static/img/icons/server.svg" v-if="dropletsExists === false" />
             <span slot="title" v-if="dropletsExists === false">{{ $t('Servers') }}</span>
           </el-menu-item>
           <el-submenu index="2">
             <template slot="title">
-              <img class="menu-icon menu-icon-gray" src="/static/img/icons/english.svg" />
+              <img class="menu-icon menu-icon-gray" src="static/img/icons/english.svg" />
               <span slot="title">{{ $t('Settings') }}</span>
             </template>
             <el-menu-item-group>

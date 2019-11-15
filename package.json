@@ -9,8 +9,10 @@
   "description": "MyVPN - your personal VPN",
   "license": null,
   "main": "./dist/electron/main.js",
+  "release": "build",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
+    "release": "node .electron-vue/build.js && electron-builder --publish always",
     "build:dir": "node .electron-vue/build.js && electron-builder --dir",
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node --max_old_space_size=4096 .electron-vue/build.js",
@@ -44,16 +46,20 @@
           "y": 150,
           "type": "file"
         }
-      ]
+      ],
+      "publish": ["github"]
     },
     "mac": {
-      "icon": "build/icons/icon.icns"
+      "icon": "build/icons/icon.icns",
+      "publish": ["github"]
     },
     "win": {
-      "icon": "build/icons/icon.ico"
+      "icon": "build/icons/icon.ico",
+      "publish": ["github"]
     },
     "linux": {
-      "icon": "build/icons"
+      "icon": "build/icons",
+      "publish": ["github"]
     }
   },
   "dependencies": {
