@@ -13,10 +13,10 @@ Open source desktop application for the personal VPN server.
 
 ### Providers
 
+* [CryptoServers](https://cryptoservers.net/)
 * [DigitalOcean](https://www.digitalocean.com/)
-* [CryptoServers](https://cryptoservers.net/) - accepted Bitcoin
+* [Linode](https://linode.com/)
 
-We plan to expand the list!
 
 ### VPN protocols
 
