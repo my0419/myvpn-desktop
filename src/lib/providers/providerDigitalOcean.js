@@ -23,7 +23,12 @@ export class ProviderDigitalOcean extends ProviderBase {
 
   async regions () {
     let regions = await this.client.regions.list()
-    return regions.filter(v => v.name).map(v => ({name: v.name.replace(' 1', ''), slug: v.slug, available: v.available})).sort((a, b) => a.name.localeCompare(b.name))
+    return regions.filter(v => v.name).map(v => ({
+      name: v.name.replace(' 1', ''),
+      slug: v.slug,
+      available: v.available,
+      speedtest: 'http://speedtest-' + v.slug.replace('-', '') + '.digitalocean.com/'
+    })).sort((a, b) => a.name.localeCompare(b.name))
   }
 
   async serverList () {

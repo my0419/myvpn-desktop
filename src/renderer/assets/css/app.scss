@@ -2,7 +2,11 @@
 
 .app-page {
     padding: 20px;
+    width: calc(100% - 40px);
     -webkit-user-select: none;
+}
+.el-aside {
+    height: calc(100vh - 48px);
 }
 .el-steps {
     -webkit-user-select: none;
@@ -57,4 +61,15 @@ h3 {
 .app-version {
     position: absolute;
     bottom: 0;
+    left: -5px;
+}
+.menu-icon {
+    width: 24px;
+}
+.menu-icon-gray {
+    opacity: 0.4;
+}
+.menu-icon-logo {
+    width: 40px;
+    margin: -6px;
 }

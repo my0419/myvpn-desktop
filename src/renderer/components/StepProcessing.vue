@@ -18,10 +18,9 @@
   import { mapState } from 'vuex'
   import Preloader from './Preloader'
   import HeaderSteps from './HeaderSteps'
-  import InfoJournal from './InfoJournal'
 
   export default {
-    components: {InfoJournal, HeaderSteps, Preloader},
+    components: {HeaderSteps, Preloader},
     data () {
       return {
         lockedIp: null

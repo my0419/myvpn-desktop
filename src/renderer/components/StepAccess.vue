@@ -57,6 +57,11 @@
                     <h2>{{ $t('User') }}</h2>
                     <h3><Copied text="root" /></h3>
 
+                    <div v-if="serverPassword">
+                        <h2>{{ $t('Root password') }}</h2>
+                        <h3><Copied :text="serverPassword" /></h3>
+                    </div>
+
                     <h2>{{ $t('RSA Key') }}</h2>
                     <el-input  type="textarea" :value="keypairSshPublic" :readonly="true"/>
                     <Copied :text="keypairSshPublic" :hiddenText="true" />
@@ -107,6 +112,7 @@
       serverName: state => state.server.name,
       serverSlug: state => state.server.slug,
       serverIp: state => state.server.ipv4,
+      serverPassword: state => state.server.password,
       keypairPrivate: state => state.keypair.private,
       keypairPublic: state => state.keypair.public,
       keypairSshPublic: state => state.keypair.sshPublic,

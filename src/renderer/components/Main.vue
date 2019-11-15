@@ -5,17 +5,20 @@
     <el-container>
       <el-aside width="80px">
         <el-menu class="left-menu-vertical" height="100vh" :collapse="true">
+          <el-menu-item  @click="handleGoToWebsite" index="0">
+            <img class="menu-icon-logo" src="/static/img/logo-small.png" />
+          </el-menu-item>
           <el-menu-item @click="handleDroplets" index="1" :disabled="!configuredSuccess || dropletsLoading">
             <el-badge class="menu-badge" :value="dropletsCount" type="primary" v-if="dropletsExists">
-              <i class="el-icon-s-platform"></i>
+                <img class="menu-icon" src="/static//img/icons/server.svg" />
                 <span slot="title">{{ $t('Servers') }}</span>
             </el-badge>
-            <i class="el-icon-s-platform" v-if="dropletsExists === false"></i>
+            <img class="menu-icon" src="/static/img/icons/server.svg" v-if="dropletsExists === false" />
             <span slot="title" v-if="dropletsExists === false">{{ $t('Servers') }}</span>
           </el-menu-item>
           <el-submenu index="2">
             <template slot="title">
-              <i class="el-icon-setting"></i>
+              <img class="menu-icon menu-icon-gray" src="/static/img/icons/english.svg" />
               <span slot="title">{{ $t('Settings') }}</span>
             </template>
             <el-menu-item-group>
@@ -29,15 +32,15 @@
       </el-aside>
       <el-container>
         <div class="app-page">
-          <h3>1. {{ $t('Choose a hosting provider') }}</h3>
+          <h3>1. {{ $t('Choose a hosting provider and connect your account') }}</h3>
           <Providers />
-          <h3>3. {{ $t('Select a server region')}}</h3>
+          <h3>2. {{ $t('Select a server region')}}</h3>
           <FormRegions />
-          <h3>4. {{ $t('Select the connection protocol') }}</h3>
+          <h3>3. {{ $t('Select the connection protocol') }}</h3>
           <FormTypes />
 
           <div class="m-top">
-            <el-button type="success" :disabled="!configuredSuccess" v-on:click="handleProcessing" icon="el-icon-magic-stick">{{ $t('Create a server and get VPN access') }}</el-button>
+            <el-button type="primary" :disabled="!configuredSuccess" v-on:click="handleProcessing" icon="el-icon-magic-stick">{{ $t('Create a VPN server and get access') }}</el-button>
           </div>
         </div>
       </el-container>
@@ -95,6 +98,9 @@
       },
       handleDroplets: function () {
         this.$router.push({ name: 'droplets' })
+      },
+      handleGoToWebsite: function () {
+        shell.openExternal('https://myvpn.run')
       },
       changeLang: function (code) {
         this.$i18n.locale = code

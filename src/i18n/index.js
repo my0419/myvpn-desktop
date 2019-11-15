@@ -1,15 +1,16 @@
 export default {
   ru: {
     'Language': 'Язык',
-    'Choose a hosting provider': 'Выберите хостинг-провайдера',
+    'Choose a hosting provider and connect your account': 'Выберите хостинг-провайдера и подключите учетную запись',
     'Connect your account': 'Подключите свой аккаунт',
     'Insert the API key from your DigitalOcean account': 'Вставьте API-ключ из личного кабинета DigitalOcean',
     'Insert the API key from your CryptoServers account': 'Вставьте API-ключ из личного кабинета CryptoServers',
+    'Insert the API key from your Linode account': 'Вставьте API-ключ из личного кабинета Linode',
     'Successful connection to the account': 'Вы верно указали данные, продолжим!',
     'Select a server region': 'Выберите регион сервера',
     'Select the connection protocol': 'Выберите протокол подключения',
-    'Create a server and get VPN access': 'Создать сервер и получить VPN доступы',
-    'How do I get this key?': 'Как получить этот ключ?',
+    'Create a VPN server and get access': 'Создать VPN сервер и получить доступы',
+    'Open the setup manual': 'Открыть инструкцию по настройке',
     'Parameters': 'Параметры',
     'Server configuration': 'Настройка сервера',
     'Your VPN': 'Ваш VPN',
@@ -88,5 +89,6 @@ export default {
     'Your version': 'Ваша версия',
     'latest version': 'последняя версия',
     'Download the latest version': 'Скачать последнюю версию',
+    'Root password': 'Root пароль'
   }
 }
