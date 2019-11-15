@@ -59,6 +59,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import { ping } from '../../lib/stats'
   export default {
     props: ['regions'],
@@ -68,6 +69,9 @@
         running: false
       }
     },
+    computed: mapState({
+      selectedProvider: state => state.provider.name,
+    }),
     methods: {
       handleClose: function () {
         this.running = false
@@ -150,7 +154,7 @@
             }
           }
           image.onerror = complete
-          image.src = 'http://speedtest-' + region.slug.replace('-', '') + '.digitalocean.com/' + '?cache_buster=' + Date.now()
+          image.src = region.speedtest+'?r='+Date.now()
         }
         this.running = true
         pingRegion(0, {})

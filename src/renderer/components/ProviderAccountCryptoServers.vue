@@ -4,7 +4,7 @@
         <p>
             <el-alert v-if="configuredError !== '' && token !== ''" :title="$t(configuredError)" type="error" show-icon :closable=false />
         </p>
-        <a v-show="true !== configuredSuccess" v-on:click.prevent="handleOpenDocs" target="_blank" href="#">{{ $t('How do I get this key?')}}</a>
+        <a v-show="true !== configuredSuccess" v-on:click.prevent="handleOpenDocs" target="_blank" href="#">{{ $t('Open the setup manual')}}</a>
     </el-row>
 </template>
 
