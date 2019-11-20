@@ -43,6 +43,22 @@
                         <h3><Copied :text="serverIp" /></h3>
                         <el-button type="primary" v-on:click="saveOpenvpn" icon="el-icon-tickets">{{ $t('Save ovpn file') }}</el-button>
                     </div>
+                    <div v-if="connectionType === 'wireguard'">
+                        <el-row :gutter="20">
+                            <el-col :span="12">
+                                <h2>{{ $t('Type of connection') }}</h2>
+                                <h3>WireGuard</h3>
+                                <h2>{{ $t('IP address') }}</h2>
+                                <h3><Copied :text="serverIp" /></h3>
+                                <el-button type="primary" v-on:click="saveWireguard" icon="el-icon-tickets">{{ $t('Save WireGuard Configuration') }}</el-button>
+                            </el-col>
+                            <el-col :span="12">
+                                <h2>{{ $t('Connect via QR Code') }}</h2>
+                                <qrcode-vue :value="wireguardConfig" :size="300" :level="M"></qrcode-vue>
+                                <hr />
+                            </el-col>
+                        </el-row>
+                    </div>
                     <hr />
                     <el-button type="success" v-on:click="handleMainPage" icon="el-icon-arrow-left">{{ $t('Go Back') }}</el-button>
                     <el-button type="danger" v-on:click="deleteServer" icon="el-icon-delete">{{ $t('Delete server') }}</el-button>
@@ -93,6 +109,7 @@
 
 <script>
   import { mapState } from 'vuex'
+  import QrcodeVue from 'qrcode.vue'
   import HeaderSteps from './HeaderSteps'
   import Copied from './Copied'
 
@@ -100,7 +117,7 @@
   const fs = require('fs')
 
   export default {
-    components: {Copied, HeaderSteps},
+    components: {Copied, HeaderSteps, QrcodeVue},
     data () {
       return {
         activeTab: '1'
@@ -119,7 +136,8 @@
       accountUsername: state => state.account.username,
       accountPassword: state => state.account.password,
       accountPskKey: state => state.account.pskKey,
-      accountOvpn: state => state.account.ovpn
+      accountOvpn: state => state.account.ovpn,
+      wireguardConfig: state => state.account.wireguard
     }),
     mounted: function () {
       if (!this.configuredSuccess) {
@@ -137,6 +155,9 @@
       },
       saveOpenvpn: function () {
         this.saveFile(`myvpn-${this.serverName}.ovpn`, this.accountOvpn)
+      },
+      saveWireguard: function () {
+        this.saveFile(`wireguard-${this.serverName}.conf`, this.wireguardConfig)
       },
       savePrivateKey: function () {
         this.saveFile(`myvpn-${this.serverName}-private.key`, this.keypairPrivate)
