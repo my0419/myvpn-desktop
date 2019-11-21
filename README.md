@@ -23,6 +23,7 @@ Open source desktop application for the personal VPN server.
 * L2TP
 * PPTP
 * OpenVPN
+* [WireGuard](https://www.wireguard.com/)
 
 ### Languages
 

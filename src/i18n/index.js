@@ -89,6 +89,8 @@ export default {
     'Your version': 'Ваша версия',
     'latest version': 'последняя версия',
     'Download the latest version': 'Скачать последнюю версию',
+    'Connect via QR Code': 'Подключиться через QR Сode',
+    'Save WireGuard Configuration': 'Сохранить конфигурацию WireGuard',
     'Root password': 'Root пароль'
   }
 }
