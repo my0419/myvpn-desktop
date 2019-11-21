@@ -29,7 +29,7 @@ export class Deployment {
         port: 22,
         username: 'root',
         privateKey: this.privateKey,
-        readyTimeout: 30000,
+        readyTimeout: 60000,
         // timeout: 1,
         // debug: (data) => {}
       })
@@ -71,7 +71,7 @@ export class Deployment {
         break
       }
     }
-    await sleep(5000)
+    await sleep(20000) // dpkg does not respond on DO servers
     await this.sshConn.exec(exec.cmd, (err, stream) => {
       stream.on('close', (code, signal) => {
         if (this.setupComplete === false) {
