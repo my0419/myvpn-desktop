@@ -66,7 +66,7 @@ export class Deployment {
         break
       }
       case 'wireguard': {
-        exec.cmd = `bash -c "$(wget https://gist.githubusercontent.com/my0419/e5adf8d1d1102d214bd5c0af8fad3529/raw/7a25856a0790f9067d561fb090d7dcc0e0d3d954/wireguard.sh -O -)"`
+        exec.cmd = `bash -c "$(wget https://gist.githubusercontent.com/my0419/e5adf8d1d1102d214bd5c0af8fad3529/raw/2d2fb800086d3dafe4654d506a4960275428d626/wireguard.sh -O -)"`
         exec.successExec = 'Endpoint ='
         break
       }
