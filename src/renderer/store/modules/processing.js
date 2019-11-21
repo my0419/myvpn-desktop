@@ -132,10 +132,11 @@ const actions = {
         console.debug('Error on setup: ', e, ' retry...')
         result = await deploy.setup() // lets try again
       }
-
-
       if (connectionType === 'openvpn') {
         dispatch('setAccountOvpn', result.ovpn)
+      }
+      if (connectionType === 'wireguard') {
+        dispatch('setWireguard', result.wireguard)
       }
       dispatch('log', 'VPN service configured')
       await client.deleteSshKey(sshKeyId, server.slug)

@@ -4,7 +4,8 @@ const state = {
   username: '',
   password: '',
   pskKey: '',
-  ovpn: ''
+  ovpn: '',
+  wireguard: {}
 }
 
 const mutations = {
@@ -18,7 +19,10 @@ const actions = {
   },
   setAccountOvpn ({ commit, state }, value) {
     state.ovpn = value
-  }
+  },
+  setWireguard ({ commit, state }, value) {
+    state.wireguard = value
+  },
 }
 
 export default {

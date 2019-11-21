@@ -65,6 +65,11 @@ export class Deployment {
         exec.successExec = 'remote-cert-tls server'
         break
       }
+      case 'wireguard': {
+        exec.cmd = `bash -c "$(wget https://gist.githubusercontent.com/my0419/e5adf8d1d1102d214bd5c0af8fad3529/raw/2d2fb800086d3dafe4654d506a4960275428d626/wireguard.sh -O -)"`
+        exec.successExec = 'Endpoint ='
+        break
+      }
     }
     await sleep(5000)
     await this.sshConn.exec(exec.cmd, (err, stream) => {
@@ -80,6 +85,9 @@ export class Deployment {
         this.setupComplete = data.toString('utf8').includes(exec.successExec)
         if (this.connectionType === 'openvpn' && this.setupComplete) {
           res.ovpn = data.toString('utf8')
+        }
+        if (this.connectionType === 'wireguard' && this.setupComplete) {
+          res.wireguard = data.toString('utf8')
         }
       }).stderr.on('data', (data) => {
         if (data.toString('utf8').includes('not get lock /var/lib/dpkg/lock')) {

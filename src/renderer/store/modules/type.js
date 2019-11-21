@@ -2,15 +2,19 @@ const state = {
   list: [
     {
       key: 'l2tp',
-      title: 'Login and password — L2TP'
+      title: 'L2TP'
     },
     {
       key: 'pptp',
-      title: 'Login and password — PPTP'
+      title: 'PPTP'
     },
     {
       key: 'openvpn',
-      title: 'File — OpenVPN'
+      title: 'OpenVPN'
+    },
+    {
+      key: 'wireguard',
+      title: 'WireGuard'
     }
   ],
   selected: 'l2tp'
