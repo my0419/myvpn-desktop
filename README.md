@@ -43,36 +43,25 @@ npm run dev
 
 ### Build for platform
 
-#### Windows x64 (.exe)
+#### Windows (x64)
 
 ``` bash
-npm run build --platform=win --arch=x64
+npm run build -w
 ```
 
-#### Windows x32 (.exe)
+
+#### Linux Debian / Ubuntu (.deb), .tar.bz2
 
 ``` bash
-npm run build --platform=win32
-```
-
-#### Linux Debian / Ubuntu (.deb)
-
-``` bash
-npm run build --linux deb
-```
-
-#### Linux (.tar.bz2)
-
-``` bash
-npm run build --linux tar.bz2
+npm run build -l
 ```
 
 #### MacOS (.dmg)
 
 ``` bash
-npm run build --platform=mac
+npm run build -m
 ```
 
 ### Official Website
 
-[www.myvpn.run](http://myvpn.run/) (russian language)
+[www.myvpn.run](http://myvpn.run)

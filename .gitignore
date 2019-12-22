@@ -9,3 +9,7 @@ npm-debug.log
 npm-debug.log.*
 thumbs.db
 !.gitkeep
+dist/index.d.ts
+dist/index.d.ts.map
+dist/oauth2
+dist/utils
