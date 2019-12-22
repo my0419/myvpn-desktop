@@ -50,17 +50,15 @@
 
 <script>
   import { app, remote, shell } from 'electron'
-  import ProviderAccountDigitalOcean from './ProviderAccountDigitalOcean'
   import { mapState } from 'vuex'
   import FormRegions from './FormRegions'
   import FormTypes from './FormTypes'
   import HeaderSteps from './HeaderSteps'
   import Copied from './Copied'
   import Providers from './Providers'
-  import ProviderAccountCryptoServers from './ProviderAccountCryptoServers'
 
   export default {
-    components: {Providers, ProviderAccountCryptoServers, Copied, FormTypes, FormRegions, HeaderSteps, ProviderAccountDigitalOcean},
+    components: {Providers, Copied, FormTypes, FormRegions, HeaderSteps},
     computed: mapState({
       configuredSuccess: state => state.provider.configuredSuccess,
       dropletsExists: state => state.droplet.isEmpty === false,

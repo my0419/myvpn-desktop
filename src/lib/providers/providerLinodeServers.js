@@ -19,11 +19,11 @@ export class ProviderLinodeServers extends ProviderBase {
 
   constructor (config) {
     super(config)
-    const { linodekey } = this.config
+    const { apikey } = this.config
     this.client = axios.create({
       baseURL: 'https://api.linode.com/v4/',
       timeout: 3 * 60 * 1000, // 3 min
-      headers: {'Authorization': `Bearer ${linodekey}`},
+      headers: {'Authorization': `Bearer ${apikey}`},
     });
     this.sshKey = null
     this.rootPassword = `Myvpn${Math.random().toString(20).substring(2)}@2`

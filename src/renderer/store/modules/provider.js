@@ -40,8 +40,10 @@ const mutations = {
 const actions = {
   async configureProvider ({ commit, dispatch, state }, params) {
     const { name, config } = params
+    const { apikey } = config
     state.name = name
-    if (Object.keys(config).length === 0) {
+    if (apikey === '' || Object.keys(config).length === 0) {
+      state.configuredSuccess = null
       return
     }
     let client = ProviderFactory.register(name, config)

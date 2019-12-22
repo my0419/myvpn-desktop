@@ -43,6 +43,11 @@ let rendererConfig = {
         }*/
       },
       {
+        test: /\.tsx?$/,
+        loader: "ts-loader",
+        options: { allowTsInNodeModules: true }
+      },
+      {
         test: /\.scss$/,
         use: ['vue-style-loader', 'css-loader', 'sass-loader']
       },
@@ -145,9 +150,10 @@ let rendererConfig = {
   resolve: {
     alias: {
       '@': path.join(__dirname, '../src/renderer'),
+      '~': path.join(__dirname, '../node_modules'),
       'vue$': 'vue/dist/vue.esm.js'
     },
-    extensions: ['.js', '.vue', '.json', '.css', '.node']
+    extensions: ['.js', '.ts', '.tsx', '.vue', '.json', '.css', '.node']
   },
   target: 'electron-renderer'
 }

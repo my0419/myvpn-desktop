@@ -5,8 +5,8 @@ import {ProviderBase} from './providerBase'
 export class ProviderDigitalOcean extends ProviderBase {
   constructor (config) {
     super(config)
-    const { authToken } = this.config
-    this.client = require('digitalocean').client(authToken)
+    const { apikey } = this.config
+    this.client = require('digitalocean').client(apikey)
   }
 
   async identifyAccess () {

@@ -1,6 +1,6 @@
 {
   "name": "myvpn",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "author": {
     "name": "MyVPN",
     "email": "support@myvpn.run"
@@ -73,9 +73,10 @@
   "dependencies": {
     "axios": "^0.18.0",
     "digitalocean": "^1.2.0",
-    "element-ui": "^2.8.2",
+    "element-ui": "^2.13.0",
     "keypair": "^1.0.1",
     "moment": "^2.24.0",
+    "myvpn-electron-oauth": "git@github.com:my0419/electron-oauth-helper.git#master",
     "qrcode.vue": "^1.7.0",
     "ssh2": "^0.8.4",
     "v-clipboard": "^2.2.2",
@@ -89,6 +90,8 @@
   },
   "devDependencies": {
     "ajv": "^6.5.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.3",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.4",
@@ -104,9 +107,9 @@
     "css-loader": "^0.28.11",
     "del": "^3.0.0",
     "devtron": "^1.4.0",
-    "electron": "^2.0.4",
-    "electron-builder": "^20.19.2",
-    "electron-debug": "^1.5.0",
+    "electron": "^4.2.12",
+    "electron-builder": "^22.1.0",
+    "electron-debug": "^3.0.1",
     "electron-devtools-installer": "^2.2.4",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",

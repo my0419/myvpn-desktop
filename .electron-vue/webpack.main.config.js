@@ -36,6 +36,11 @@ let mainConfig = {
       {
         test: /\.node$/,
         use: 'node-loader'
+      },
+      {
+        test: /\.tsx?$/,
+        loader: "ts-loader",
+        options: { allowTsInNodeModules: true }
       }
     ]
   },
@@ -52,7 +57,7 @@ let mainConfig = {
     new webpack.NoEmitOnErrorsPlugin()
   ],
   resolve: {
-    extensions: ['.js', '.json', '.node']
+    extensions: ['.ts', '.tsx', '.js', '.json', '.node']
   },
   target: 'electron-main'
 }
