@@ -39,7 +39,7 @@
               provider-website="https://www.linode.com"
               faq-link="https://myvpn.run/faq/setup/linode"
               :oauth-window-height="710"
-              :oauthConfig='{client_id: "e392581f1822013c89c0", redirect_uri: "http://localhost", scope: "linodes:read_write", authorize_url: "https://login.linode.com/oauth/authorize", response_type: "token" }'
+              :oauthConfig='{client_id: "839b0a3d0ab64f6c8c2d", redirect_uri: "https://localhost", scope: "linodes:read_write", authorize_url: "https://login.linode.com/oauth/authorize", response_type: "token" }'
       />
     </el-tab-pane>
   </el-tabs>

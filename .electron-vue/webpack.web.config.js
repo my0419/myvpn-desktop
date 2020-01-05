@@ -107,7 +107,19 @@ let webConfig = {
         removeAttributeQuotes: true,
         removeComments: true
       },
-      nodeModules: false
+      nodeModules: false,
+      templateParameters(compilation, assets, options) {
+        return {
+          compilation: compilation,
+          webpack: compilation.getStats().toJson(),
+          webpackConfig: compilation.options,
+          htmlWebpackPlugin: {
+            files: assets,
+            options: options
+          },
+          process,
+        };
+      }
     }),
     new webpack.DefinePlugin({
       'process.env.IS_WEB': 'true'
