@@ -1,15 +1,12 @@
 <template>
-    <div>
-        <HeaderSteps :active="1" />
-        <div class="app-page">
-            <el-alert v-show="lockedIp && $i18n.locale === 'ru'" title="Повторная попытка создать новый сервер в выбранном регионе" :description="`IP созданного сервера ${lockedIp} заблокирован надзорными органами вашей страны`" type="warning" show-icon></el-alert>
-            <el-alert v-show="lockedIp && $i18n.locale !== 'ru'" title="Trying to create a new server in the selected region again" :description="`The IP of the created server ${lockedIp} is blocked in your country`" type="warning" show-icon></el-alert>
-            <Preloader />
-            <h1 class="text-center">{{ $t(journalLastLog) }}</h1>
-            <h4 class="text-center">{{ $t('It can take 3 to 5 minutes to set up the environment') }}</h4>
-            <div class="text-center" v-show="allowCancel">
-                <el-button type="info" plain v-on:click="handleCancel" icon="el-icon-close">{{ $t('Cancel') }}</el-button>
-            </div>
+    <div class="app-page">
+        <el-alert v-show="lockedIp && $i18n.locale === 'ru'" title="Повторная попытка создать новый сервер в выбранном регионе" :description="`IP созданного сервера ${lockedIp} заблокирован надзорными органами вашей страны`" type="warning" show-icon></el-alert>
+        <el-alert v-show="lockedIp && $i18n.locale !== 'ru'" title="Trying to create a new server in the selected region again" :description="`The IP of the created server ${lockedIp} is blocked in your country`" type="warning" show-icon></el-alert>
+        <Preloader />
+        <h1 class="text-center">{{ $t(journalLastLog) }}</h1>
+        <h4 class="text-center">{{ $t('It can take 3 to 5 minutes to set up the environment') }}</h4>
+        <div class="text-center" v-show="allowCancel">
+            <el-button type="info" plain v-on:click="handleCancel" icon="el-icon-close">{{ $t('Cancel') }}</el-button>
         </div>
     </div>
 </template>
@@ -17,10 +14,9 @@
 <script>
   import { mapState } from 'vuex'
   import Preloader from './Preloader'
-  import HeaderSteps from './HeaderSteps'
 
   export default {
-    components: {HeaderSteps, Preloader},
+    components: {Preloader},
     data () {
       return {
         lockedIp: null

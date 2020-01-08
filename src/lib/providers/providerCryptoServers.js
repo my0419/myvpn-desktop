@@ -72,9 +72,10 @@ export class ProviderCryptoServers extends ProviderBase {
     })
   }
 
-  async createServer (sshKeyId, region) {
+  async createServer (sshKeyId, region, startupCommand) {
     let name = 'vpn-' + Math.random().toString(36).substring(7)
-    let droplet = await this.client.post('/droplet/create', {name, region, ssh_key_id: sshKeyId}).then(res => {
+    const params = {name, region, ssh_key_id: sshKeyId, user_data: startupCommand}
+    let droplet = await this.client.post('/droplet/create', params).then(res => {
       return res.data.droplet
     },res => {
       throw new Error(res.response.data.error || 'Failed create droplet')
@@ -83,6 +84,7 @@ export class ProviderCryptoServers extends ProviderBase {
       name,
       slug: droplet.id,
       ipv4: null,
+      aesKey: this.aesKey
     }
   }
 
@@ -106,6 +108,7 @@ export class ProviderCryptoServers extends ProviderBase {
       name: droplet.name,
       slug: id,
       ipv4: droplet.networks && droplet.networks.length > 0 ? droplet.networks[0].ipAddress : null,
+      aesKey: this.aesKey
     }
   }
 

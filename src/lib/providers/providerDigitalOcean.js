@@ -3,6 +3,7 @@ import {sleep} from '../urils'
 import {ProviderBase} from './providerBase'
 
 export class ProviderDigitalOcean extends ProviderBase {
+
   constructor (config) {
     super(config)
     const { apikey } = this.config
@@ -51,7 +52,7 @@ export class ProviderDigitalOcean extends ProviderBase {
     await this.client.account.deleteSshKey(id)
   }
 
-  async createServer (sshKeyId, region) {
+  async createServer (sshKeyId, region, startupCommand) {
     let name = 'vpn-' + Math.random().toString(36).substring(7)
     let dropletCfg = {
       name,
@@ -59,12 +60,14 @@ export class ProviderDigitalOcean extends ProviderBase {
       size: '1gb',
       image: 'debian-9-x64',
       ssh_keys: [sshKeyId],
+      user_data: startupCommand,
       backups: false
     }
     let droplet = await this.client.droplets.create(dropletCfg)
     return {
       name,
       slug: droplet.id,
+      aesKey: this.aesKey,
       ipv4: null
     }
   }
@@ -82,7 +85,8 @@ export class ProviderDigitalOcean extends ProviderBase {
     return {
       name: droplet.name,
       slug: id,
-      ipv4: droplet.networks.v4[0].ip_address
+      ipv4: droplet.networks.v4[0].ip_address,
+      aesKey: this.aesKey
     }
   }
 

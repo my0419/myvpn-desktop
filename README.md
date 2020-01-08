@@ -9,7 +9,7 @@ Open source desktop application for the personal VPN server.
 * ElectronJS
 * VueJS
 * [ElementUI](https://element.eleme.io/)
-* [ssh2](https://github.com/mscdex/ssh2)
+* [MyVPN Agent](https://github.com/my0419/myvpn-agent)
 
 ### Providers
 
@@ -43,23 +43,22 @@ npm run dev
 
 ### Build for platform
 
-#### Windows (x64)
+#### Windows x64 (.exe)
 
 ``` bash
-npm run build -w
+npm run build:windows
 ```
 
-
-#### Linux Debian / Ubuntu (.deb), .tar.bz2
+#### Linux Debian / Ubuntu (.deb) and Other (.tar.bz2)
 
 ``` bash
-npm run build -l
+npm run build:linux
 ```
 
 #### MacOS (.dmg)
 
 ``` bash
-npm run build -m
+npm run build:mac
 ```
 
 ### Official Website

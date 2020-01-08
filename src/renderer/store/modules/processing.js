@@ -1,5 +1,5 @@
-import {Deployment} from '../../../lib/deployment'
-import {sleep} from '../../../lib/urils'
+import {ServerAgent} from "../../../lib/server/agent";
+import {sleep} from "../../../lib/urils";
 
 const state = {
   complete: false,
@@ -44,17 +44,16 @@ const actions = {
     } = params
     state.client = client
     try {
-      let deploy = null
-      let connected = false
+      let completed = false
       let server = null
+      let result = null
       let unsubscribe = null
+      let startupCommand = client.startupCommand(connectionType, accountPskKey, accountUsername, accountPassword)
       const sshKeyId = await client.addSshKey(sshKey)
       let cancelled = false
       const createServerProcessing = async () => {
-        if (deploy !== null) {
-          deploy.closeConnection()
-        }
         server = null
+        result = null
         unsubscribe = this.subscribe((mutation, state) => {
           switch (mutation.type) {
             case 'PROCESSING_CANCEL':
@@ -63,49 +62,77 @@ const actions = {
                 client.deleteServer(server.slug)
                 client.deleteSshKey(sshKeyId, server.slug)
               }
-              if (deploy !== null) {
-                deploy.closeConnection()
-              }
               throw new Error('cancel')
           }
         })
         state.allowCancel = true
-        dispatch('log', 'Creating server and waiting for run')
+        dispatch('log', 'Creating a new server')
         try {
-          server = await client.createServer(sshKeyId, region)
+          server = await client.createServer(sshKeyId, region, startupCommand)
           dispatch('saveServer', server)
           // this hack for PROCESSING_CANCEL
           if (cancelled === true) {
             console.info('stopped. cancelled.')
             return
           }
+          dispatch('log', 'Waiting for the server to start')
           server = await client.checkServer(server.slug)
           dispatch('saveServer', server)
+
+          dispatch('log', 'Connecting to the server')
+
+          /* MyVPN Agent */
+          const agent = new ServerAgent(server.ipv4, server.aesKey)
+          while (result === null) {
+            result = await agent.getState().then(data => {
+              console.log('myvpn agent response:', data)
+              const status = data.status
+              if (typeof status !== 'object') {
+                dispatch('log', 'MyVPN Agent response could not be decrypted.')
+                return new Error('Failed to decrypt response')
+              }
+              if (data.time_running > 60 * 5) {
+                return new Error('Waiting time 300sec is exceeded')
+              }
+              switch (status.code) {
+                case 'error':
+                  dispatch('log', 'Software installation is failure')
+                  client.deleteServer(server.slug)
+                  throw new Error(status.error_text || 'Unknown error')
+                case 'completed':
+                  dispatch('log', 'Software installation is complete')
+                  completed = true
+                  return status.client_config
+                case 'idle':
+                  dispatch('log', 'Waiting for software setup to start on the server')
+                  break
+                case 'setup':
+                  dispatch('log', 'Waiting for software installation')
+                  break
+              }
+              return null
+            }, err => {
+              console.log('myvpn agent http failed:', err)
+              commit('PROCESSING_FAILED_CONNECTION')
+              client.deleteServer(server.slug)
+              return err
+            })
+            if (result === null) {
+              await sleep(5000)
+            }
+          }
         } catch (e) {
           if (cancelled === true) {
             return
           }
           throw new Error(e.message)
         }
-        dispatch('log', 'Connecting to the server (SSH)')
+
         if (cancelled === true) {
           console.info('stopped. cancelled.')
-          return
-        }
-        deploy = new Deployment(server.ipv4, privateKey, connectionType, accountUsername, accountPassword, accountPskKey)
-        try {
-          await deploy.openConnection()
-          state.allowCancel = false
-          connected = true
-        } catch (e) {
-          console.log(e)
-          console.log('ssh return error text:', e.message)
-          dispatch('log', 'Connection failed. SSH error: ' + e.message)
-          commit('PROCESSING_FAILED_CONNECTION')
-          client.deleteServer(server.slug)
         }
       }
-      while (connected === false && cancelled === false) {
+      while (completed === false && cancelled === false) {
         try {
           await createServerProcessing()
         } catch (e) {
@@ -116,29 +143,13 @@ const actions = {
           return null
         }
       }
-      if (unsubscribe !== null) {
-        unsubscribe();
-      }
+      unsubscribe !== null && unsubscribe();
       if (cancelled === true) {
         console.info('end process. cancelled.')
         return
       }
-      dispatch('log', 'Installing the required software') // @TODO wait interval
 
-      let result = {}
-      try {
-        result = await deploy.setup()
-      } catch (e) {
-        console.debug('Error on setup: ', e, ' retry...')
-        result = await deploy.setup() // lets try again
-      }
-      if (connectionType === 'openvpn') {
-        dispatch('setAccountOvpn', result.ovpn)
-      }
-      if (connectionType === 'wireguard') {
-        dispatch('setWireguard', result.wireguard)
-      }
-      dispatch('log', 'VPN service configured')
+      dispatch('setClientConfig', result)
       await client.deleteSshKey(sshKeyId, server.slug)
     } catch (e) {
       dispatch('log', `Error: ${e.message}`)

@@ -23,7 +23,7 @@
 
 <script>
   const { shell } = require('electron')
-  const { BrowserWindow } = require('electron').remote
+  const { BrowserWindow, session } = require('electron').remote
   import { mapState } from 'vuex'
   import OAuth2Provider from "~/myvpn-electron-oauth/lib/oauth2"
 
@@ -46,7 +46,7 @@
         this.$store.dispatch('configureProvider', {name: this.providerKey, config: {apikey: value}}) // attach client
       },
       login () {
-        const window = new BrowserWindow({
+        let window = new BrowserWindow({
           width: this.oauthWindowWidth || 600,
           height: this.oauthWindowHeight || 540,
           webPreferences: {
@@ -57,6 +57,7 @@
         const provider = new OAuth2Provider(this.oauthConfig)
         provider.perform(window)
           .then(resp => {
+            session.defaultSession.clearStorageData()
             window.close()
             this.setToken((new URLSearchParams(resp)).get('access_token'))
           }, err => {

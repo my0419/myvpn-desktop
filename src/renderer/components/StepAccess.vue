@@ -1,9 +1,13 @@
 <template>
     <div>
-        <HeaderSteps :active="2" />
         <el-alert :title="$t('Save access to the VPN. When you exit, all data will be cleared.')" type="warning" show-icon></el-alert>
 
         <div class="app-page selectable">
+            <el-row style="text-align: right">
+                <el-button type="success" size="mini"  v-on:click="handleMainPage" icon="el-icon-arrow-left">{{ $t('Go Back') }}</el-button>
+                <el-button type="danger" size="mini" v-on:click="deleteServer" icon="el-icon-delete">{{ $t('Delete server') }}</el-button>
+            </el-row>
+
             <el-tabs v-model="activeTab">
                 <el-tab-pane :label="$t('My VPN')" name="1">
                     <div v-if="connectionType === 'l2tp'">
@@ -54,14 +58,11 @@
                             </el-col>
                             <el-col :span="12">
                                 <h2>{{ $t('Connect via QR Code') }}</h2>
-                                <qrcode-vue :value="wireguardConfig" :size="300" :level="M"></qrcode-vue>
+                                <qrcode-vue :value="clientConfig" :size="300" :level="M"></qrcode-vue>
                                 <hr />
                             </el-col>
                         </el-row>
                     </div>
-                    <hr />
-                    <el-button type="success" v-on:click="handleMainPage" icon="el-icon-arrow-left">{{ $t('Go Back') }}</el-button>
-                    <el-button type="danger" v-on:click="deleteServer" icon="el-icon-delete">{{ $t('Delete server') }}</el-button>
                 </el-tab-pane>
                 <el-tab-pane :label="$t('My Server')" name="2">
                     <h2>{{ $t('Protocol') }}</h2>
@@ -110,14 +111,13 @@
 <script>
   import { mapState } from 'vuex'
   import QrcodeVue from 'qrcode.vue'
-  import HeaderSteps from './HeaderSteps'
   import Copied from './Copied'
 
   const {dialog} = require('electron').remote
   const fs = require('fs')
 
   export default {
-    components: {Copied, HeaderSteps, QrcodeVue},
+    components: {Copied, QrcodeVue},
     data () {
       return {
         activeTab: '1'
@@ -136,8 +136,7 @@
       accountUsername: state => state.account.username,
       accountPassword: state => state.account.password,
       accountPskKey: state => state.account.pskKey,
-      accountOvpn: state => state.account.ovpn,
-      wireguardConfig: state => state.account.wireguard
+      clientConfig: state => state.account.clientConfig
     }),
     mounted: function () {
       if (!this.configuredSuccess) {
@@ -154,10 +153,10 @@
         this.$router.push({ name: 'main' })
       },
       saveOpenvpn: function () {
-        this.saveFile(`myvpn-${this.serverName}.ovpn`, this.accountOvpn)
+        this.saveFile(`myvpn-${this.serverName}.ovpn`, this.clientConfig)
       },
       saveWireguard: function () {
-        this.saveFile(`wireguard-${this.serverName}.conf`, this.wireguardConfig)
+        this.saveFile(`wireguard-${this.serverName}.conf`, this.clientConfig)
       },
       savePrivateKey: function () {
         this.saveFile(`myvpn-${this.serverName}-private.key`, this.keypairPrivate)

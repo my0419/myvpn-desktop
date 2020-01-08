@@ -1,7 +1,5 @@
 <template>
   <div>
-    <HeaderSteps :active="0" />
-
     <el-container>
       <el-aside width="80px">
         <el-menu class="left-menu-vertical" height="100vh" :collapse="true">
@@ -53,12 +51,11 @@
   import { mapState } from 'vuex'
   import FormRegions from './FormRegions'
   import FormTypes from './FormTypes'
-  import HeaderSteps from './HeaderSteps'
   import Copied from './Copied'
   import Providers from './Providers'
 
   export default {
-    components: {Providers, Copied, FormTypes, FormRegions, HeaderSteps},
+    components: {Providers, Copied, FormTypes, FormRegions},
     computed: mapState({
       configuredSuccess: state => state.provider.configuredSuccess,
       dropletsExists: state => state.droplet.isEmpty === false,

@@ -50,7 +50,7 @@
                         </table>
                     </div>
                     <span slot="footer" class="dialog-footer">
-                        <el-button @click="running = false">{{ $t('Close') }}</el-button>
+                        <el-button @click="running = false" size="mini">{{ $t('Close') }}</el-button>
                     </span>
         </el-dialog>
         <p></p>
@@ -184,7 +184,7 @@
         border-bottom: 1px solid rgba(0,0,0,0.12);
     }
     td {
-        padding: 15px 5px;
+        padding: 5px 5px;
         display: table-cell;
         vertical-align: middle;
         border-radius: 2px;
@@ -196,5 +196,10 @@
     }
     tr:hover {
         background-color: #ebf1fa;
+    }
+</style>
+<style>
+    .el-dialog__wrapper > div {
+        margin-top: 22px !important;
     }
 </style>

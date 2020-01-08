@@ -2,17 +2,19 @@ const state = {
   name: '',
   slug: null,
   ipv4: null,
-  password: null
+  password: null,
+  aesKey: null
 }
 
 const mutations = {}
 
 const actions = {
   saveServer ({ commit, state }, params) {
-    const {name, slug, ipv4, password} = params
+    const {name, slug, ipv4, password, aesKey} = params
     state.name = name
     state.slug = slug
     state.ipv4 = ipv4
+    state.aesKey = aesKey
     state.password = password || null
   }
 }

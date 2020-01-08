@@ -1,11 +1,13 @@
 import {ProviderBase} from './providerBase'
 import axios from 'axios'
 import {sleep} from '../urils'
+import {generateRandomString} from "../string";
 
 const LINODE_REGIONS = {
   'ap-west': {title: 'India (Mumbai)', speedtest: 'mumbai1'},
   'ca-central': {title: 'Canada (Toronto)', speedtest: 'toronto1'},
   'us-southeast': {title: 'US Southeast (Atlanta)', speedtest: 'atlanta'},
+  'ap-southeast': {title: 'Australia (Sydney)', speedtest: 'sydney'},
   'us-west': {title: 'US West (Fremont)', speedtest: 'fremont'},
   'us-east': {title: 'US East (Newark)',  speedtest: 'newark'},
   'us-central': {title: 'US Central (Dallas)', speedtest: 'dallas'},
@@ -26,6 +28,7 @@ export class ProviderLinodeServers extends ProviderBase {
       headers: {'Authorization': `Bearer ${apikey}`},
     });
     this.sshKey = null
+    this.stackScriptId = null
     this.rootPassword = `Myvpn${Math.random().toString(20).substring(2)}@2`
   }
 
@@ -73,10 +76,10 @@ export class ProviderLinodeServers extends ProviderBase {
   }
 
   async deleteServer (id) {
+    this.deleteStackScript()
     await this.client.delete('linode/instances/'+id).then(r => r,err => {
       throw new Error('Failed delete server.')
     })
-
   }
 
   async addSshKey (publicKey) {
@@ -85,32 +88,37 @@ export class ProviderLinodeServers extends ProviderBase {
 
   async deleteSshKey (id, dropletId) {}
 
-  async createServer (sshKeyId, region) {
-    let name = 'vpn-' + Math.random().toString(36).substring(7)
-    let type = await this.client.get('linode/types',).then(res => {
+  async createServer (sshKeyId, region, startupCommand) {
+    const name = 'vpn-' + Math.random().toString(36).substring(7)
+    const type = await this.client.get('linode/types',).then(res => {
       let typeItem = res.data.data[0] || null
       if (typeItem === null) {
-        throw new Error( 'Failed get server types')
+        throw new Error('Failed get server types')
       }
       return typeItem
     },err => {
-      throw new Error( 'Failed get types')
+      throw new Error('Failed get types')
     })
+    this.stackScriptId = await this.createStackScript(startupCommand)
     return await this.client.post('linode/instances', {
       label: name,
       region,
       type: type.id,
       root_pass: this.rootPassword,
       authorized_keys: [this.sshKey],
+      stackscript_id: this.stackScriptId,
       image: 'linode/debian9'
     }).then(res => {
+      this.deleteStackScript()
       return {
         slug: res.data.id,
         name: res.data.label,
         password: this.rootPassword,
         ipv4: null,
+        aesKey: this.aesKey
       }
     },err => {
+      this.deleteStackScript()
       throw new Error(err.response.data.errors.length > 0 ? err.response.data.errors[0].reason : 'Failed get server list')
     })
   }
@@ -131,10 +139,31 @@ export class ProviderLinodeServers extends ProviderBase {
       }
     }
     return {
-      name: droplet.name,
+      name: droplet.label,
       slug: id,
       ipv4: droplet.ipv4.length > 0 ? droplet.ipv4[0] : null,
-      password: this.rootPassword
+      password: this.rootPassword,
+      aesKey: this.aesKey
+    }
+  }
+
+  async createStackScript (script) {
+    return await this.client.post('linode/stackscripts', {
+      images: ['linode/debian9'],
+      label: `myvpn-agent-${generateRandomString(8)}`,
+      script,
+      is_public: false,
+    }).then(res => {
+      return res.data.id
+    }, err => {
+      throw new Error('Failed create stack script')
+    })
+  }
+
+  async deleteStackScript () {
+    if (this.stackScriptId !== null) {
+      this.client.delete(`linode/stackscripts/${this.stackScriptId}`).catch((err) => console.log('failed delete stack script', err))
+      this.stackScriptId = null
     }
   }
 
