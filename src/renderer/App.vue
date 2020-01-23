@@ -14,18 +14,28 @@
 
 <script>
   import Offline from 'v-offline'
+
+  const isBrowser = process.browser
+  let electron = null
+
+  if (!isBrowser) {
+    const { remote } = require('electron')
+    electron = { remote }
+  }
+
   export default {
     name: 'vpn',
-    created: function () {
-      const { Menu } = require('electron').remote
+    created: function () {      
       const menuElements = [
         { label: this.$root.$t('Copy'), role: 'copy' },
         { label: this.$root.$t('Paste'), role: 'paste' }
       ]
       window.addEventListener('contextmenu', (e) => {
-        e.preventDefault()
-        const window = require('electron').remote.getCurrentWindow()
-        Menu.buildFromTemplate(menuElements).popup(window)
+        if (!isBrowser) {
+          const { Menu, getCurrentWindow } = electron.remote
+          Menu.buildFromTemplate(menuElements).popup(getCurrentWindow())
+          e.preventDefault()          
+        }
       }, false)
     },
     components: {Offline}

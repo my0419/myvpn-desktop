@@ -5,7 +5,7 @@
         </div>
         <div v-else>
             <el-button type="info" v-if="token" icon="el-icon-connection" v-on:click="logout">{{ $t('Logout') }}</el-button>
-            <el-button type="success" v-else icon="el-icon-connection" v-on:click="login">{{ $t(`Log in to the ${providerName} account`) }}</el-button>
+            <el-button type="success" :name="providerName" v-else icon="el-icon-connection" v-on:click="login">{{ $t(`Log in to the ${providerName} account`) }}</el-button>
         </div>
         <p>
             <el-alert v-if="configuredError !== '' && token !== ''" :title="$t(configuredError)" type="error" show-icon :closable=false />
@@ -22,10 +22,68 @@
 </template>
 
 <script>
-  const { shell } = require('electron')
-  const { BrowserWindow, session } = require('electron').remote
   import { mapState } from 'vuex'
-  import OAuth2Provider from "~/myvpn-electron-oauth/lib/oauth2"
+  import providers from '../../config/providers'
+  import { redirectTo, localStorageService } from '../../lib/utils'
+  import OAuth2Provider from 'myvpn-electron-oauth/lib/oauth2'  
+  
+  const isBrowser = process.browser
+  let electron = null
+
+  if (!isBrowser) {
+    const { shell, remote } = require('electron')
+    electron = { shell, remote }
+  }
+
+  const redirectToUrl = (url) =>
+    isBrowser ? redirectTo(url) : electron.shell.openExternal(url)
+
+  const saveProviderKey = (value) =>
+    localStorageService.set('my_vpn_provider_key', value)
+
+  const removeProviderKey = () =>
+    localStorageService.remove('my_vpn_provider_key')
+
+  function createLoginWindow(BrowserWindow, session) {
+    let window = new BrowserWindow({
+    width: this.oauthWindowWidth || 600,
+    height: this.oauthWindowHeight || 540,
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true
+    }})
+    const provider = new OAuth2Provider(this.oauthConfig)
+    provider.perform(window)
+      .then(resp => {
+        session.defaultSession.clearStorageData()
+        this.setToken((new URLSearchParams(resp)).get('access_token'))
+      }, err => {
+        this.$message({message: this.$root.$t('Please try again'), type: 'error'})
+      })
+    window.close()
+  }
+
+  function loginOnSiteProvider(providerTitle) {
+    const {
+      name,
+      oauthConfig      
+    } = providers.web.reduce((cfg, provider) => ({
+      ...cfg,
+      ...(provider.title === providerTitle ? provider : {})
+    }), {})
+    const {
+      client_id,
+      redirect_uri,
+      scope,
+      authorize_url,
+      response_type
+    } = oauthConfig
+    const baseURL = `${authorize_url}?`
+    const uri = `redirect_uri=${redirect_uri}&client_id=${client_id}&response_type=${response_type}&scope=${scope}`
+    const encoded = baseURL + encodeURI(uri)
+    saveProviderKey(name)
+    redirectTo(encoded, false)
+  }
 
   export default {
     props: ['providerKey', 'providerName', 'providerWebsite', 'faqLink', 'oauthConfig', 'oauthWindowWidth', 'oauthWindowHeight'],
@@ -45,31 +103,22 @@
         this.$store.dispatch('updateConfig', {apikey: value})
         this.$store.dispatch('configureProvider', {name: this.providerKey, config: {apikey: value}}) // attach client
       },
-      login () {
-        let window = new BrowserWindow({
-          width: this.oauthWindowWidth || 600,
-          height: this.oauthWindowHeight || 540,
-          webPreferences: {
-            nodeIntegration: false,
-            contextIsolation: true
-          }
-        })
-        const provider = new OAuth2Provider(this.oauthConfig)
-        provider.perform(window)
-          .then(resp => {
-            session.defaultSession.clearStorageData()
-            window.close()
-            this.setToken((new URLSearchParams(resp)).get('access_token'))
-          }, err => {
-            window.close()
-            this.$message({message: this.$root.$t('Please try again'), type: 'error'})
-          })
+      login (e) {
+        if (isBrowser) {
+          loginOnSiteProvider(e.currentTarget.name)
+        } else {
+          const { BrowserWindow, session } = electron.remote;
+          createLoginWindow.apply(this, [BrowserWindow, session])
+        }
       },
       logout () {
         this.setToken('')
+        if (isBrowser) {
+          removeProviderKey()
+        }
       },
       handleLinkTo (url) {
-        shell.openExternal(url)
+        redirectToUrl(url)
       }
     },
     watch: {

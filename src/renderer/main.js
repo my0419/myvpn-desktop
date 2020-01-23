@@ -21,7 +21,7 @@ Vue.use(VueI18n)
 Vue.use(Clipboard)
 
 const i18n = new VueI18n({
-  locale: navigator.language === 'ru' ? 'ru' : 'en',
+  locale: navigator.language ? (navigator.language.split('-')[0] === 'ru' ? 'ru' : 'en') : 'en',
   messages: translate
 })
 

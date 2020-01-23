@@ -57,7 +57,7 @@
     },
     methods: {
       formattedDaysAgo: function (time) {
-        return moment(time).lang(this.$i18n.locale).fromNow()
+        return moment(time).locale(this.$i18n.locale).fromNow()
       },
       handleDelete: function (droplet) {
         let res = this.client.deleteServer(droplet.id)

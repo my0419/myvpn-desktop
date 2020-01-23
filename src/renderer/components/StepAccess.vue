@@ -113,8 +113,52 @@
   import QrcodeVue from 'qrcode.vue'
   import Copied from './Copied'
 
-  const {dialog} = require('electron').remote
   const fs = require('fs')
+  const isBrowser = process.browser
+  let electron = null
+
+  if (!isBrowser) {
+    const { remote } = require('electron')
+    electron = { remote }
+  }  
+
+  function renderMessage(message, type, options) {
+    return this.$message({message: this.$root.$t(message), type, ...options})
+  }
+
+  function displaySuccessfulMessage() {
+    renderMessage.call(this, 'File saved', 'success')
+  }
+
+  function displayErrorMessage(error) {
+    console.log('save file error: ', error)
+    renderMessage.call(this, 'Failed to save the file', 'error', {
+      dangerouslyUseHTMLString: true,
+    })
+  }
+
+  function saveFileFromBrowser(filename, fileData) {
+    const blob = new Blob([fileData], {type: "text/*"});
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+  }
+
+  function saveFileHandler(filename, fileData) {
+    if (isBrowser) {
+      try {        
+        saveFileFromBrowser.call(this, filename, fileData)
+      } catch(error) {
+        displayErrorMessage.call(this, error)
+      }
+    } else {
+      const savePath = electron.remote.dialog.showSaveDialog({defaultPath: filename})
+      fs.writeFile(savePath, fileData, (err) => {
+        err !== null ? displayErrorMessage.call(this, err) : displaySuccessfulMessage.call(this)
+      })
+    }
+  }
 
   export default {
     components: {Copied, QrcodeVue},
@@ -149,7 +193,7 @@
       },
       deleteServer: function () {
         this.$store.dispatch('deleteServer', this.serverSlug)
-        this.$message({message: this.$root.$t('Request to delete the server has been sent'), type: 'success'})
+        renderMessage.call(this, 'Request to delete the server has been sent', 'success')
         this.$router.push({ name: 'main' })
       },
       saveOpenvpn: function () {
@@ -167,21 +211,7 @@
       savePublicKey: function () {
         this.saveFile(`myvpn-${this.serverName}-public.key`, this.keypairPublic)
       },
-      saveFile: function (filename, fileData) {
-        const savePath = dialog.showSaveDialog({defaultPath: filename})
-        fs.writeFile(savePath, fileData, (err) => {
-          if (err !== null) {
-            console.log('save file error: ', err)
-            this.$message({
-              dangerouslyUseHTMLString: true,
-              message: this.$root.$t('Failed to save the file'),
-              type: 'error'
-            })
-          } else {
-            this.$message({message: this.$root.$t('File saved'), type: 'success'})
-          }
-        })
-      }
+      saveFile: saveFileHandler
     }
   }
 </script>
