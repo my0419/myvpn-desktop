@@ -25,7 +25,7 @@
     $bolb-color: #409eff;
 
     // Loader
-    .blobs {
+    .blobs {        
         filter: url(#goo);
         width: 300px;
         height: 200px;
@@ -77,6 +77,20 @@
             &:nth-child(#{$i}) {
                 animation-delay: $i * 0.2 + s;
             }
+        }
+    }
+
+    // Mozilla fix
+    @-moz-document url-prefix() {
+        .blobs {
+            filter: none !important;
+            width: 300px;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 70px;
+            transform-style: preserve-3d;
+            margin: 0 auto;
         }
     }
 

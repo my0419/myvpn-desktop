@@ -47,12 +47,83 @@
 </template>
 
 <script>
-  import { app, remote, shell } from 'electron'
   import { mapState } from 'vuex'
   import FormRegions from './FormRegions'
   import FormTypes from './FormTypes'
   import Copied from './Copied'
   import Providers from './Providers'
+  import { redirectTo, localStorageService } from '../../lib/utils'
+
+  const isBrowser = process.browser
+  let electron = null
+
+  if (!isBrowser) {
+    const { app, remote, shell } = require('electron')
+    electron = { app, remote, shell }
+  }
+
+  const getVersion = () => 
+    isBrowser ? '.Online' : electron.remote.app.getVersion()
+
+  const redirectToSite = (url) =>
+    isBrowser ? redirectTo(url) : shell.openExternal(url)
+
+  const redirectToLinkUpdate = () =>
+    electron && electron.shell.openExternal('https://myvpn.run/#download')
+
+  const getProviderKey = () =>
+    localStorageService.get('my_vpn_provider_key')
+
+  const closeApp = () =>
+    setTimeout(function () {
+      if (electron.remote.process.platform !== 'darwin') {
+        electron.app.quit();
+      }
+    }, 500)
+
+  function initProviderParams() {
+    const hash = window.location.hash.replace(/(^#\/#|\/#|#)/mg, '')
+    const params = new URLSearchParams(hash)
+    const access_token = params.get('access_token')
+    if (access_token) {
+      return access_token
+    }
+  }
+
+  function openUpdateDialog(lastVersion, currentVersion) {
+    const message = `${this.$root.$t('Your version')} v${currentVersion}, ${this.$root.$t('latest version')} <strong>v${lastVersion}</strong>`
+    const options = {
+      title: this.$root.$t('There is a new version available!'),
+      dangerouslyUseHTMLString: true,
+      confirmButtonText: this.$root.$t('Download the latest version'),
+      cancelButtonText: this.$root.$t('Continue'),
+      type: 'warning'
+    }
+    return this.$confirm(message, 'Warning', options)
+  }
+
+  function renderMessage(message, type, options) {
+    return this.$message({message: this.$root.$t(message), type, ...options})
+  }
+
+  function checkUpdateApp() {
+    require('axios').get('https://myvpn.run/api/v1/application')
+      .then(res => {
+        const lastVersion = res.data.desktop.latestVersion
+        const currentVersion = electron.remote.app.getVersion()
+        if (lastVersion !== currentVersion) {
+          openUpdateDialog.call(this, lastVersion, currentVersion)
+            .then(_ => {
+              redirectToLinkUpdate()
+              closeApp()
+            })            
+            .catch(_ => this.renderMessage('We recommend that you do not ignore updates.', 'info'))
+        }
+      })
+      .catch(error => {        
+        console.log('Skip application update check.')
+      });
+  }
 
   export default {
     components: {Providers, Copied, FormTypes, FormRegions},
@@ -61,33 +132,30 @@
       dropletsExists: state => state.droplet.isEmpty === false,
       dropletsCount: state => state.droplet.list.length,
       dropletsLoading: state => state.droplet.loading,
-      appVersion: () => remote.app.getVersion()
+      token: state => state.provider.config.apikey,
+      appVersion: getVersion
     }),
     mounted () {
-      require('axios').get('https://myvpn.run/api/v1/application').then(res => {
-        const lastVersion = res.data.desktop.latestVersion
-        const currentVersion = remote.app.getVersion()
-        if (lastVersion !== currentVersion) {
-          this.$confirm(`${this.$root.$t('Your version')} v${currentVersion}, ${this.$root.$t('latest version')} <strong>v${lastVersion}</strong>`, 'Warning', {
-            title: this.$root.$t('There is a new version available!'),
-            dangerouslyUseHTMLString: true,
-            confirmButtonText: this.$root.$t('Download the latest version'),
-            cancelButtonText: this.$root.$t('Continue'),
-            type: 'warning'
-          })
-          .then(_ => {
-            shell.openExternal('https://myvpn.run/#download')
-            setTimeout(function () {
-              if(remote.process.platform !== 'darwin'){
-                app.quit();
-              }
-            }, 500)
-          })
-          .catch(_ => this.$message({type: 'info', message: this.$root.$t('We recommend that you do not ignore updates.')}));
+      checkUpdateApp()
+      if (isBrowser) {
+        const access_token = initProviderParams()
+        const provider_key = getProviderKey()
+        if (access_token && provider_key) {
+          try {            
+            this.setToken(access_token, provider_key)
+            this.handleProcessing()
+          } catch (error) {
+            console.log(error.message)
+            this.renderMessage('Authorization Error', 'error')
+          }
         }
-      });
+      }      
     },
     methods: {
+      setToken (value, providerKey) {
+        this.$store.dispatch('updateConfig', {apikey: value})
+        this.$store.dispatch('configureProvider', {name: providerKey, config: {apikey: value}}) // attach client
+      },
       handleProcessing: function () {
         this.$router.push({ name: 'processing' })
       },
@@ -95,7 +163,7 @@
         this.$router.push({ name: 'droplets' })
       },
       handleGoToWebsite: function () {
-        shell.openExternal('https://myvpn.run')
+        redirectToUrl('https://myvpn.run')               
       },
       changeLang: function (code) {
         this.$i18n.locale = code
