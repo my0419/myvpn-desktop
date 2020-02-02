@@ -24,7 +24,7 @@
     height: 50px;
   }
   .providers .provider-choose-logo {
-    height: 28px;
+    height: 24px;
     position: relative;
     top: 6px;
   }

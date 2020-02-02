@@ -132,7 +132,7 @@ export class ProviderHetznerCloud extends ProviderBase {
       }
     }
     return {
-      name,
+      name: server.name,
       slug: id,
       ipv4: server.public_net && server.public_net.ipv4 && server.public_net.ipv4.ip ? server.public_net.ipv4.ip : null,
       aesKey: this.aesKey
