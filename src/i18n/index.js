@@ -6,6 +6,7 @@ export default {
     'Insert the API key from your DigitalOcean account': 'Вставьте API-ключ из личного кабинета DigitalOcean',
     'Insert the API key from your CryptoServers account': 'Вставьте API-ключ из личного кабинета CryptoServers',
     'Insert the API key from your Linode account': 'Вставьте API-ключ из личного кабинета Linode',
+    'Insert the API key from your Hetzner Cloud account': 'Вставьте API-ключ из личного кабинета Hetzner Cloud',
     'Successful connection to the account': 'Вы верно указали данные, ваш аккаут подключен!',
     'Select a server region': 'Выберите регион сервера',
     'Select the connection protocol': 'Выберите протокол подключения',

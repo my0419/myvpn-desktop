@@ -10,9 +10,10 @@
               :provider-name="provider.title"
               :provider-website="provider.website"
               :faq-link="provider.faq"
-              :oauthConfig="provider.oauthConfig"
-              :oauth-window-height="provider.oauthWindow.height"
-              :oauth-window-width="provider.oauthWindow.width"
+              :oauthConfig="provider.oauthConfig || null"
+              :oauth-window-height="(provider.oauthWindow) ? provider.oauthWindow.height : null"
+              :oauth-window-width="(provider.oauthWindow) ? provider.oauthWindow.width : null"
+              :via-key="provider.viaKey || false"
       />
     </el-tab-pane>
   </el-tabs>

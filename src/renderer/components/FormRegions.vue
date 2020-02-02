@@ -3,7 +3,7 @@
         <el-select v-model="region" placeholder="New York" :disabled="listRegions.length === 0">
             <el-option v-for="r in listRegions" :key="r.slug" :label="r.name" :value="r.slug"></el-option>
         </el-select>
-        <div v-if="listRegions.length > 0">
+        <div v-if="listRegions.length > 0 && speedtestAvailable">
             <ModalSpeedTest :regions="listRegions" />
         </div>
     </div>
@@ -25,6 +25,13 @@
         },
         set (value) {
           this.$store.dispatch('updateRegion', value)
+        }
+      },
+      speedtestAvailable: {
+        get () {
+          return this.$store.state.provider.regions.every(region => {
+            return region.speedtest
+          })
         }
       }
     }

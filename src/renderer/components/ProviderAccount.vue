@@ -11,9 +11,9 @@
             <el-alert v-if="configuredError !== '' && token !== ''" :title="$t(configuredError)" type="error" show-icon :closable=false />
         </p>
         <div>
-            <el-link v-if="tokenInput" v-on:click="tokenInput = false">{{ $t('Connect via login and password') }}<i class="el-icon-user-solid el-icon--right"></i> </el-link>
-            <el-link v-else v-on:click="tokenInput = true">{{ $t('Connect via API key') }}<i class="el-icon-key el-icon--right"></i> </el-link>
-            <el-divider direction="vertical"></el-divider>
+            <el-link v-if="tokenInput && !viaKey" v-on:click="tokenInput = false">{{ $t('Connect via login and password') }}<i class="el-icon-user-solid el-icon--right"></i> </el-link>
+            <el-link v-if="!tokenInput" v-on:click="tokenInput = true">{{ $t('Connect via API key') }}<i class="el-icon-key el-icon--right"></i> </el-link>
+            <el-divider v-if="!viaKey" direction="vertical"></el-divider>
             <el-link v-on:click.prevent="handleLinkTo(providerWebsite)">{{ $t('Go to website')}}<i class="el-icon-link el-icon--right"></i></el-link>
             <el-divider direction="vertical"></el-divider>
             <el-link v-on:click.prevent="handleLinkTo(faqLink)">{{ $t('How to set up')}}<i class="el-icon-question el-icon--right"></i></el-link>
@@ -40,10 +40,15 @@
   const removeProviderKey = () =>
     localStorageService.remove('my_vpn_provider_key')
   export default {
-    props: ['providerKey', 'providerName', 'providerWebsite', 'faqLink', 'oauthConfig', 'oauthWindowWidth', 'oauthWindowHeight'],
+    props: ['providerKey', 'providerName', 'providerWebsite', 'faqLink', 'oauthConfig', 'oauthWindowWidth', 'oauthWindowHeight', 'viaKey'],
     data () {
       return {
         tokenInput: false
+      }
+    },
+    mounted () {
+      if (this.oauthConfig === null && this.viaKey) {
+        this.tokenInput = true
       }
     },
     computed: mapState({

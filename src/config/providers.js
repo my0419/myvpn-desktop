@@ -23,6 +23,13 @@ const providers = {
     faq: 'https://myvpn.run/faq/setup/linode',
     oauthConfig: {client_id: "839b0a3d0ab64f6c8c2d", redirect_uri: "https://localhost", scope: "linodes:read_write,stackscripts:read_write", authorize_url: "https://login.linode.com/oauth/authorize", response_type: "token" },
     oauthWindow: {width: 600, height: 710}
+  }, {
+    name: 'hetznerCloud',
+    title: 'Hetzner Cloud',
+    logo: 'static/img/providers/hetzner-cloud.svg',
+    website: 'https://www.hetzner.com/cloud',
+    faq: 'https://myvpn.run/faq/setup/hetznerCloud',
+    viaKey: true
   }],
   web: [{
     name: 'cryptoservers',
