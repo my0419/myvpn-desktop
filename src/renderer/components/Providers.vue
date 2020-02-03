@@ -1,8 +1,8 @@
 <template>
   <el-tabs :value="selectedProvider" @tab-click="handleChangeProvider" class="providers" type="border-card">
-    <el-tab-pane v-for="provider in providers" :name="provider.name" :disabled="apikey.length > 0 && activeProvider() !== provider.name">
+    <el-tab-pane v-for="provider in providers" :key="provider.name" :name="provider.name" :disabled="apikey.length > 0 && activeProvider() !== provider.name">
       <span slot="label">
-        <img class="provider-choose-logo" :src="provider.logo" />
+        <img class="provider-choose-logo" :src="staticPath + provider.logo" />
       </span>
       <ProviderAccount
               v-if="activeProvider() === provider.name"
@@ -50,6 +50,7 @@
     }),
     data () {
       return {
+        staticPath: process.browser || process.env.NODE_ENV === 'development' ? 'static' :  __static,
         activeTab: null,
         providers: providers[process.browser ? 'web' : 'desktop'],
       }
