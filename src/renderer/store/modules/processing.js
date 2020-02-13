@@ -40,7 +40,8 @@ const actions = {
       connectionType,
       accountUsername,
       accountPassword,
-      accountPskKey
+      accountPskKey,
+      setting
     } = params
     state.client = client
     try {
@@ -48,7 +49,7 @@ const actions = {
       let server = null
       let result = null
       let unsubscribe = null
-      let startupCommand = client.startupCommand(connectionType, accountPskKey, accountUsername, accountPassword)
+      let startupCommand = client.startupCommand({connectionType, accountPskKey, accountUsername, accountPassword, setting})
       const sshKeyId = await client.addSshKey(sshKey)
       let cancelled = false
       const createServerProcessing = async () => {

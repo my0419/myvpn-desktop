@@ -36,7 +36,7 @@
           <FormRegions />
           <h3>3. {{ $t('Select the connection protocol') }}</h3>
           <FormTypes />
-
+          <ModalAdvancedSettings />
           <div class="m-top">
             <el-button type="primary" :disabled="!configuredSuccess" v-on:click="handleProcessing" icon="el-icon-magic-stick">{{ $t('Create a VPN server and get access') }}</el-button>
           </div>
@@ -52,6 +52,7 @@
   import FormTypes from './FormTypes'
   import Copied from './Copied'
   import Providers from './Providers'
+  import ModalAdvancedSettings from './ModalAdvancedSettings'
   import { redirectTo, localStorageService } from '../../lib/utils'
 
   const isBrowser = process.browser
@@ -126,7 +127,7 @@
   }
 
   export default {
-    components: {Providers, Copied, FormTypes, FormRegions},
+    components: {Providers, Copied, FormTypes, FormRegions, ModalAdvancedSettings},
     computed: mapState({
       configuredSuccess: state => state.provider.configuredSuccess,
       dropletsExists: state => state.droplet.isEmpty === false,

@@ -22,7 +22,7 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 500,
+    height: 540,
     useContentSize: true,
     // transparent: true,
     // vibrancy: 'light',

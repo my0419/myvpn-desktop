@@ -63,7 +63,8 @@
           connectionType: this.$store.state.type.selected,
           accountUsername: this.$store.state.account.username,
           accountPassword: this.$store.state.account.password,
-          accountPskKey: this.$store.state.account.pskKey
+          accountPskKey: this.$store.state.account.pskKey,
+          setting: this.$store.state.setting
         })
         this.$store.subscribe((mutation, state) => {
           switch (mutation.type) {

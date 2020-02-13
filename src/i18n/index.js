@@ -104,6 +104,10 @@ export default {
     'Download the latest version': 'Скачать последнюю версию',
     'Connect via QR Code': 'Подключиться через QR Сode',
     'Save WireGuard Configuration': 'Сохранить конфигурацию WireGuard',
-    'Root password': 'Root пароль'
+    'Root password': 'Root пароль',
+    'Advanced Settings': 'Расширенные настройки',
+    'Invalid IP address specified': 'Указан некорректный IP адрес',
+    'Apply': 'Применить',
+    'We recommend that you additionally set the DNS in your system.': 'Рекомендуем дополнительно задать DNS в своей системе.',
   }
 }

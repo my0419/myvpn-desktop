@@ -8,13 +8,10 @@ export class ProviderBase {
 
   /**
    * MyVPN Agent Installer
-   * @param type
-   * @param accountPskKey
-   * @param accountUser
-   * @param accountPassword
+   * @param params
    * @returns {string}
    */
-  startupCommand(type, accountPskKey, accountUser, accountPassword) {
+  startupCommand(params) {
     return `#!/bin/sh
 sudo wget -O /usr/local/bin/myvpn-agent https://github.com/my0419/myvpn-agent/releases/latest/download/myvpn-agent_linux_x86_64 &&
 chmod +x /usr/local/bin/myvpn-agent &&
@@ -24,10 +21,12 @@ Description=MyVPN Agent
 [Service]
 ExecStart=/usr/local/bin/myvpn-agent
 Restart=no
-Environment=VPN_TYPE=${type}
-Environment=VPN_IPSEC_PSK=${accountPskKey}
-Environment=VPN_USER=${accountUser}
-Environment=VPN_PASSWORD=${accountPassword}
+Environment=VPN_TYPE=${params.connectionType}
+Environment=VPN_IPSEC_PSK=${params.accountPskKey}
+Environment=VPN_USER=${params.accountUsername}
+Environment=VPN_PASSWORD=${params.accountPassword}
+Environment=DNS_PRIMARY=${params.setting.dns.first}
+Environment=DNS_SECONDARY=${params.setting.dns.second}
 Environment=ENCRYPT_KEY=${this.aesKey}
 Environment=VPN_CLIENT_CONFIG_FILE=/tmp/myvpn-client-config
 
