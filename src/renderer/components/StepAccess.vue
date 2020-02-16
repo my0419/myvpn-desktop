@@ -5,7 +5,7 @@
         <div class="app-page selectable">
             <el-row style="text-align: right">
                 <el-button type="success" size="mini"  v-on:click="handleMainPage" icon="el-icon-arrow-left">{{ $t('Go Back') }}</el-button>
-                <el-button type="danger" size="mini" v-on:click="deleteServer" icon="el-icon-delete">{{ $t('Delete server') }}</el-button>
+                <el-button v-if="selectedProvider !== 'custom'" type="danger" size="mini" v-on:click="deleteServer" icon="el-icon-delete">{{ $t('Delete server') }}</el-button>
             </el-row>
 
             <el-tabs v-model="activeTab">
@@ -64,7 +64,7 @@
                         </el-row>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane :label="$t('My Server')" name="2">
+                <el-tab-pane :label="$t('My Server')" name="2" v-if="selectedProvider !== 'custom'">
                     <h2>{{ $t('Protocol') }}</h2>
                     <h3>SSH</h3>
 
@@ -168,6 +168,7 @@
       }
     },
     computed: mapState({
+      selectedProvider: state => state.provider.name,
       configuredSuccess: state => state.provider.configuredSuccess,
       connectionType: state => state.type.selected,
       serverName: state => state.server.name,

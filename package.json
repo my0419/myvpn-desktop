@@ -94,6 +94,7 @@
     "vue-i18n": "^8.14.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
+    "ssh2": "^0.8.7",
     "vuex-electron": "^1.0.0"
   },
   "devDependencies": {

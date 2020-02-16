@@ -1,6 +1,7 @@
 <template>
     <div>
         <h3 class="title">{{ $t('Setup SSH Connection') }}</h3>
+        <div class="notice"><i class="el-icon-warning"></i> {{ $t('Requires a clean Debian 9 server')}}</div>
         <el-form :inline="true">
             <el-form-item :label="$t('User')">
                 <el-input v-model="user" class="input-user" placeholder="root"></el-input>
@@ -28,6 +29,11 @@
 </template>
 
 <style scoped>
+    .notice {
+        color: #dd7b00;
+        padding-bottom: 5px;
+        font-weight: bold;
+    }
     .title {
         color: #6ea0e3;
     }
@@ -48,7 +54,7 @@
 <script>
   export default {
     mounted () {
-      this.handleChangeIp()
+      this.$store.state.provider.configuredSuccess = require('net').isIP(this.ip)
     },
     computed: {
       isPrivateKey: {
@@ -102,12 +108,10 @@
     },
     methods: {
       handleChangeIp () {
-        if (this.ip.length === 0 || !require('net').isIP(this.ip)) {
-          this.$message({message: this.$root.$t('IP field is not filled in correctly'), type: 'error'})
+        let configured = this.$store.state.provider.configuredSuccess = require('net').isIP(this.ip)
+        if (!configured) {
           this.ip = ''
-          this.$store.state.provider.configuredSuccess = false
-        } else {
-          this.$store.state.provider.configuredSuccess = true
+          this.$message({message: this.$root.$t('IP field is not filled in correctly'), type: 'error'})
         }
       }
     }

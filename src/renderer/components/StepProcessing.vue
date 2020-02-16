@@ -14,6 +14,7 @@
 <script>
   import { mapState } from 'vuex'
   import Preloader from './Preloader'
+  import { CRYPTOSERVERS_KEY } from '../../lib/providers'
 
   export default {
     components: {Preloader},
@@ -31,6 +32,7 @@
         let splitLog = log.split('\n').filter(v => v.length > 0)
         return splitLog[splitLog.length - 1]
       },
+      selectedProvider: state => state.provider.name || CRYPTOSERVERS_KEY,
       allowCancel: state => state.processing.allowCancel,
       configuredSuccess: state => state.provider.configuredSuccess,
       serverName: state => state.server.name,
@@ -52,41 +54,69 @@
     },
     methods: {
       create: function () {
-        this.log('Generate RSA public/private key pair')
-        this.$store.dispatch('generateKeypair')
-        this.$store.dispatch('generatePersonalAccess')
-        this.$store.dispatch('processing', {
-          client: this.$store.state.provider.client,
-          sshKey: this.$store.state.keypair.sshPublic,
-          privateKey: this.$store.state.keypair.private,
-          region: this.$store.state.region.value,
-          connectionType: this.$store.state.type.selected,
-          accountUsername: this.$store.state.account.username,
-          accountPassword: this.$store.state.account.password,
-          accountPskKey: this.$store.state.account.pskKey,
-          setting: this.$store.state.setting
-        })
-        this.$store.subscribe((mutation, state) => {
+
+        switch (this.selectedProvider) {
+          case 'custom': {
+            this.$store.dispatch('generatePersonalAccess')
+            this.$store.dispatch('processingSSH', {
+              sshIp: this.$store.state.server.ipv4,
+              sshPrivateKey: this.$store.state.server.sshPrivateKey,
+              sshPassword: this.$store.state.server.sshPassword,
+              sshPort: this.$store.state.server.sshPort,
+              sshUser: this.$store.state.server.sshUser,
+              connectionType: this.$store.state.type.selected,
+              accountUsername: this.$store.state.account.username,
+              accountPassword: this.$store.state.account.password,
+              accountPskKey: this.$store.state.account.pskKey,
+              setting: this.$store.state.setting
+            })
+
+            break
+          }
+          default: {
+            this.log('Generate RSA public/private key pair')
+            this.$store.dispatch('generateKeypair')
+            this.$store.dispatch('generatePersonalAccess')
+            this.$store.dispatch('processing', {
+              client: this.$store.state.provider.client,
+              sshKey: this.$store.state.keypair.sshPublic,
+              privateKey: this.$store.state.keypair.private,
+              region: this.$store.state.region.value,
+              connectionType: this.$store.state.type.selected,
+              accountUsername: this.$store.state.account.username,
+              accountPassword: this.$store.state.account.password,
+              accountPskKey: this.$store.state.account.pskKey,
+              setting: this.$store.state.setting
+            })
+          }
+        }
+
+        let unsubscribe = this.$store.subscribe((mutation, state) => {
           switch (mutation.type) {
             case 'PROCESSING_COMPLETE':
               this.$message({message: this.$root.$t('The server is successfully configured'), type: 'success'})
+              unsubscribe()
               this.$router.push({ name: 'access' })
               break
             case 'PROCESSING_CANCEL':
               this.$message({message: this.$root.$t('The process of building the VPN server is cancelled. If you have build problems, try changing the region.'), type: 'error', duration: 8000})
+              unsubscribe()
               this.$router.push({ name: 'main' })
               break
             case 'PROCESSING_ERROR':
               if (mutation.payload !== 'cancel') {
                 this.$message({dangerouslyUseHTMLString: true, message: `${this.$root.$t('A server configuration error has occurred.')}<br/>${mutation.payload}`, type: 'error', duration: 15000})
+                unsubscribe()
                 this.$router.push({ name: 'main' })
               }
               break
             case 'PROCESSING_FAILED_CONNECTION':
               this.lockedIp = this.serverIp
+              unsubscribe()
               break
           }
         })
+
       },
       log: function (text) {
         this.$store.dispatch('log', text)

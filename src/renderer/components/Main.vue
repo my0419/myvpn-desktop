@@ -38,7 +38,10 @@
           <FormTypes />
           <ModalAdvancedSettings />
           <div class="m-top">
-            <el-button type="primary" :disabled="!configuredSuccess" v-on:click="handleProcessing" icon="el-icon-magic-stick">{{ $t('Create a VPN server and get access') }}</el-button>
+            <el-button type="primary" :disabled="!configuredSuccess" v-on:click="handleProcessing" icon="el-icon-magic-stick">
+              <span v-if="selectedProvider !== 'custom'">{{ $t('Create a server and configure the VPN') }}</span>
+              <span v-else>{{ $t('Connect to the server and configure the VPN') }}</span>
+            </el-button>
           </div>
         </div>
       </el-container>

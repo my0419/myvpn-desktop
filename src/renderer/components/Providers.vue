@@ -38,6 +38,9 @@
   .providers {
     box-shadow: none !important;
   }
+  .el-tabs__item.is-disabled {
+    display: none;
+  }
   .el-tabs__item {
     height: 50px;
     padding: 0 10px !important;

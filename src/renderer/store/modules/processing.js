@@ -1,5 +1,7 @@
 import {ServerAgent} from "../../../lib/server/agent";
 import {sleep} from "../../../lib/urils";
+import {ProviderBase} from "../../../lib/providers/providerBase";
+import {Deployment} from '../../../lib/server/deployment'
 
 const state = {
   complete: false,
@@ -31,6 +33,78 @@ const mutations = {
 }
 
 const actions = {
+  async processingSSH ({ commit, dispatch, state }, params) {
+    const {
+      sshIp,
+      sshPrivateKey,
+      sshPassword,
+      sshPort,
+      sshUser,
+      connectionType,
+      accountUsername,
+      accountPassword,
+      accountPskKey,
+      setting
+    } = params
+
+    state.client = new ProviderBase({})
+    const startupBash = state.client.startupCommand({
+      connectionType,
+      accountUsername,
+      accountPassword,
+      accountPskKey,
+      setting
+    })
+    dispatch('log', 'Connecting to the server')
+    const deploy = new Deployment(sshIp, sshPort, sshUser, sshPassword, sshPrivateKey, startupBash)
+    let result = null
+    try {
+      await deploy.openConnection()
+      dispatch('log', 'Waiting for MyVPN Agent to start on port 8400')
+      await deploy.setup()
+      const agent = new ServerAgent(sshIp, state.client.aesKey)
+      while (result === null) {
+        result = await agent.getState().then(data => {
+          console.log('myvpn agent response:', data)
+          const status = data.status
+          if (typeof status !== 'object') {
+            dispatch('log', 'MyVPN Agent response could not be decrypted.')
+            return new Error('Failed to decrypt response')
+          }
+          if (data.time_running > 60 * 5) {
+            return new Error('Waiting time 300sec is exceeded')
+          }
+          switch (status.code) {
+            case 'error':
+              dispatch('log', 'Software installation is failure')
+              throw new Error(status.error_text || 'Unknown error')
+            case 'completed':
+              dispatch('log', 'Software installation is complete')
+              return status.client_config
+            case 'idle':
+              dispatch('log', 'Waiting for software setup to start on the server')
+              break
+            case 'setup':
+              dispatch('log', 'Waiting for software installation')
+              break
+          }
+          return null
+        }, err => {
+          console.log('myvpn agent http failed:', err)
+          commit('PROCESSING_ERROR', 'Failed to connect to MyVPN Agent, port 8400 is not available.')
+          return err
+        })
+        if (result === null) {
+          await sleep(5000)
+        }
+      }
+      dispatch('setClientConfig', result)
+      commit('PROCESSING_COMPLETE')
+    } catch (e) {
+      commit('PROCESSING_ERROR', e.message)
+    }
+
+  },
   async processing ({ commit, dispatch, state }, params) {
     const {
       client,

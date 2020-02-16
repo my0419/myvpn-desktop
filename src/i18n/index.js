@@ -10,7 +10,8 @@ export default {
     'Successful connection to the account': 'Вы верно указали данные, ваш аккаут подключен!',
     'Select a server region': 'Выберите регион сервера',
     'Select the connection protocol': 'Выберите протокол подключения',
-    'Create a VPN server and get access': 'Создать VPN сервер и получить доступы',
+    'Create a server and configure the VPN': 'Создать сервер и настроить VPN',
+    'Connect to the server and configure the VPN': 'Подключиться к серверу и настроить VPN',
     'Parameters': 'Параметры',
     'The account is successfully connected': 'Аккаунт успешно подключен',
     'Server configuration': 'Настройка сервера',
@@ -114,6 +115,8 @@ export default {
     'Port': 'Порт',
     'Private Key Authorization': 'Авторизация по приватному ключу',
     'Paste in the server private key': 'Вставьте приватный ключ',
-    'IP field is not filled in correctly': 'Неверно заполнено поле IP'
+    'IP field is not filled in correctly': 'Неверно заполнено поле IP',
+    'Waiting for MyVPN Agent to start on port 8400': 'Ожидание запуска MyVPN Agent на порту 8400',
+    'Requires a clean Debian 9 server': 'Требуется чистый Debian 9 сервер'
   }
 }
