@@ -1,38 +1,53 @@
 <template>
   <el-tabs :value="selectedProvider" @tab-click="handleChangeProvider" class="providers" type="border-card">
-    <el-tab-pane v-for="provider in providers" :key="provider.name" :name="provider.name" :disabled="apikey.length > 0 && activeProvider() !== provider.name">
+    <el-tab-pane v-for="provider in providers" :key="provider.name" type="card" :name="provider.name" :disabled="apikey.length > 0 && activeProvider() !== provider.name">
       <span slot="label">
-        <img class="provider-choose-logo" :src="staticPath + provider.logo" />
+        <img class="provider-choose-logo" :src="staticPath + provider.logo" v-if="provider.logo" />
+        <span class="provider-choose-title" v-if="provider.name === 'custom'">{{ $t(provider.title) }}</span>
       </span>
-      <ProviderAccount
-              v-if="activeProvider() === provider.name"
-              :provider-key="provider.name"
-              :provider-name="provider.title"
-              :provider-website="provider.website"
-              :faq-link="provider.faq"
-              :oauthConfig="provider.oauthConfig || null"
-              :oauth-window-height="(provider.oauthWindow) ? provider.oauthWindow.height : null"
-              :oauth-window-width="(provider.oauthWindow) ? provider.oauthWindow.width : null"
-              :via-key="provider.viaKey || false"
-      />
+      <div v-if="activeProvider() === provider.name">
+        <ProviderSelf v-if="provider.name === 'custom'" />
+        <ProviderAccount v-else
+                :provider-key="provider.name"
+                :provider-name="provider.title"
+                :provider-website="provider.website"
+                :faq-link="provider.faq"
+                :oauthConfig="provider.oauthConfig || null"
+                :oauth-window-height="(provider.oauthWindow) ? provider.oauthWindow.height : null"
+                :oauth-window-width="(provider.oauthWindow) ? provider.oauthWindow.width : null"
+                :via-key="provider.viaKey || false"
+        />
+      </div>
     </el-tab-pane>
   </el-tabs>
 </template>
 
 <style scoped>
-  .providers .el-tabs__item {
-    height: 50px;
+  .providers .provider-choose-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #3f3f3f;
   }
   .providers .provider-choose-logo {
-    height: 24px;
+    height: 23px;
     position: relative;
     top: 6px;
   }
 </style>
-
 <style>
-  .el-tabs__item.is-disabled {
-    display: none;
+  .providers {
+    box-shadow: none !important;
+  }
+  .el-tabs__item {
+    height: 50px;
+    padding: 0 10px !important;
+    border-right: 1px solid #ddd !important;
+  }
+  .el-tabs__item:last-child {
+    border-right: none !important;
+  }
+  .el-tabs__nav {
+    height: 42px;
   }
 </style>
 
@@ -41,9 +56,10 @@
   import { CRYPTOSERVERS_KEY } from '../../lib/providers'
   import ProviderAccount from './ProviderAccount'
   import providers from '../../config/providers'
+  import ProviderSelf from "./ProviderSelf";
 
   export default {
-    components: {ProviderAccount},
+    components: {ProviderSelf, ProviderAccount},
     computed: mapState({
       selectedProvider: state => state.provider.name || CRYPTOSERVERS_KEY,
       apikey: state => state.provider.config.apikey || '',

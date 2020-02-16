@@ -3,7 +3,11 @@ const state = {
   slug: null,
   ipv4: null,
   password: null,
-  aesKey: null
+  aesKey: null,
+  sshUser: 'root',
+  sshPort: 22,
+  sshPassword: '',
+  sshPrivateKey: null
 }
 
 const mutations = {}

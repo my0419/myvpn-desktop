@@ -6,7 +6,7 @@
           <el-menu-item  @click="handleGoToWebsite" index="0">
             <img class="menu-icon-logo" :src="staticPath + '/img/logo-small.png'" />
           </el-menu-item>
-          <el-menu-item @click="handleDroplets" index="1" :disabled="!configuredSuccess || dropletsLoading">
+          <el-menu-item @click="handleDroplets" index="1" :disabled="selectedProvider === 'custom' || !configuredSuccess || dropletsLoading">
             <el-badge class="menu-badge" :value="dropletsCount" type="primary" v-if="dropletsExists">
                 <img class="menu-icon" :src="staticPath + '/img/icons/server.svg'" />
                 <span slot="title">{{ $t('Servers') }}</span>
@@ -30,11 +30,11 @@
       </el-aside>
       <el-container>
         <div class="app-page">
-          <h3>1. {{ $t('Choose a hosting provider and connect your account') }}</h3>
+          <h3>{{ $t('Choose a hosting provider and connect your account') }}</h3>
           <Providers />
-          <h3>2. {{ $t('Select a server region')}}</h3>
-          <FormRegions />
-          <h3>3. {{ $t('Select the connection protocol') }}</h3>
+          <h3 v-if="selectedProvider !== 'custom'">{{ $t('Select a server region')}}</h3>
+          <FormRegions v-if="selectedProvider !== 'custom'" />
+          <h3>{{ $t('Select the connection protocol') }}</h3>
           <FormTypes />
           <ModalAdvancedSettings />
           <div class="m-top">
@@ -54,6 +54,7 @@
   import Providers from './Providers'
   import ModalAdvancedSettings from './ModalAdvancedSettings'
   import { redirectTo, localStorageService } from '../../lib/utils'
+  import { CRYPTOSERVERS_KEY } from '../../lib/providers'
 
   const isBrowser = process.browser
   let electron = null
@@ -129,6 +130,7 @@
   export default {
     components: {Providers, Copied, FormTypes, FormRegions, ModalAdvancedSettings},
     computed: mapState({
+      selectedProvider: state => state.provider.name || CRYPTOSERVERS_KEY,
       configuredSuccess: state => state.provider.configuredSuccess,
       dropletsExists: state => state.droplet.isEmpty === false,
       dropletsCount: state => state.droplet.list.length,

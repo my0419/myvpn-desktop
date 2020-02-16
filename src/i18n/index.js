@@ -109,5 +109,11 @@ export default {
     'Invalid IP address specified': 'Указан некорректный IP адрес',
     'Apply': 'Применить',
     'We recommend that you additionally set the DNS in your system.': 'Рекомендуем дополнительно задать DNS в своей системе.',
+    'Self Server': 'Свой сервер',
+    'Setup SSH Connection': 'Настройка SSH подключения',
+    'Port': 'Порт',
+    'Private Key Authorization': 'Авторизация по приватному ключу',
+    'Paste in the server private key': 'Вставьте приватный ключ',
+    'IP field is not filled in correctly': 'Неверно заполнено поле IP'
   }
 }

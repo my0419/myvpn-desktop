@@ -30,6 +30,10 @@ const providers = {
     website: 'https://www.hetzner.com/cloud',
     faq: 'https://myvpn.run/faq/setup/hetznerCloud',
     viaKey: true
+  }, {
+    name: 'custom',
+    title: 'Self Server',
+    logo: '/img/providers/custom.svg'
   }],
   web: [{
     name: 'cryptoservers',
