@@ -43,9 +43,6 @@
     .input-port {
         width: 100px;
     }
-</style>
-
-<style>
     .el-form-item {
         margin-bottom: 0px;
     }

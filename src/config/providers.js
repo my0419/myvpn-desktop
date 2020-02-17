@@ -32,7 +32,7 @@ const providers = {
     viaKey: true
   }, {
     name: 'custom',
-    title: 'Self Server',
+    title: 'Other Server',
     logo: '/img/providers/custom.svg'
   }],
   web: [{

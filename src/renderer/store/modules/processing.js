@@ -60,7 +60,7 @@ const actions = {
     let result = null
     try {
       await deploy.openConnection()
-      dispatch('log', 'Waiting for MyVPN Agent to start on port 8400')
+      dispatch('log', 'Starting MyVPN Agent. Make sure that port 8400 is open on your server.')
       await deploy.setup()
       const agent = new ServerAgent(sshIp, state.client.aesKey)
       while (result === null) {

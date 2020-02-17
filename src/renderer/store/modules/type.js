@@ -15,6 +15,10 @@ const state = {
     {
       key: 'wireguard',
       title: 'WireGuard'
+    },
+    {
+      key: 'shadowsocks',
+      title: 'Shadowsocks'
     }
   ],
   selected: 'l2tp'

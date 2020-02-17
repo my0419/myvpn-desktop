@@ -15,7 +15,12 @@ export class Deployment {
     } else {
       this.connectionConfig.password = sshPassword
     }
-    this.bash = bash
+    this.bash = `
+        #!/bin/sh
+        echo '${bash} && exit 0' > /tmp/setup-vpn.sh &&
+        sudo chmod +x /tmp/setup-vpn.sh &&
+        sudo /tmp/setup-vpn.sh && exit 24
+    `
     this.connectionOpen = false
     this.setupComplete = false
   }
@@ -36,7 +41,7 @@ export class Deployment {
     if (errorStr !== null) {
       throw new Error(errorStr)
     }
-    console.warn(`connected ${this.ipv4}`)
+    console.warn(`connected ${this.connectionConfig}`)
   }
 
   async setup () {
@@ -47,14 +52,18 @@ export class Deployment {
     let stderrText = ''
     await this.sshConn.exec(this.bash, (err, stream) => {
       stream.on('close', (code, signal) => {
-        this.setupComplete = (code === 0)
-        if (this.setupComplete === false) {
+        this.setupComplete = (code === 0 || code === 24)
+        if (this.setupComplete === false && error === null) {
           // https://www.secureblackbox.com/kb/help/ref_err_ssherrorcodes.html
           error = new Error(`Failed install software. Connection closed. Code: ${code}, Signal: ${signal}, STDERR: ${stderrText} `)
           error.code = code
         }
       })
       stream.on('data', (data) => {
+        if (data.toString('utf8').indexOf('Please login as the user') !== -1) {
+          error = new Error(data.toString('utf8'))
+          this.closeConnection()
+        }
         console.log('STDOUT: ', data.toString('utf8'))
       }).stderr.on('data', (data) => {
         stderrText = data.toString('utf8')

@@ -112,7 +112,6 @@
               break
             case 'PROCESSING_FAILED_CONNECTION':
               this.lockedIp = this.serverIp
-              unsubscribe()
               break
           }
         })

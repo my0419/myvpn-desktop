@@ -8,11 +8,12 @@ export class ServerAgent {
 
   constructor (serverIp, aesKey) {
     this.aesKey = aesKey
-    this.agentUrl = `http://${serverIp}:${AGENT_HTTP_PORT}`
+    this.serverIp = serverIp
   }
 
   async getState() {
-    const client = axios.create({ baseURL: this.agentUrl, timeout: 1000 });
+    const agentUrl = `http://${this.serverIp}:${AGENT_HTTP_PORT}`
+    const client = axios.create({ baseURL: agentUrl, timeout: 1000 });
     let retries = 30
     axiosRetry(client, {
       retries,

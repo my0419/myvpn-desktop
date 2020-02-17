@@ -29,7 +29,7 @@
     color: #3f3f3f;
   }
   .providers .provider-choose-logo {
-    height: 23px;
+    height: 21px;
     position: relative;
     top: 6px;
   }

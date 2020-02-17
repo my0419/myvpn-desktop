@@ -63,6 +63,32 @@
                             </el-col>
                         </el-row>
                     </div>
+                    <div v-if="connectionType === 'shadowsocks'">
+                        <el-row :gutter="20">
+                            <el-col :span="12">
+                                <h2>{{ $t('Type of connection') }}</h2>
+                                <h3>Shadowsocks</h3>
+                                <h2>{{ $t('IP address') }}</h2>
+                                <h3><Copied :text="serverIp" /></h3>
+                                <h2>{{ $t('Password') }}</h2>
+                                <h3><Copied :text="accountPassword" /></h3>
+                                <h2>{{ $t('Server Port') }}</h2>
+                                <h3><Copied text="8388" /></h3>
+                                <h2>{{ $t('Local Port') }}</h2>
+                                <h3><Copied text="1080" /></h3>
+                                <h2>{{ $t('Encryption method') }}</h2>
+                                <h3><Copied text="aes-256-cfb" /></h3>
+                            </el-col>
+                            <el-col :span="12">
+                                <h2>{{ $t('Connect via QR Code') }}</h2>
+                                <qrcode-vue :value="shadowsocksConnect" :size="200" :level="M"></qrcode-vue>
+                                <h2>{{ $t('Config') }}</h2>
+                                <el-input :value="shadowsocksConnect" :readonly="true"/>
+                                <Copied :text="shadowsocksConnect" :hiddenText="true" />
+                                <hr />
+                            </el-col>
+                        </el-row>
+                    </div>
                 </el-tab-pane>
                 <el-tab-pane :label="$t('My Server')" name="2" v-if="selectedProvider !== 'custom'">
                     <h2>{{ $t('Protocol') }}</h2>
@@ -181,7 +207,10 @@
       accountUsername: state => state.account.username,
       accountPassword: state => state.account.password,
       accountPskKey: state => state.account.pskKey,
-      clientConfig: state => state.account.clientConfig
+      clientConfig: state => state.account.clientConfig,
+      shadowsocksConnect: state => {
+        return `ss://${btoa(`aes-256-cfb:${state.account.password}@${state.server.ipv4}:8388`)}`
+      }
     }),
     mounted: function () {
       if (!this.configuredSuccess) {
@@ -201,7 +230,7 @@
         this.saveFile(`myvpn-${this.serverName}.ovpn`, this.clientConfig)
       },
       saveWireguard: function () {
-        this.saveFile(`wireguard-${this.serverName}.conf`, this.clientConfig)
+        this.saveFile(`wireguard.conf`, this.clientConfig)
       },
       savePrivateKey: function () {
         this.saveFile(`myvpn-${this.serverName}-private.key`, this.keypairPrivate)
