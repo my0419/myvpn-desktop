@@ -67,6 +67,9 @@ const state = {
     first: dnsList[0].first,
     second: dnsList[0].second,
     list: dnsList
+  },
+  shadowsocks: {
+    v2rayPlugin: false
   }
 }
 

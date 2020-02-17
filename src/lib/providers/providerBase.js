@@ -27,6 +27,7 @@ Environment=VPN_USER=${params.accountUsername}
 Environment=VPN_PASSWORD=${params.accountPassword}
 Environment=DNS_PRIMARY=${params.setting.dns.first}
 Environment=DNS_SECONDARY=${params.setting.dns.second}
+Environment=SHADOWSOCKS_PLUGIN_V2RAY_ENABLE=${params.setting.shadowsocks.v2rayPlugin ? '1' : '0'}
 Environment=ENCRYPT_KEY=${this.aesKey}
 Environment=VPN_CLIENT_CONFIG_FILE=/tmp/myvpn-client-config
 

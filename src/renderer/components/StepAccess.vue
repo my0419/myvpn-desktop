@@ -75,14 +75,21 @@
                                 <h2>{{ $t('Local Port') }}</h2>
                                 <h3><Copied text="1080" /></h3>
                                 <h2>{{ $t('Encryption method') }}</h2>
-                                <h3><Copied text="aes-256-cfb" /></h3>
+                                <h3><Copied text="chacha20-ietf-poly1305" /></h3>
                             </el-col>
                             <el-col :span="12">
                                 <h2>{{ $t('Connect via QR Code') }}</h2>
                                 <qrcode-vue :value="shadowsocksConnect" :size="200" :level="M"></qrcode-vue>
                                 <h2>{{ $t('Config') }}</h2>
+                                <el-button type="primary" v-on:click="saveShadowsocks" icon="el-icon-tickets">{{ $t('Save Shadowsocks Configuration') }}</el-button>
+                                <div class="copied-section">
+                                    <Copied :text="clientConfig" :hiddenText="true" />
+                                </div>
+                                <h2>{{ $t('Protocol Connection') }}</h2>
                                 <el-input :value="shadowsocksConnect" :readonly="true"/>
-                                <Copied :text="shadowsocksConnect" :hiddenText="true" />
+                                <div class="copied-section">
+                                    <Copied :text="shadowsocksConnect" :hiddenText="true" />
+                                </div>
                                 <hr />
                             </el-col>
                         </el-row>
@@ -131,6 +138,12 @@
         </div>
     </div>
 </template>
+
+<style scoped>
+    .copied-section {
+        margin-top: 10px;
+    }
+</style>
 
 <script>
   import { mapState } from 'vuex'
@@ -207,7 +220,7 @@
       accountPskKey: state => state.account.pskKey,
       clientConfig: state => state.account.clientConfig,
       shadowsocksConnect: state => {
-        return `ss://${btoa(`aes-256-cfb:${state.account.password}@${state.server.ipv4}:8388`)}`
+        return `ss://${btoa(`chacha20-ietf-poly1305:${state.account.password}@${state.server.ipv4}:8388`)}`
       }
     }),
     mounted: function () {
@@ -229,6 +242,9 @@
       },
       saveWireguard: function () {
         this.saveFile(`wireguard.conf`, this.clientConfig)
+      },
+      saveShadowsocks: function () {
+        this.saveFile(`shadowsocks-client.json`, this.clientConfig)
       },
       savePrivateKey: function () {
         this.saveFile(`myvpn-${this.serverName}-private.key`, this.keypairPrivate)

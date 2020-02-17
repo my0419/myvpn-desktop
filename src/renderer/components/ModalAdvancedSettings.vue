@@ -7,6 +7,11 @@
                 :close-on-press-escape="false"
                 :close-on-click-modal="false"
                 width="500px">
+            <el-form v-if="protocol === 'shadowsocks'" ref="form" label-width="120px">
+                <h3>Shadowsocks</h3>
+                <el-checkbox v-model="shadowsocksV2RayPlugin">{{$t('Enable V2Ray plugin')}}</el-checkbox>
+            </el-form>
+            <h3>DNS</h3>
             <el-form ref="form" label-width="120px">
                 <el-form-item label="dns-list">
                     <span slot="label"></span>
@@ -50,8 +55,7 @@
             </el-form>
         </el-dialog>
 
-
-        <a href="#" class="link-padding" @click="modalOpen = true"><i class="el-icon-setting"></i> {{ $t('Advanced Settings') }} (DNS)</a>
+        <a href="#" class="link-padding" @click="modalOpen = true"><i class="el-icon-setting"></i> {{ $t('Advanced Settings') }} (DNS<span v-if="protocol === 'shadowsocks'">, V2Ray Plugin</span>)</a>
     </div>
 </template>
 
@@ -81,6 +85,11 @@
       }
     },
     computed: {
+      protocol: {
+        get () {
+          return this.$store.state.type.selected
+        }
+      },
       dnsList: {
         get () {
           return this.$store.state.setting.dns.list
@@ -100,6 +109,14 @@
         },
         set (value) {
           this.$store.dispatch('setDNSSecond', value)
+        }
+      },
+      shadowsocksV2RayPlugin: {
+        get () {
+          return this.$store.state.setting.shadowsocks.v2rayPlugin
+        },
+        set (value) {
+          this.$store.state.setting.shadowsocks.v2rayPlugin = value
         }
       },
     },
@@ -123,6 +140,7 @@
         this.modalOpen = false
         this.invalidDNS = false
         this.selectedDNS = 0
+        this.shadowsocksV2RayPlugin = false
         this.$store.dispatch('resetDNS')
       },
       handleLinkTo (url) {

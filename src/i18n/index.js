@@ -121,6 +121,9 @@ export default {
     'Server Port': 'Порт сервера',
     'Local Port': 'Порт локальный',
     'Encryption method': 'Метод шифрования',
-    'Config': 'Конфигурация'
+    'Config': 'Конфигурация',
+    'Enable V2Ray plugin': 'Включить плагин V2Ray',
+    'Save Shadowsocks Configuration': 'Сохранить конфигурацию Shadowsocks',
+    'Protocol Connection': 'Подключение по протоколу'
   }
 }
