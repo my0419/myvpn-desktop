@@ -10,6 +10,7 @@ Open source desktop application for the personal VPN server.
 * VueJS
 * [ElementUI](https://element.eleme.io/)
 * [MyVPN Agent](https://github.com/my0419/myvpn-agent)
+* [ssh2](https://github.com/mscdex/ssh2)
 
 ### Providers
 
@@ -25,6 +26,7 @@ Open source desktop application for the personal VPN server.
 * PPTP
 * OpenVPN
 * [WireGuard](https://www.wireguard.com/)
+* Shadowsocks (with optional V2Ray Plugin)
 
 ### Languages
 
