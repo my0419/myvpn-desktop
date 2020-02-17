@@ -18,6 +18,7 @@ Open source desktop application for the personal VPN server.
 * [DigitalOcean](https://www.digitalocean.com/)
 * [Linode](https://linode.com/)
 * [Hetzner Cloud](https://www.hetzner.com/cloud)
+* Other providers (Using SSH protocol)
 
 
 ### VPN protocols
