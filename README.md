@@ -3,6 +3,7 @@
 Open source desktop application for the personal VPN server.
 
 ![Screenshot](preview.png)
+![Screenshot](preview2.png)
 
 ### Stack
 
