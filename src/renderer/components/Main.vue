@@ -95,39 +95,8 @@
     }
   }
 
-  function openUpdateDialog(lastVersion, currentVersion) {
-    const message = `${this.$root.$t('Your version')} v${currentVersion}, ${this.$root.$t('latest version')} <strong>v${lastVersion}</strong>`
-    const options = {
-      title: this.$root.$t('There is a new version available!'),
-      dangerouslyUseHTMLString: true,
-      confirmButtonText: this.$root.$t('Download the latest version'),
-      cancelButtonText: this.$root.$t('Continue'),
-      type: 'warning'
-    }
-    return this.$confirm(message, 'Warning', options)
-  }
-
   function renderMessage(message, type, options) {
     return this.$message({message: this.$root.$t(message), type, ...options})
-  }
-
-  function checkUpdateApp() {
-    require('axios').get('https://myvpn.run/api/v1/application')
-      .then(res => {
-        const lastVersion = res.data.desktop.latestVersion
-        const currentVersion = electron.remote.app.getVersion()
-        if (lastVersion !== currentVersion) {
-          openUpdateDialog.call(this, lastVersion, currentVersion)
-            .then(_ => {
-              redirectToLinkUpdate()
-              closeApp()
-            })            
-            .catch(_ => this.renderMessage('We recommend that you do not ignore updates.', 'info'))
-        }
-      })
-      .catch(error => {        
-        console.log('Skip application update check.')
-      });
   }
 
   export default {
@@ -147,7 +116,31 @@
       }
     },
     mounted () {
-      checkUpdateApp()
+
+      require('axios').get('https://api.github.com/repos/my0419/myvpn-desktop/releases/latest')
+        .then(res => {
+          const lastVersion = res.data.name
+          const currentVersion = electron.remote.app.getVersion()
+          if (lastVersion !== currentVersion) {
+            const message = `${this.$root.$t('Your version')} v${currentVersion}, ${this.$root.$t('latest version')} <strong>v${lastVersion}</strong>`
+            const options = {
+              title: this.$root.$t('There is a new version available!'),
+              dangerouslyUseHTMLString: true,
+              confirmButtonText: this.$root.$t('Download the latest version'),
+              cancelButtonText: this.$root.$t('Continue'),
+              type: 'warning'
+            }
+            this.$confirm(message, 'Warning', options).then(_ => {
+              redirectToLinkUpdate()
+              closeApp()
+            })
+              .catch(_ => this.renderMessage('We recommend that you do not ignore updates.', 'info'))
+          }
+        })
+        .catch(error => {
+          console.log('Skip application update check.', error)
+        });
+
       if (isBrowser) {
         const access_token = initProviderParams()
         const provider_key = getProviderKey()
