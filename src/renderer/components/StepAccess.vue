@@ -66,8 +66,6 @@
                     <div v-if="connectionType === 'shadowsocks'">
                         <el-row :gutter="20">
                             <el-col :span="12">
-                                <h2>{{ $t('Type of connection') }}</h2>
-                                <h3>Shadowsocks</h3>
                                 <h2>{{ $t('IP address') }}</h2>
                                 <h3><Copied :text="serverIp" /></h3>
                                 <h2>{{ $t('Password') }}</h2>
