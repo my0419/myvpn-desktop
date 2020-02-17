@@ -95,10 +95,6 @@
     }
   }
 
-  function renderMessage(message, type, options) {
-    return this.$message({message: this.$root.$t(message), type, ...options})
-  }
-
   export default {
     components: {Providers, Copied, FormTypes, FormRegions, ModalAdvancedSettings},
     computed: mapState({
@@ -134,7 +130,9 @@
               redirectToLinkUpdate()
               closeApp()
             })
-              .catch(_ => this.renderMessage('We recommend that you do not ignore updates.', 'info'))
+              .catch(_ => {
+                this.$message({message: this.$root.$t('We recommend that you do not ignore updates.'), type: 'info'})
+              })
           }
         })
         .catch(error => {
@@ -150,7 +148,7 @@
             this.handleProcessing()
           } catch (error) {
             console.log(error.message)
-            this.renderMessage('Authorization Error', 'error')
+            this.$message({message: this.$root.$t('Authorization Error'), type: 'error'})
           }
         }
       }      
