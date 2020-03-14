@@ -124,6 +124,11 @@ export default {
     'Config': 'Конфигурация',
     'Enable V2Ray plugin': 'Включить плагин V2Ray',
     'Save Shadowsocks Configuration': 'Сохранить конфигурацию Shadowsocks',
-    'Protocol Connection': 'Подключение по протоколу'
+    'Protocol Connection': 'Подключение по протоколу',
+    'Copy all accesses': 'Скопировать все доступы',
+    'Save all accesses': 'Сохранить все доступы',
+    'To connect to the server via SSH, save a private key named «myvpn.key» and enter the command below': 'Для подключения к серверу по SSH сохраните приватный ключ с именем «myvpn.key» и введите команду ниже',
+    'Command to connect': 'Команда для подключения',
+    'Save QR Code': 'Сохранить QR код'
   }
 }

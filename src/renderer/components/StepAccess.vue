@@ -59,6 +59,7 @@
                             <el-col :span="12">
                                 <h2>{{ $t('Connect via QR Code') }}</h2>
                                 <qrcode-vue :value="clientConfig" :size="300" :level="M"></qrcode-vue>
+                                <el-button type="primary" icon="el-icon-download" size="small" v-on:click="saveQrCode">{{ $t('Save QR Code') }}</el-button>
                                 <hr />
                             </el-col>
                         </el-row>
@@ -80,6 +81,7 @@
                             <el-col :span="12">
                                 <h2>{{ $t('Connect via QR Code') }}</h2>
                                 <qrcode-vue :value="shadowsocksConnect" :size="200" :level="M"></qrcode-vue>
+                                <el-button type="primary" icon="el-icon-download" size="small" v-on:click="saveQrCode">{{ $t('Save QR Code') }}</el-button>
                                 <h2>{{ $t('Config') }}</h2>
                                 <el-button type="primary" v-on:click="saveShadowsocks" icon="el-icon-tickets">{{ $t('Save Shadowsocks Configuration') }}</el-button>
                                 <div class="copied-section">
@@ -96,9 +98,10 @@
                     </div>
                 </el-tab-pane>
                 <el-tab-pane :label="$t('My Server')" name="2" v-if="selectedProvider !== 'custom'">
-                    <h2>{{ $t('Protocol') }}</h2>
-                    <h3>SSH</h3>
-
+                    <el-button-group>
+                        <el-button type="primary" icon="el-icon-document-copy" v-clipboard="serverAccess" v-clipboard:success="clipboardSuccessHandler">{{ $t('Copy all accesses') }}</el-button>
+                        <el-button type="primary" icon="el-icon-download" v-on:click="saveServerAccess">{{ $t('Save all accesses') }}</el-button>
+                    </el-button-group>
                     <h2>{{ $t('IP address') }}</h2>
                     <h3><Copied :text="serverIp" /></h3>
 
@@ -109,6 +112,18 @@
                         <h2>{{ $t('Root password') }}</h2>
                         <h3><Copied :text="serverPassword" /></h3>
                     </div>
+
+                    <el-alert :title="$t('To connect to the server via SSH, save a private key named «myvpn.key» and enter the command below')" type="info"></el-alert>
+
+                    <h2>{{ $t('Private Key') }}</h2>
+                    <el-input  type="textarea" :value="keypairPrivate" :readonly="true"/>
+                    <Copied :text="keypairPrivate" :hiddenText="true" />
+                    <div class="m-top">
+                        <el-button type="primary" v-on:click="savePrivateKey" icon="el-icon-tickets">{{ $t('Save Private Key') }}</el-button>
+                    </div>
+                    <h2>{{ $t('Command to connect') }}</h2>
+                    <el-input :value="`chmod 600 myvpn.key && ssh -i myvpn.key root@${serverIp}`" :readonly="true"/>
+                    <Copied :text="`chmod 600 myvpn.key && ssh -i myvpn.key root@${serverIp}`" :hiddenText="true" />
 
                     <h2>{{ $t('RSA Key') }}</h2>
                     <el-input  type="textarea" :value="keypairSshPublic" :readonly="true"/>
@@ -124,15 +139,6 @@
                         <el-button type="primary" v-on:click="savePublicKey" icon="el-icon-tickets">{{ $t('Save Public Key') }}</el-button>
                     </div>
 
-                    <h2>{{ $t('Private Key') }}</h2>
-                    <el-input  type="textarea" :value="keypairPrivate" :readonly="true"/>
-                    <Copied :text="keypairPrivate" :hiddenText="true" />
-                    <div class="m-top">
-                        <el-button type="primary" v-on:click="savePrivateKey" icon="el-icon-tickets">{{ $t('Save Private Key') }}</el-button>
-                    </div>
-                    <h2>{{ $t('Console') }}</h2>
-                    <el-input :value="`chmod 600 myvpn-${serverName}-private.key && ssh -i myvpn-${serverName}-private.key root@${serverIp}`" :readonly="true"/>
-                    <Copied :text="`chmod 600 myvpn-${serverName}-private.key && ssh -i myvpn-${serverName}-private.key root@${serverIp}`" :hiddenText="true" />
                 </el-tab-pane>
             </el-tabs>
         </div>
@@ -191,7 +197,7 @@
       }
     } else {
       const savePath = electron.remote.dialog.showSaveDialog({defaultPath: filename})
-      fs.writeFile(savePath, fileData, (err) => {
+      fs.writeFile(savePath, fileData, 'binary', (err) => {
         err !== null ? displayErrorMessage.call(this, err) : displaySuccessfulMessage.call(this)
       })
     }
@@ -221,7 +227,22 @@
       clientConfig: state => state.account.clientConfig,
       shadowsocksConnect: state => {
         return `ss://${btoa(`chacha20-ietf-poly1305:${state.account.password}@${state.server.ipv4}:8388`)}`
-      }
+      },
+      serverAccess: state => `Server Name: ${state.server.name}
+IP: ${state.server.ipv4}
+Username: root
+
+Private Key:
+${state.keypair.private}
+
+RSA Key:
+${state.keypair.sshPublic}
+
+Public Key:
+${state.keypair.public}
+
+Command:
+ssh -i myvpn.key root@${state.server.ipv4}`
     }),
     mounted: function () {
       if (!this.configuredSuccess) {
@@ -229,6 +250,9 @@
       }
     },
     methods: {
+      clipboardSuccessHandler ({ value, event }) {
+        this.$message({message: this.$root.$t('Copied!'), type: 'success', duration: 800})
+      },
       handleMainPage: function () {
         this.$router.push({ name: 'main' })
       },
@@ -241,21 +265,34 @@
         this.saveFile(`myvpn-${this.serverName}.ovpn`, this.clientConfig)
       },
       saveWireguard: function () {
-        this.saveFile(`wireguard.conf`, this.clientConfig)
+        this.saveFile('wireguard.conf', this.clientConfig)
       },
       saveShadowsocks: function () {
-        this.saveFile(`shadowsocks-client.json`, this.clientConfig)
+        this.saveFile('shadowsocks-client.json', this.clientConfig)
       },
       savePrivateKey: function () {
-        this.saveFile(`myvpn-${this.serverName}-private.key`, this.keypairPrivate)
+        this.saveFile('myvpn.key', this.keypairPrivate)
       },
       saveRsaKey: function () {
-        this.saveFile(`myvpn-${this.serverName}-rsa.key`, this.keypairSshPublic)
+        this.saveFile('myvpn-rsa.key', this.keypairSshPublic)
       },
       savePublicKey: function () {
-        this.saveFile(`myvpn-${this.serverName}-public.key`, this.keypairPublic)
+        this.saveFile('myvpn-public.key', this.keypairPublic)
       },
-      saveFile: saveFileHandler
+      saveServerAccess: function () {
+        this.saveFile('myvpn-server.txt', this.serverAccess)
+      },
+      saveFile: saveFileHandler,
+      saveQrCode: function () {
+        const qrCodeImage = document.getElementsByTagName('canvas')[0]
+        qrCodeImage.toBlob((blob) => {
+          let reader = new FileReader()
+          reader.onload = () => {
+            this.saveFile('myvpn-qrcode.png', reader.result)
+          }
+          reader.readAsBinaryString(blob);
+        })
+      }
     }
   }
 </script>
