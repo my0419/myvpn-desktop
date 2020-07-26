@@ -14,13 +14,14 @@
                     <el-card class="box-card m-top" v-bind:style="{ opacity: deletedDroplets.indexOf(droplet.id) === -1 ? 1 : 0.3 }">
                         <div slot="header" class="clearfix">
                             <strong>{{ droplet.name }}, {{ droplet.image.distribution }} {{ droplet.image.name }}</strong>
-                            <el-button v-if="droplet.locked === false && deletedDroplets.indexOf(droplet.id) === -1" @click="() => handleDelete(droplet)" style="float: right; padding: 3px 0;color: red;" type="text">{{ $t('Delete') }}</el-button>
                         </div>
                         <div class="text item">
                             <h4>{{ $t('IP')}}: <strong v-if="droplet.networks.v4.length > 0">{{ droplet.networks.v4[0].ip_address }}</strong><strong v-else>N/A</strong></h4>
+                            <h4>{{ $t('Type')}}: <strong>{{ droplet.type || 'N/A' }}</strong></h4>
                             <h4>{{ $t('Status')}}: <strong>{{ droplet.status }}</strong></h4>
                             <h4>{{ $t('Region')}}: <strong>{{ droplet.region.name }}</strong></h4>
                             <h4>{{ $t('Created')}}: <strong>{{ formattedDaysAgo(droplet.created_at) }}</strong></h4>
+                            <el-button class="delete-button" v-if="droplet.locked === false && deletedDroplets.indexOf(droplet.id) === -1" @click="() => handleDelete(droplet)" type="text">{{ $t('Delete') }}</el-button>
                         </div>
                     </el-card>
                 </el-col>
@@ -29,6 +30,18 @@
 
     </div>
 </template>
+
+<style scoped>
+    h4 {
+        margin: 4px 0;
+    }
+    .delete-button {
+        margin-top: 10px;
+        color: #d4682c;
+        padding: 7px;
+        font-size: 0.7rem;
+    }
+</style>
 
 <script>
   import { mapState } from 'vuex'

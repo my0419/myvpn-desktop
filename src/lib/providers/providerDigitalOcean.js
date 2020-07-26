@@ -1,6 +1,7 @@
 
 import {sleep} from '../urils'
 import {ProviderBase} from './providerBase'
+import storeType from '../../renderer/store/modules/type'
 
 export class ProviderDigitalOcean extends ProviderBase {
 
@@ -52,8 +53,9 @@ export class ProviderDigitalOcean extends ProviderBase {
     await this.client.account.deleteSshKey(id)
   }
 
-  async createServer (sshKeyId, region, startupCommand) {
-    let name = 'vpn-' + Math.random().toString(36).substring(7)
+  async createServer (sshKeyId, region, protocol, startupCommand) {
+    let protocolCode = storeType.codes.filter(v => v.type === protocol)[0].code
+    let name = 'vpn-'+protocolCode+'-' + Math.random().toString(36).substring(7)
     let dropletCfg = {
       name,
       region,

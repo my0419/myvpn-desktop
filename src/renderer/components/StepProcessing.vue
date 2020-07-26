@@ -3,13 +3,31 @@
         <el-alert v-show="lockedIp && $i18n.locale === 'ru'" title="Повторная попытка создать новый сервер в выбранном регионе" :description="`IP созданного сервера ${lockedIp} заблокирован надзорными органами вашей страны`" type="warning" show-icon></el-alert>
         <el-alert v-show="lockedIp && $i18n.locale !== 'ru'" title="Trying to create a new server in the selected region again" :description="`The IP of the created server ${lockedIp} is blocked in your country`" type="warning" show-icon></el-alert>
         <Preloader />
-        <h1 class="text-center">{{ $t(journalLastLog) }}</h1>
-        <h4 class="text-center">{{ $t('It can take 3 to 5 minutes to set up the environment') }}</h4>
-        <div class="text-center" v-show="allowCancel">
-            <el-button type="info" plain v-on:click="handleCancel" icon="el-icon-close">{{ $t('Cancel') }}</el-button>
+        <div class="wrapper">
+            <h1 class="glitch" :text="$t(journalLastLog)">{{ $t(journalLastLog) }}</h1>
         </div>
+        <h4 class="text-center">{{ $t('It can take 3 to 5 minutes to set up the environment') }}</h4>
+        <!--<div class="text-center" v-show="allowCancel">
+            <el-button type="primary" v-on:click="handleCancel" icon="el-icon-close">{{ $t('Cancel') }}</el-button>
+        </div>-->
     </div>
 </template>
+
+<style scoped>
+    .wrapper {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .wrapper h1 {
+        font-family: 'Roboto Mono';
+        font-weight: 500;
+        font-size: 1.8rem;
+        color: #fff;
+    }
+</style>
 
 <script>
   import { mapState } from 'vuex'

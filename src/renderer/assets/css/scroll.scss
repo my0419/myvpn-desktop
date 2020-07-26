@@ -9,12 +9,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #9a9a9a;
-    border: 71px none #ffffff;
+    background: #535353;
+    border: 71px none #2f2f2f;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #848484;
+    background: #2f2f2f;
 }
 
 ::-webkit-scrollbar-thumb:active {
@@ -22,12 +22,12 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: #eee;
-    border: 65px none #ffffff;
+    background: #828282;
+    border: 65px none #535353;
 }
 
 ::-webkit-scrollbar-track:hover {
-    background: #fff;
+    background: #8e8e8e;
 }
 
 ::-webkit-scrollbar-track:active {

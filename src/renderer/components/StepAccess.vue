@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="app-page step-access">
         <el-alert :title="$t('Save access to the VPN. When you exit, all data will be cleared.')" type="warning" show-icon></el-alert>
 
-        <div class="app-page selectable">
+        <div class="selectable m-top">
             <el-row style="text-align: right">
                 <el-button type="success" size="mini"  v-on:click="handleMainPage" icon="el-icon-arrow-left">{{ $t('Go Back') }}</el-button>
                 <el-button v-if="selectedProvider !== 'custom'" type="danger" size="mini" v-on:click="deleteServer" icon="el-icon-delete">{{ $t('Delete server') }}</el-button>
@@ -146,6 +146,9 @@
 </template>
 
 <style scoped>
+    h3 {
+        text-transform: none;
+    }
     .copied-section {
         margin-top: 10px;
     }

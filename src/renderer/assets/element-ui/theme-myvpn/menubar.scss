@@ -1,0 +1,15 @@
+.el-menu {
+  background: #191919;
+  border-right: solid 1px #313131;
+}
+.el-menu-item {
+  color: #fff;
+  &:hover {
+    color: #ff9254;
+  }
+}
+.el-submenu__title:hover,
+.el-menu-item:focus,
+.el-menu-item:hover {
+  background-color: #313131;
+}

@@ -5,6 +5,7 @@ import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/reset.css'
+import './assets/element-ui/theme-myvpn/index.scss'
 
 import App from './App'
 import router from './router'
@@ -23,7 +24,6 @@ const i18n = new VueI18n({
   locale: navigator.language ? (navigator.language.split('-')[0] === 'ru' ? 'ru' : 'en') : 'en',
   messages: translate
 })
-
 
 /* eslint-disable no-new */
 new Vue({

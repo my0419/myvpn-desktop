@@ -175,6 +175,7 @@
         border-collapse: collapse;
         border-spacing: 0;
         width: 100%;
+        color: #c1c1c1;
     }
     th {
         text-align: center;
@@ -195,7 +196,7 @@
         min-width: 130px !important;
     }
     tr:hover {
-        background-color: #ebf1fa;
+        background-color: #3e3e3e;
     }
 </style>
 <style>

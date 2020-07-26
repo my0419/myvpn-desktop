@@ -57,7 +57,10 @@ let mainConfig = {
     new webpack.NoEmitOnErrorsPlugin()
   ],
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json', '.node']
+    extensions: ['.ts', '.tsx', '.js', '.json', '.node'],
+    alias: {
+      elementui: path.resolve(__dirname, '../node_modules/element-ui'),
+    }
   },
   target: 'electron-main'
 }

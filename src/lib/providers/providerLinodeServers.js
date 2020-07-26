@@ -2,6 +2,7 @@ import {ProviderBase} from './providerBase'
 import axios from 'axios'
 import {sleep} from '../urils'
 import {generateRandomString} from "../string";
+import storeType from "../../renderer/store/modules/type";
 
 const LINODE_REGIONS = {
   'ap-west': {title: 'India (Mumbai)', speedtest: 'mumbai1'},
@@ -88,8 +89,9 @@ export class ProviderLinodeServers extends ProviderBase {
 
   async deleteSshKey (id, dropletId) {}
 
-  async createServer (sshKeyId, region, startupCommand) {
-    const name = 'vpn-' + Math.random().toString(36).substring(7)
+  async createServer (sshKeyId, region, protocol, startupCommand) {
+    let protocolCode = storeType.codes.filter(v => v.type === protocol)[0].code
+    let name = 'vpn-'+protocolCode+'-' + Math.random().toString(36).substring(7)
     const type = await this.client.get('linode/types',).then(res => {
       let typeItem = res.data.data[0] || null
       if (typeItem === null) {

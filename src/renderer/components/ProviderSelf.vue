@@ -30,12 +30,8 @@
 
 <style scoped>
     .notice {
-        color: #dd7b00;
-        padding-bottom: 5px;
-        font-weight: bold;
-    }
-    .title {
-        color: #6ea0e3;
+        color: #c00000;
+        padding-bottom: 15px;
     }
     .input-user {
         width: 100px;
@@ -44,7 +40,7 @@
         width: 100px;
     }
     .el-form-item {
-        margin-bottom: 0px;
+        margin-bottom: 0;
     }
 </style>
 

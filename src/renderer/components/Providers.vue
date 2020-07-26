@@ -24,14 +24,16 @@
 
 <style scoped>
   .providers .provider-choose-title {
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: #3f3f3f;
+    font-weight: 400;
+    font-size: 1rem;
+    color: #ffffff;
+    opacity: 0.8;
   }
   .providers .provider-choose-logo {
     height: 21px;
     position: relative;
     top: 6px;
+    opacity: 0.8;
   }
 </style>
 <style>
@@ -44,7 +46,7 @@
   .el-tabs__item {
     height: 50px;
     padding: 0 10px !important;
-    border-right: 1px solid #ddd !important;
+    border-right: 1px solid #ddd;
   }
   .el-tabs__item:last-child {
     border-right: none !important;

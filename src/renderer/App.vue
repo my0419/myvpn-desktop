@@ -1,8 +1,6 @@
 <template>
-  <div id="app">
-    <!--<div class="logo">
-      <img class="logo__image" src="/static/img/logo.svg" />
-    </div>-->
+  <div id="app" v-bind:style="{ 'background-image': 'url(' + staticPath + '/img/background.svg' + ')' }">
+    <Header />
     <Offline>
       <div slot="offline">
         <el-alert :title="$t('Connect to the network!')" type="error" effect="dark">{{ $t('To work with the application you need to connect to the Internet.') }}</el-alert>
@@ -14,6 +12,7 @@
 
 <script>
   import Offline from 'v-offline'
+  import Header from "./components/Header";
 
   const isBrowser = process.browser
   let electron = null
@@ -25,6 +24,12 @@
 
   export default {
     name: 'vpn',
+    components: { Offline, Header },
+    data () {
+      return {
+        staticPath: process.browser || process.env.NODE_ENV === 'development' ? 'static' :  __static,
+      }
+    },
     created: function () {      
       const menuElements = [
         { label: this.$root.$t('Copy'), role: 'copy' },
@@ -37,8 +42,7 @@
           e.preventDefault()          
         }
       }, false)
-    },
-    components: {Offline}
+    }
   }
 </script>
 

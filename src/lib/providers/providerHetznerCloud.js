@@ -1,7 +1,7 @@
 import {ProviderBase} from './providerBase'
 import axios from 'axios'
 import {sleep} from '../urils'
-
+import storeType from "../../renderer/store/modules/type";
 
 export class ProviderHetznerCloud extends ProviderBase {
 
@@ -82,8 +82,9 @@ export class ProviderHetznerCloud extends ProviderBase {
     })
   }
 
-  async createServer (sshKeyId, region, startupCommand) {
-    const name = 'vpn-' + Math.random().toString(36).substring(7)
+  async createServer (sshKeyId, region, protocol, startupCommand) {
+    let protocolCode = storeType.codes.filter(v => v.type === protocol)[0].code
+    let name = 'vpn-'+protocolCode+'-' + Math.random().toString(36).substring(7)
     const type = await this.client.get('/server_types',).then(res => {
       let typeItem = res.data.server_types[0] || null
       if (typeItem === null) {

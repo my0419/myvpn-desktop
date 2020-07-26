@@ -13,15 +13,16 @@ export class ServerAgent {
 
   async getState() {
     const agentUrl = `http://${this.serverIp}:${AGENT_HTTP_PORT}`
-    const client = axios.create({ baseURL: agentUrl, timeout: 1000 });
+    const client = axios.create({ baseURL: agentUrl, timeout: 5000 });
     let retries = 30
     axiosRetry(client, {
       retries,
       retryCondition: (error) => {
         retries -= 1
+        console.log('retry condition on error', error)
         return (axiosRetry.isNetworkOrIdempotentRequestError(error) || error.toString().indexOf('timeout of') !== -1) && retries > 0;
       },
-      retryDelay: (retryCount) => 1000,
+      retryDelay: (retryCount) => 2500,
       shouldResetTimeout: true
     });
 

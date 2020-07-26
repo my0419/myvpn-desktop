@@ -47,7 +47,7 @@ systemctl start myvpn-agent.service`
   async addSshKey (publicKey) {
   }
 
-  async createServer (sshKeyId, region) {
+  async createServer (sshKeyId, region, protocol, startupCommand) {
     return {slug: '', ipv4: '', aesKey: this.aesKey}
   }
 

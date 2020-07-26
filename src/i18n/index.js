@@ -28,6 +28,7 @@ export default {
     'IP address': 'IP адрес',
     'Login': 'Логин',
     'Password': 'Пароль',
+    'Type': 'Тип',
     'Save ovpn file': 'Сохранить ovpn файл',
     'Create new access': 'Создать новый доступ',
     'Delete server': 'Удалить сервер',
@@ -57,7 +58,7 @@ export default {
     'Waiting for software installation': 'Установка и настройка VPN',
     'Waiting time 300sec is exceeded': 'Превышено время ожидания 300 сек.',
     'VPN service configured': 'Успешная настройка VPN сервера',
-    'Generate RSA public/private key pair': 'Генерируются публичные и приватные ключи',
+    'Generate RSA public/private key pair': 'Генерируются  приватные ключи',
     'Waiting for the server to start': 'Ожидание запуска нового сервера',
     'Copied!': 'Скопировано!',
     'Close': 'Закрыть',
@@ -129,6 +130,7 @@ export default {
     'Save all accesses': 'Сохранить все доступы',
     'To connect to the server via SSH, save a private key named «myvpn.key» and enter the command below': 'Для подключения к серверу по SSH сохраните приватный ключ с именем «myvpn.key» и введите команду ниже',
     'Command to connect': 'Команда для подключения',
-    'Save QR Code': 'Сохранить QR код'
+    'Save QR Code': 'Сохранить QR код',
+    'Version': 'Версия'
   }
 }

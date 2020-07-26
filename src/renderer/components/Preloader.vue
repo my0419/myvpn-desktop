@@ -22,10 +22,10 @@
 </template>
 
 <style lang="scss" scoped>
-    $bolb-color: #409eff;
+    $bolb-color: #ff6715;
 
     // Loader
-    .blobs {        
+    .blobs {
         filter: url(#goo);
         width: 300px;
         height: 200px;

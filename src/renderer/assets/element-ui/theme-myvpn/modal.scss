@@ -1,0 +1,20 @@
+.el-message-box {
+  background-color: #1e1e1e;
+  border: 1px solid #fa7600;
+  &__title {
+    color: #fa7600;
+  }
+  &__message {
+    color: #c1c1c1;
+  }
+}
+.el-message-box__headerbtn:focus .el-message-box__close,
+.el-message-box__headerbtn:hover .el-message-box__close {
+  color: #fa7600;
+}
+.el-dialog {
+  background: linear-gradient(5.41deg,#191919,#313131);
+  &__title {
+    color: #c1c1c1;
+  }
+}

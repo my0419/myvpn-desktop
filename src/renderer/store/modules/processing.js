@@ -143,7 +143,7 @@ const actions = {
         state.allowCancel = true
         dispatch('log', 'Creating a new server')
         try {
-          server = await client.createServer(sshKeyId, region, startupCommand)
+          server = await client.createServer(sshKeyId, region, connectionType, startupCommand)
           dispatch('saveServer', server)
           // this hack for PROCESSING_CANCEL
           if (cancelled === true) {

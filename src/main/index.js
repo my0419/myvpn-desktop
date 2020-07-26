@@ -19,14 +19,16 @@ const winURL = process.env.NODE_ENV === 'development'
 
 function createWindow () {
   /**
-   * Initial window options
+   * Initial window optionshttp://localhost:9080/static/img/background.svg
    */
   mainWindow = new BrowserWindow({
-    height: 540,
+    height: 560,
     useContentSize: true,
     // transparent: true,
     // vibrancy: 'light',
-    width: 865,
+    width: 800,
+    frame: false,
+    transparent: true,
     webPreferences: {
       nodeIntegration: true
     }

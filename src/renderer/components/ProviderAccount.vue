@@ -2,8 +2,10 @@
     <el-row v-loading.lock=processing>
         <div v-if="tokenInput">
             <el-input prefix-icon="el-icon-key" :placeholder="$t(`Insert the API key from your ${providerName} account`)" :value="token" @input="setToken" autofocus clearable></el-input>
+            <el-button class="m-top" type="primary" v-if="token && configuredSuccess" icon="el-icon-receiving" v-on:click="goToDroplets">{{ $t('Servers') }}</el-button>
         </div>
         <div v-else>
+            <el-button type="primary" v-if="token" icon="el-icon-receiving" v-on:click="goToDroplets">{{ $t('Servers') }}</el-button>
             <el-button type="info" v-if="token" icon="el-icon-connection" v-on:click="logout">{{ $t('Logout') }}</el-button>
             <el-button type="success" :name="providerName" v-else icon="el-icon-connection" v-on:click="login">{{ $t(`Log in to the ${providerName} account`) }}</el-button>
         </div>
@@ -73,6 +75,9 @@
       },
       handleLinkTo (url) {
         redirectToUrl(url)
+      },
+      goToDroplets: function () {
+        this.$router.push({ name: 'droplets' })
       },
       loginOnSiteProvider(providerTitle) {
         const {

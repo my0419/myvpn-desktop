@@ -1,27 +1,40 @@
+const TYPE_L2TP='l2tp',
+      TYPE_PPTP='pptp',
+      TYPE_OPENVPN='openvpn',
+      TYPE_WIREGUARD='wireguard',
+      TYPE_SHADOWSOCKS='shadowsocks',
+      CODES = [
+        {code: 1, type: TYPE_L2TP},
+        {code: 2, type: TYPE_PPTP},
+        {code: 3, type: TYPE_OPENVPN},
+        {code: 4, type: TYPE_WIREGUARD},
+        {code: 5, type: TYPE_SHADOWSOCKS},
+      ]
+
 const state = {
   list: [
     {
-      key: 'l2tp',
+      key: TYPE_L2TP,
       title: 'L2TP'
     },
     {
-      key: 'pptp',
+      key: TYPE_PPTP,
       title: 'PPTP'
     },
     {
-      key: 'openvpn',
+      key: TYPE_OPENVPN,
       title: 'OpenVPN'
     },
     {
-      key: 'wireguard',
+      key: TYPE_WIREGUARD,
       title: 'WireGuard'
     },
     {
-      key: 'shadowsocks',
+      key: TYPE_SHADOWSOCKS,
       title: 'Shadowsocks'
     }
   ],
-  selected: 'l2tp'
+  selected: TYPE_L2TP
 }
 
 const mutations = {
@@ -39,5 +52,6 @@ const actions = {
 export default {
   state,
   mutations,
-  actions
+  actions,
+  codes: CODES
 }
