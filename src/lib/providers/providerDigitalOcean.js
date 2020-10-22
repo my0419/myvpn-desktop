@@ -34,7 +34,13 @@ export class ProviderDigitalOcean extends ProviderBase {
   }
 
   async serverList () {
-    let res = await this.client.droplets.list().filter(v => v.name && v.name.includes('vpn-'))
+    let res = await this.client.droplets.list(1, 200).filter(v => {
+      return v.name && v.name.includes('vpn-')
+    })
+    res = res.map(v => {
+      v.networks.v4 = v.networks.v4.filter(fv => fv.type === 'public')
+      return v
+    })
     return res
   }
 
@@ -87,7 +93,7 @@ export class ProviderDigitalOcean extends ProviderBase {
     return {
       name: droplet.name,
       slug: id,
-      ipv4: droplet.networks.v4[0].ip_address,
+      ipv4: droplet.networks.v4.filter(fv => fv.type === 'public')[0].ip_address,
       aesKey: this.aesKey
     }
   }

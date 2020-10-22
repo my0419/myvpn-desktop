@@ -17,7 +17,8 @@ export class ProviderCryptoServers extends ProviderBase {
 
   async identifyAccess () {
     await this.client.get('/regions').then(r => r,err => {
-      throw new Error(err.response.data.error.replace('Invalid API key.', 'You entered an incorrect key. Authentication failed.'))
+      let errMessage = 'You entered an incorrect key. Authentication failed.'
+      throw new Error(err.response.data ? err.response.data.error.replace('Invalid API key.', errMessage) : errMessage)
     })
   }
 
@@ -39,7 +40,7 @@ export class ProviderCryptoServers extends ProviderBase {
       return res.data.map(v => {
         let data = v.data
         data.id = v.id
-        data.networks = {v4: [{ip_address: data.networks[0].ipAddress}]}
+        data.networks = {v4: [{ip_address: data.networks.filter(fv => fv.type === 'public')[0].ipAddress}]}
         data.created_at = data.createdAt
         return data
       })
