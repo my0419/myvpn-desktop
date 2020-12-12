@@ -26,9 +26,9 @@
                         <h2>{{ $t('PSK key') }}</h2>
                         <h3><Copied :text="accountPskKey" /></h3>
                     </div>
-                    <div v-if="connectionType === 'pptp'">
+                    <div v-if="connectionType === 'l2tp'">
                         <h2>{{ $t('Type of connection') }}</h2>
-                        <h3>PPTP</h3>
+                        <h3>L2TP</h3>
 
                         <h2>{{ $t('IP address') }}</h2>
                         <h3><Copied :text="serverIp" /></h3>
@@ -38,7 +38,23 @@
 
                         <h2>{{ $t('Password') }}</h2>
                         <h3><Copied :text="accountPassword" /></h3>
-                        <u class="text-warning">{{ $t('Be sure to enable MPPE encryption') }}</u>
+                    </div>
+                    <div v-if="connectionType === 'socks5'">
+                        <h2>{{ $t('Type of connection') }}</h2>
+                        <h3>SOCKS5</h3>
+
+                        <h2>{{ $t('IP address') }}</h2>
+                        <h3><Copied :text="serverIp" /></h3>
+
+                        <h2>{{ $t('Login') }}</h2>
+                        <h3><Copied :text="accountUsername" /></h3>
+
+                        <h2>{{ $t('Password') }}</h2>
+                        <h3><Copied :text="accountPassword" /></h3>
+
+                        <h2>{{ $t('Port') }}</h2>
+                        <h3><Copied text="1080" /></h3>
+
                     </div>
                     <div v-if="connectionType === 'openvpn'">
                         <h2>{{ $t('Type of connection') }}</h2>
