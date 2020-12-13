@@ -1,6 +1,6 @@
 {
   "exclude": ["**/*.test.ts", "**/__test_utils/**"],
-  "include":["node_modules/myvpn-electron-oauth/lib/oauth2/*", "**/*"],
+  "include":["**/*"],
   "compilerOptions": {
     "skipLibCheck": true,
     /* Basic Options */

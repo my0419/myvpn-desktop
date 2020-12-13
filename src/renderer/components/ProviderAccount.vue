@@ -27,7 +27,7 @@
   import { mapState } from 'vuex'
   import providers from '../../config/providers'
   import { redirectTo, localStorageService } from '../../lib/utils'
-  import OAuth2Provider from 'myvpn-electron-oauth/lib/oauth2'
+  import OAuth2Provider from '@my0419/electron-oauth-helper/lib/oauth2'
 
   const isBrowser = process.browser
   let electron = null
