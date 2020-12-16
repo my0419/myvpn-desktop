@@ -46,12 +46,6 @@
                         <h2>{{ $t('IP address') }}</h2>
                         <h3><Copied :text="serverIp" /></h3>
 
-                        <h2>{{ $t('Login') }}</h2>
-                        <h3><Copied :text="accountUsername" /></h3>
-
-                        <h2>{{ $t('Password') }}</h2>
-                        <h3><Copied :text="accountPassword" /></h3>
-
                         <h2>{{ $t('Port') }}</h2>
                         <h3><Copied text="1080" /></h3>
 
