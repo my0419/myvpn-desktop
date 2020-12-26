@@ -116,8 +116,7 @@ export class ProviderLinodeServers extends ProviderBase {
         slug: res.data.id,
         name: res.data.label,
         password: this.rootPassword,
-        ipv4: null,
-        aesKey: this.aesKey
+        ipv4: null
       }
     },err => {
       this.deleteStackScript()
@@ -144,8 +143,7 @@ export class ProviderLinodeServers extends ProviderBase {
       name: droplet.label,
       slug: id,
       ipv4: droplet.ipv4.length > 0 ? droplet.ipv4[0] : null,
-      password: this.rootPassword,
-      aesKey: this.aesKey
+      password: this.rootPassword
     }
   }
 

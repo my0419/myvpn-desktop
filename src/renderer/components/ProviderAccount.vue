@@ -1,8 +1,14 @@
 <template>
     <el-row v-loading.lock=processing>
         <div v-if="tokenInput">
-            <el-input prefix-icon="el-icon-key" :placeholder="$t(`Insert the API key from your ${providerName} account`)" :value="token" @input="setToken" autofocus clearable></el-input>
-            <el-button class="m-top" type="primary" v-if="token && configuredSuccess" icon="el-icon-receiving" v-on:click="goToDroplets">{{ $t('Servers') }}</el-button>
+          <el-row :gutter="24">
+            <el-col v-if="token && configuredSuccess" :span="4">
+              <el-button type="primary" icon="el-icon-receiving" v-on:click="goToDroplets">{{ $t('Servers') }}</el-button>
+            </el-col>
+            <el-col :span="token && configuredSuccess ? 20 : 24">
+              <el-input prefix-icon="el-icon-key" :placeholder="$t(`Insert the API key from your ${providerName} account`)" :value="token" @input="setToken" autofocus clearable></el-input>
+            </el-col>
+          </el-row>
         </div>
         <div v-else>
             <el-button type="primary" v-if="token" icon="el-icon-receiving" v-on:click="goToDroplets">{{ $t('Servers') }}</el-button>

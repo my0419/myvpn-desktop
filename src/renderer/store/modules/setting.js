@@ -70,7 +70,8 @@ const state = {
   },
   shadowsocks: {
     v2rayPlugin: false
-  }
+  },
+  numberOfAccounts: 1,
 }
 
 const mutations = {

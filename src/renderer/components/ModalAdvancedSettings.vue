@@ -7,12 +7,26 @@
                 :close-on-press-escape="false"
                 :close-on-click-modal="false"
                 width="500px">
-            <el-form v-if="protocol === 'shadowsocks'" ref="form" label-width="120px">
-                <h3>Shadowsocks</h3>
-                <el-checkbox v-model="shadowsocksV2RayPlugin">{{$t('Enable V2Ray plugin')}}</el-checkbox>
+
+            <el-form v-if="protocol === 'wireguard'" ref="form" label-width="145px">
+                <h3>{{ protocol }}</h3>
+                <el-form-item :label="this.$root.$t('Accounts')">
+                  <el-input-number v-model="numberOfAccounts" :min="1" :max="5"></el-input-number>
+                </el-form-item>
             </el-form>
+
+            <el-form v-if="protocol === 'shadowsocks'" ref="form" label-width="145px">
+                <h3>{{ protocol }}</h3>
+                <el-form-item :label="this.$root.$t('Accounts')">
+                  <el-input-number v-model="numberOfAccounts" :min="1" :max="5"></el-input-number>
+                </el-form-item>
+                <el-form-item label="">
+                  <el-checkbox v-model="shadowsocksV2RayPlugin">{{$t('Enable V2Ray plugin')}}</el-checkbox>
+                </el-form-item>
+            </el-form>
+
             <h3>DNS</h3>
-            <el-form ref="form" label-width="120px">
+            <el-form ref="form" label-width="145px">
                 <el-form-item label="dns-list">
                     <span slot="label"></span>
                     <el-select v-model="selectedDNS" :placeholder="$t('OpenDNS')" @change="handleChooseDNS">
@@ -55,7 +69,7 @@
             </el-form>
         </el-dialog>
 
-        <a href="#" class="link-padding" @click="modalOpen = true"><i class="el-icon-setting"></i> {{ $t('Advanced Settings') }} (DNS<span v-if="protocol === 'shadowsocks'">, V2Ray Plugin</span>)</a>
+        <a href="#" class="link-padding" @click="modalOpen = true"><i class="el-icon-setting"></i> {{ $t('Advanced Settings') }} ({{ settingsAvailable }})</a>
     </div>
 </template>
 
@@ -85,6 +99,18 @@
       }
     },
     computed: {
+      settingsAvailable () {
+        let info = ['DNS']
+        if (this.protocol === 'shadowsocks') {
+          info.push('V2Ray Plugin')
+        }
+
+        if (['shadowsocks', 'wireguard'].includes(this.protocol)) {
+          info.push(`${this.$root.$t('Accounts')}:${this.numberOfAccounts}`)
+        }
+
+        return info.join(', ')
+      },
       protocol: {
         get () {
           return this.$store.state.type.selected
@@ -117,6 +143,14 @@
         },
         set (value) {
           this.$store.state.setting.shadowsocks.v2rayPlugin = value
+        }
+      },
+      numberOfAccounts: {
+        get () {
+          return this.$store.state.setting.numberOfAccounts
+        },
+        set (value) {
+          this.$store.state.setting.numberOfAccounts = value
         }
       },
     },

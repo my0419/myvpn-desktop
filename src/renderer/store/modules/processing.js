@@ -1,7 +1,8 @@
 import {ServerAgent} from "../../../lib/server/agent";
-import {sleep} from "../../../lib/urils";
-import {ProviderBase} from "../../../lib/providers/providerBase";
 import {Deployment} from '../../../lib/server/deployment'
+import Environment from "../../../lib/server/environment";
+import {sleep} from "../../../lib/urils";
+import {ProtocolFactory} from "../../../lib/protocols";
 
 const state = {
   complete: false,
@@ -9,7 +10,8 @@ const state = {
   errorText: null,
   reconnect: false,
   allowCancel: false,
-  client: null
+  client: null, // provider
+  protocol: null,
 }
 
 const mutations = {
@@ -40,29 +42,22 @@ const actions = {
       sshPassword,
       sshPort,
       sshUser,
-      connectionType,
-      accountUsername,
-      accountPassword,
-      accountPskKey,
-      setting
+      protocol,
+      configuration
     } = params
 
-    state.client = new ProviderBase({})
-    const startupBash = state.client.startupCommand({
-      connectionType,
-      accountUsername,
-      accountPassword,
-      accountPskKey,
-      setting
-    })
     dispatch('log', 'Connecting to the server')
-    const deploy = new Deployment(sshIp, sshPort, sshUser, sshPassword, sshPrivateKey, startupBash)
+
+    configuration.aesKey = ServerAgent.generateAesKey()
+    const protocolInstance = ProtocolFactory.create(protocol, configuration)
+    const deploy = new Deployment(sshIp, sshPort, sshUser, sshPassword, sshPrivateKey, protocolInstance)
     let result = null
     try {
       await deploy.openConnection()
       dispatch('log', 'Starting MyVPN Agent. Make sure that port 8400 is open on your server.')
       await deploy.setup()
-      const agent = new ServerAgent(sshIp, state.client.aesKey)
+
+      const agent = new ServerAgent(sshIp, configuration.aesKey)
       while (result === null) {
         result = await agent.getState().then(data => {
           console.log('myvpn agent response:', data)
@@ -110,12 +105,8 @@ const actions = {
       client,
       region,
       sshKey,
-      privateKey,
-      connectionType,
-      accountUsername,
-      accountPassword,
-      accountPskKey,
-      setting
+      protocol,
+      configuration
     } = params
     state.client = client
     try {
@@ -123,7 +114,17 @@ const actions = {
       let server = null
       let result = null
       let unsubscribe = null
-      let startupCommand = client.startupCommand({connectionType, accountPskKey, accountUsername, accountPassword, setting})
+
+      configuration.aesKey = ServerAgent.generateAesKey()
+
+      const protocolInstance = ProtocolFactory.create(protocol, configuration)
+      const variables = protocolInstance.envVariables()
+      const startupCommand = ServerAgent.startupCommand(
+        new Environment(variables)
+      )
+
+      console.log('[bash] agent startup', startupCommand)
+
       const sshKeyId = await client.addSshKey(sshKey)
       let cancelled = false
       const createServerProcessing = async () => {
@@ -143,7 +144,7 @@ const actions = {
         state.allowCancel = true
         dispatch('log', 'Creating a new server')
         try {
-          server = await client.createServer(sshKeyId, region, connectionType, startupCommand)
+          server = await client.createServer(sshKeyId, region, protocol, startupCommand)
           dispatch('saveServer', server)
           // this hack for PROCESSING_CANCEL
           if (cancelled === true) {
@@ -157,7 +158,7 @@ const actions = {
           dispatch('log', 'Connecting to the server')
 
           /* MyVPN Agent */
-          const agent = new ServerAgent(server.ipv4, server.aesKey)
+          const agent = new ServerAgent(server.ipv4, configuration.aesKey)
           while (result === null) {
             result = await agent.getState().then(data => {
               console.log('myvpn agent response:', data)

@@ -55,13 +55,6 @@
       configuredSuccess: state => state.provider.configuredSuccess,
       serverName: state => state.server.name,
       serverIp: state => state.server.ipv4,
-      keypairPrivate: state => state.keypair.private,
-      keypairPublic: state => state.keypair.public,
-      keypairSshPublic: state => state.keypair.sshPublic,
-      accountUsername: state => state.account.username,
-      accountPassword: state => state.account.password,
-      accountPskKey: state => state.account.pskKey,
-      accountOvpn: state => state.account.ovpn
     }),
     mounted: function () {
       if (!this.configuredSuccess) {
@@ -73,46 +66,48 @@
     methods: {
       create: function () {
 
+        const configuration = {
+            protocol: this.$store.state.type.selected,
+            account: this.$store.state.account,
+            setting: this.$store.state.setting
+        }
+
+        this.$store.dispatch('generatePersonalAccess', configuration.setting.numberOfAccounts)
+
         switch (this.selectedProvider) {
           case 'custom': {
-            this.$store.dispatch('generatePersonalAccess')
             this.$store.dispatch('processingSSH', {
               sshIp: this.$store.state.server.ipv4,
               sshPrivateKey: this.$store.state.server.sshPrivateKey,
               sshPassword: this.$store.state.server.sshPassword,
               sshPort: this.$store.state.server.sshPort,
               sshUser: this.$store.state.server.sshUser,
-              connectionType: this.$store.state.type.selected,
-              accountUsername: this.$store.state.account.username,
-              accountPassword: this.$store.state.account.password,
-              accountPskKey: this.$store.state.account.pskKey,
-              setting: this.$store.state.setting
+              protocol: this.$store.state.type.selected,
+              configuration
             })
 
             break
           }
           default: {
             this.log('Generate RSA public/private key pair')
-            this.$store.dispatch('generateKeypair')
-            this.$store.dispatch('generatePersonalAccess')
-            this.$store.dispatch('processing', {
-              client: this.$store.state.provider.client,
-              sshKey: this.$store.state.keypair.sshPublic,
-              privateKey: this.$store.state.keypair.private,
-              region: this.$store.state.region.value,
-              connectionType: this.$store.state.type.selected,
-              accountUsername: this.$store.state.account.username,
-              accountPassword: this.$store.state.account.password,
-              accountPskKey: this.$store.state.account.pskKey,
-              setting: this.$store.state.setting
-            })
+            setTimeout(_ => {
+              this.$store.dispatch('generateKeypair')
+              this.$store.dispatch('processing', {
+                client: this.$store.state.provider.client,
+                sshKey: this.$store.state.keypair.sshPublic,
+                privateKey: this.$store.state.keypair.private,
+                region: this.$store.state.region.value,
+                protocol: this.$store.state.type.selected,
+                configuration
+              })
+            }, 250) // freeze problem
           }
         }
 
         let unsubscribe = this.$store.subscribe((mutation, state) => {
           switch (mutation.type) {
             case 'PROCESSING_COMPLETE':
-              this.$message({message: this.$root.$t('The server is successfully configured'), type: 'success'})
+              this.$message({message: this.$root.$t('The server is successfully configured. Save the accesses.'), type: 'success'})
               unsubscribe()
               this.$router.push({ name: 'access' })
               break

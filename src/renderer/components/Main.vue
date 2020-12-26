@@ -12,6 +12,8 @@
         <span v-if="selectedProvider !== 'custom'">{{ $t('Create a server and configure the VPN') }}</span>
         <span v-else>{{ $t('Connect to the server and configure the VPN') }}</span>
       </el-button>
+      <el-button v-if="isDev" type="primary" v-on:click="handleDevelopmentAccess" icon="el-icon-brush">[Dev] Access Page</el-button>
+      <el-button v-if="isDev" type="primary" v-on:click="handleDevelopmentStore" icon="el-icon-brush">[Dev] Reset Store</el-button>
     </div>
     <div class="app-version">
       {{ $t('Version')}}: {{ appVersion }}
@@ -26,10 +28,13 @@
   import Copied from './Copied'
   import Providers from './Providers'
   import ModalAdvancedSettings from './ModalAdvancedSettings'
-  import { redirectTo, localStorageService } from '../../lib/utils'
+  import { localStorageService } from '../../lib/utils'
   import { CRYPTOSERVERS_KEY } from '../../lib/providers'
+  import Store from 'electron-store'
 
   const isBrowser = process.browser
+  const isDev = process.env.NODE_ENV === 'development'
+
   let electron = null
 
   if (!isBrowser) {
@@ -73,6 +78,7 @@
     data () {
       return {
         staticPath: process.browser || process.env.NODE_ENV === 'development' ? 'static' :  __static,
+        isDev
       }
     },
     mounted () {
@@ -123,6 +129,21 @@
       },
       handleProcessing: function () {
         this.$router.push({ name: 'processing' })
+      },
+      /* development debugging */
+      handleDevelopmentStore: function () {
+        const store = new Store({ name: 'vuex' })
+        store.clear()
+      },
+      handleDevelopmentAccess: function () {
+        if (!isDev) {
+          return false;
+        }
+        this.$store.dispatch('generatePersonalAccess', 5)
+        this.$store.commit('PROVIDER_CONFIGURE_SUCCESS')
+        // this.$store.dispatch('generateKeypair')
+
+        this.$router.push({ name: 'access' })
       }
     }
   }

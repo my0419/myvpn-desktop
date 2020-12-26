@@ -85,8 +85,7 @@ export class ProviderCryptoServers extends ProviderBase {
     return {
       name,
       slug: droplet.id,
-      ipv4: null,
-      aesKey: this.aesKey
+      ipv4: null
     }
   }
 
@@ -109,8 +108,7 @@ export class ProviderCryptoServers extends ProviderBase {
     return {
       name: droplet.name,
       slug: id,
-      ipv4: droplet.networks && droplet.networks.length > 0 ? droplet.networks[0].ipAddress : null,
-      aesKey: this.aesKey
+      ipv4: droplet.networks && droplet.networks.length > 0 ? droplet.networks[0].ipAddress : null
     }
   }
 

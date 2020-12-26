@@ -1,159 +1,253 @@
 <template>
     <div class="app-page step-access">
-        <el-alert :title="$t('Save access to the VPN. When you exit, all data will be cleared.')" type="warning" show-icon></el-alert>
-
         <div class="selectable m-top">
-            <el-row style="text-align: right">
+            <el-row class="step-access__nav">
                 <el-button type="success" size="mini"  v-on:click="handleMainPage" icon="el-icon-arrow-left">{{ $t('Go Back') }}</el-button>
                 <el-button v-if="selectedProvider !== 'custom'" type="danger" size="mini" v-on:click="deleteServer" icon="el-icon-delete">{{ $t('Delete server') }}</el-button>
             </el-row>
 
-            <el-tabs v-model="activeTab">
+            <el-tabs class="step-access__tabs" v-model="activeTab">
                 <el-tab-pane :label="$t('My VPN')" name="1">
                     <div v-if="connectionType === 'l2tp'">
-                        <h2>{{ $t('Type of connection') }}</h2>
-                        <h3>L2TP</h3>
-
-                        <h2>{{ $t('IP address') }}</h2>
-                        <h3><Copied :text="serverIp" /></h3>
-
-                        <h2>{{ $t('Login') }}</h2>
-                        <h3><Copied :text="accountUsername" /></h3>
-
-                        <h2>{{ $t('Password') }}</h2>
-                        <h3><Copied :text="accountPassword" /></h3>
-
-                        <h2>{{ $t('PSK key') }}</h2>
-                        <h3><Copied :text="accountPskKey" /></h3>
+                        <el-form class="step-access__form" label-width="160px">
+                            <el-form-item :label="$root.$t('Type of connection')">
+                                L2TP / IPsec
+                            </el-form-item>
+                            <el-form-item :label="$root.$t('IP address')">
+                               <Copied :text="serverIp" />
+                            </el-form-item>
+                            <el-form-item :label="$root.$t('Login')">
+                                <Copied :text="accountUsername" />
+                            </el-form-item>
+                            <el-form-item :label="$root.$t('Password')">
+                                <Copied :text="accountPassword" />
+                            </el-form-item>
+                            <el-form-item :label="$root.$t('PSK key')">
+                               <Copied :text="accountPskKey" />
+                            </el-form-item>
+                        </el-form>
                     </div>
-                    <div v-if="connectionType === 'l2tp'">
-                        <h2>{{ $t('Type of connection') }}</h2>
-                        <h3>L2TP</h3>
-
-                        <h2>{{ $t('IP address') }}</h2>
-                        <h3><Copied :text="serverIp" /></h3>
-
-                        <h2>{{ $t('Login') }}</h2>
-                        <h3><Copied :text="accountUsername" /></h3>
-
-                        <h2>{{ $t('Password') }}</h2>
-                        <h3><Copied :text="accountPassword" /></h3>
+                    <div v-if="connectionType === 'pptp'">
+                        <el-form class="step-access__form" label-width="160px">
+                            <el-form-item :label="$root.$t('Type of connection')">
+                                PPTP
+                            </el-form-item>
+                            <el-form-item :label="$root.$t('IP address')">
+                               <Copied :text="serverIp" />
+                            </el-form-item>
+                            <el-form-item :label="$root.$t('Login')">
+                               <Copied :text="accountUsername" />
+                            </el-form-item>
+                            <el-form-item :label="$root.$t('Password')">
+                               <Copied :text="accountPassword" />
+                            </el-form-item>
+                            <el-form-item>
+                               <u class="text-warning">{{ $t('Be sure to enable MPPE encryption') }}</u>
+                            </el-form-item>
+                      </el-form>
                     </div>
                     <div v-if="connectionType === 'socks5'">
-                        <h2>{{ $t('Type of connection') }}</h2>
-                        <h3>SOCKS5</h3>
-
-                        <h2>{{ $t('IP address') }}</h2>
-                        <h3><Copied :text="serverIp" /></h3>
-
-                        <h2>{{ $t('Port') }}</h2>
-                        <h3><Copied text="1080" /></h3>
-
+                        <el-form class="step-access__form" label-width="160px">
+                            <el-form-item :label="$root.$t('Type of connection')">
+                              SOCKS5
+                            </el-form-item>
+                            <el-form-item :label="$root.$t('IP address')">
+                                <Copied :text="serverIp" />
+                            </el-form-item>
+                            <el-form-item :label="$root.$t('Port')">
+                                <Copied text="1080" />
+                            </el-form-item>
+                        </el-form>
                     </div>
                     <div v-if="connectionType === 'openvpn'">
-                        <h2>{{ $t('Type of connection') }}</h2>
-                        <h3>OpenVPN</h3>
-                        <h2>{{ $t('IP address') }}</h2>
-                        <h3><Copied :text="serverIp" /></h3>
-                        <el-button type="primary" v-on:click="saveOpenvpn" icon="el-icon-tickets">{{ $t('Save ovpn file') }}</el-button>
+                        <el-form class="step-access__form" label-width="160px">
+                            <el-form-item :label="$root.$t('Type of connection')">
+                                OpenVPN
+                            </el-form-item>
+                            <el-form-item :label="$root.$t('IP address')">
+                               <Copied :text="serverIp" />
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button type="primary" v-on:click="saveOpenvpn" icon="el-icon-tickets">{{ $t('Save ovpn file') }}</el-button>
+                            </el-form-item>
+                        </el-form>
                     </div>
                     <div v-if="connectionType === 'wireguard'">
                         <el-row :gutter="20">
-                            <el-col :span="12">
-                                <h2>{{ $t('Type of connection') }}</h2>
-                                <h3>WireGuard</h3>
-                                <h2>{{ $t('IP address') }}</h2>
-                                <h3><Copied :text="serverIp" /></h3>
-                                <el-button type="primary" v-on:click="saveWireguard" icon="el-icon-tickets">{{ $t('Save WireGuard Configuration') }}</el-button>
+                            <el-col :span="14">
+                                <el-form class="step-access__form" label-width="160px">
+                                    <el-form-item :label="$root.$t('Type of connection')">
+                                        WireGuard
+                                    </el-form-item>
+                                    <el-form-item :label="$root.$t('Accounts')">
+                                        {{ accounts.length }}
+                                    </el-form-item>
+                                    <el-form-item :label="$root.$t('IP address')">
+                                        <Copied :text="serverIp" />
+                                    </el-form-item>
+                                    <el-form-item :label="$root.$t('Config')">
+                                        <el-select v-model="selectedAccountNumber" placeholder="Account" style="width: 240px">
+                                            <el-option
+                                                v-for="(_, index) in accounts"
+                                                :key="`account_wg_${index}`"
+                                                :label="`${$root.$t('Account')} #${index+1}`"
+                                                :value="index">
+                                            </el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                    <el-form-item class="m-top">
+                                        <el-button type="primary" v-on:click="saveWireguard" icon="el-icon-download">{{ $t('Save Configuration') }}</el-button>
+                                    </el-form-item>
+                                </el-form>
+
                             </el-col>
-                            <el-col :span="12">
-                                <h2>{{ $t('Connect via QR Code') }}</h2>
-                                <qrcode-vue :value="clientConfig" :size="300" :level="M"></qrcode-vue>
-                                <el-button type="primary" icon="el-icon-download" size="small" v-on:click="saveQrCode">{{ $t('Save QR Code') }}</el-button>
-                                <hr />
+                            <el-col :span="10">
+                              <h2>{{ $t('Connect via QR Code') }}</h2>
+                              <qrcode-vue class="m-top" :value="selectedAccountConfig" :size="300" level="L"></qrcode-vue>
+                              <div class="m-top">
+                                <a href="#" v-on:click.prevent="saveQrCode">
+                                  <i class="el-icon-download"></i> {{ $t('Save QR Code') }}
+                                </a>
+                              </div>
                             </el-col>
                         </el-row>
                     </div>
                     <div v-if="connectionType === 'shadowsocks'">
                         <el-row :gutter="20">
-                            <el-col :span="12">
-                                <h2>{{ $t('IP address') }}</h2>
-                                <h3><Copied :text="serverIp" /></h3>
-                                <h2>{{ $t('Password') }}</h2>
-                                <h3><Copied :text="accountPassword" /></h3>
-                                <h2>{{ $t('Server Port') }}</h2>
-                                <h3><Copied text="8388" /></h3>
-                                <h2>{{ $t('Local Port') }}</h2>
-                                <h3><Copied text="1080" /></h3>
-                                <h2>{{ $t('Encryption method') }}</h2>
-                                <h3><Copied text="chacha20-ietf-poly1305" /></h3>
-                            </el-col>
-                            <el-col :span="12">
-                                <h2>{{ $t('Connect via QR Code') }}</h2>
-                                <qrcode-vue :value="shadowsocksConnect" :size="200" :level="M"></qrcode-vue>
-                                <el-button type="primary" icon="el-icon-download" size="small" v-on:click="saveQrCode">{{ $t('Save QR Code') }}</el-button>
-                                <h2>{{ $t('Config') }}</h2>
-                                <el-button type="primary" v-on:click="saveShadowsocks" icon="el-icon-tickets">{{ $t('Save Shadowsocks Configuration') }}</el-button>
-                                <div class="copied-section">
-                                    <Copied :text="clientConfig" :hiddenText="true" />
-                                </div>
-                                <h2>{{ $t('Protocol Connection') }}</h2>
-                                <el-input :value="shadowsocksConnect" :readonly="true"/>
-                                <div class="copied-section">
+                            <el-col :span="14">
+                              <el-form class="step-access__form" label-width="160px">
+                                <el-form-item :label="$root.$t('Type of connection')">
+                                  ShadowSocks
+                                </el-form-item>
+                                <el-form-item :label="$root.$t('Accounts')">
+                                  {{ accounts.length }}
+                                </el-form-item>
+                                <el-form-item :label="$root.$t('IP address')">
+                                  <Copied :text="serverIp" />
+                                </el-form-item>
+                                <el-form-item :label="$root.$t('Local Port')">
+                                  <Copied text="1080" />
+                                </el-form-item>
+                                <el-form-item :label="$root.$t('Encryption method')">
+                                  <Copied text="chacha20-ietf-poly1305" />
+                                </el-form-item>
+                                <el-form-item :label="$root.$t('Config')">
+                                  <el-select v-model="selectedAccountNumber" placeholder="Account" style="width: 240px">
+                                    <el-option
+                                        v-for="(_, index) in accounts"
+                                        :key="`account_ss_${index}`"
+                                        :label="`${$root.$t('Account')} #${index+1}`"
+                                        :value="index">
+                                    </el-option>
+                                  </el-select>
+                                </el-form-item>
+                                <el-form-item :label="$root.$t('Password')">
+                                  <Copied :text="accountPassword" />
+                                </el-form-item>
+                                <el-form-item :label="$root.$t('Port')">
+                                  <Copied :text="shadowsocksPort" />
+                                </el-form-item>
+                                <el-form-item :label="$root.$t('Connection')">
+                                  <el-input :value="shadowsocksConnect" :readonly="true" style="width: 240px"/>
+                                  <div>
                                     <Copied :text="shadowsocksConnect" :hiddenText="true" />
-                                </div>
-                                <hr />
+                                  </div>
+                                </el-form-item>
+                                <el-form-item>
+                                  <el-button size="small"  type="primary" icon="el-icon-download" v-on:click="saveShadowsocks">{{ $t('Save Configuration') }}</el-button>
+                                </el-form-item>
+                              </el-form>
+                            </el-col>
+                            <el-col :span="10">
+                              <h2>{{ $t('Connect via QR Code') }}</h2>
+                              <qrcode-vue :value="shadowsocksConnect" :size="300" level="L"></qrcode-vue>
+                              <div class="m-top">
+                                <a href="#" v-on:click.prevent="saveQrCode">
+                                  <i class="el-icon-download"></i> {{ $t('Save QR Code') }}
+                                </a>
+                              </div>
                             </el-col>
                         </el-row>
                     </div>
                 </el-tab-pane>
                 <el-tab-pane :label="$t('My Server')" name="2" v-if="selectedProvider !== 'custom'">
-                    <el-button-group>
-                        <el-button type="primary" icon="el-icon-document-copy" v-clipboard="serverAccess" v-clipboard:success="clipboardSuccessHandler">{{ $t('Copy all accesses') }}</el-button>
-                        <el-button type="primary" icon="el-icon-download" v-on:click="saveServerAccess">{{ $t('Save all accesses') }}</el-button>
-                    </el-button-group>
-                    <h2>{{ $t('IP address') }}</h2>
-                    <h3><Copied :text="serverIp" /></h3>
-
-                    <h2>{{ $t('User') }}</h2>
-                    <h3><Copied text="root" /></h3>
-
-                    <div v-if="serverPassword">
-                        <h2>{{ $t('Root password') }}</h2>
-                        <h3><Copied :text="serverPassword" /></h3>
-                    </div>
-
-                    <el-alert :title="$t('To connect to the server via SSH, save a private key named «myvpn.key» and enter the command below')" type="info"></el-alert>
-
-                    <h2>{{ $t('Private Key') }}</h2>
-                    <el-input  type="textarea" :value="keypairPrivate" :readonly="true"/>
-                    <Copied :text="keypairPrivate" :hiddenText="true" />
-                    <div class="m-top">
-                        <el-button type="primary" v-on:click="savePrivateKey" icon="el-icon-tickets">{{ $t('Save Private Key') }}</el-button>
-                    </div>
-                    <h2>{{ $t('Command to connect') }}</h2>
-                    <el-input :value="`chmod 600 myvpn.key && ssh -i myvpn.key root@${serverIp}`" :readonly="true"/>
-                    <Copied :text="`chmod 600 myvpn.key && ssh -i myvpn.key root@${serverIp}`" :hiddenText="true" />
-
-                    <h2>{{ $t('RSA Key') }}</h2>
-                    <el-input  type="textarea" :value="keypairSshPublic" :readonly="true"/>
-                    <Copied :text="keypairSshPublic" :hiddenText="true" />
-                    <div class="m-top">
-                        <el-button type="primary" v-on:click="saveRsaKey" icon="el-icon-tickets">{{ $t('Save RSA Key') }}</el-button>
-                    </div>
-
-                    <h2>{{ $t('Public Key') }}</h2>
-                    <el-input  type="textarea" :value="keypairPublic" :readonly="true"/>
-                    <Copied :text="keypairPublic" :hiddenText="true" />
-                    <div class="m-top">
-                        <el-button type="primary" v-on:click="savePublicKey" icon="el-icon-tickets">{{ $t('Save Public Key') }}</el-button>
-                    </div>
-
+                    <el-form class="step-access__form" label-width="160px">
+                        <el-form-item>
+                          <el-button size="small"  type="primary" icon="el-icon-document-copy" v-clipboard="serverAccess" v-clipboard:success="clipboardSuccessHandler">{{ $t('Copy all accesses') }}</el-button>
+                          <el-button size="small"  type="primary" icon="el-icon-download" v-on:click="saveServerAccess">{{ $t('Save all accesses') }}</el-button>
+                        </el-form-item>
+                        <el-form-item :label="$root.$t('IP address')">
+                            <Copied :text="serverIp" />
+                        </el-form-item>
+                        <el-form-item :label="$root.$t('User')">
+                            <Copied text="root" />
+                        </el-form-item>
+                        <el-form-item v-if="serverPassword" :label="$root.$t('Password')">
+                            <Copied :text="serverPassword" />
+                        </el-form-item>
+                        <el-form-item :label="$root.$t('Private Key')">
+                          <el-input  type="textarea" :value="keypairPrivate" :readonly="true"/>
+                          <Copied :text="keypairPrivate" :hiddenText="true" />
+                          <span class="v-line"></span>
+                          <a href="#" v-on:click.prevent="savePrivateKey">
+                            <i class="el-icon-download"></i> {{ $t('Save') }}
+                          </a>
+                        </el-form-item>
+                        <el-form-item :label="$root.$t('Connection')">
+                          <el-input :value="`$ chmod 600 myvpn.key && ssh -i myvpn.key root@${serverIp}`" :readonly="true"/>
+                          <Copied :text="`chmod 600 myvpn.key && ssh -i myvpn.key root@${serverIp}`" :hiddenText="true" />
+                        </el-form-item>
+                        <el-form-item :label="$root.$t('RSA Key')">
+                          <el-input  type="textarea" :value="keypairSshPublic" :readonly="true"/>
+                          <Copied :text="keypairSshPublic" :hiddenText="true" />
+                          <span class="v-line"></span>
+                          <a href="#" v-on:click.prevent="saveRsaKey">
+                            <i class="el-icon-download"></i> {{ $t('Save') }}
+                          </a>
+                        </el-form-item>
+                        <el-form-item :label="$root.$t('Public Key')">
+                          <el-input  type="textarea" :value="keypairPublic" :readonly="true"/>
+                          <Copied :text="keypairPublic" :hiddenText="true" />
+                          <span class="v-line"></span>
+                          <a href="#" v-on:click.prevent="savePublicKey">
+                            <i class="el-icon-download"></i> {{ $t('Save') }}
+                          </a>
+                        </el-form-item>
+                    </el-form>
                 </el-tab-pane>
             </el-tabs>
         </div>
     </div>
 </template>
+
+<style lang="scss" >
+.step-access__nav {
+  z-index: 4;
+  align-items: center;
+  width: 500px;
+  text-align: right;
+  position: absolute;
+  right: 20px;
+  top: 40px;
+}
+.v-line {
+  display: inline-block;
+  border-right: 1px solid #3b3b3b;
+  height: 21px;
+  position: relative;
+  top: 6px;
+}
+.step-access__form {
+  color: #fbfbfb;
+
+  .el-form-item {
+    margin-bottom: 0;
+  }
+  .text-copy-wrap {
+    margin-top: 0;
+  }
+}
+</style>
 
 <style scoped>
     h3 {
@@ -162,6 +256,10 @@
     .copied-section {
         margin-top: 10px;
     }
+    .step-access__tabs {
+        margin-top: -15px;
+    }
+
 </style>
 
 <script>
@@ -218,29 +316,52 @@
 
   export default {
     components: {Copied, QrcodeVue},
-    data () {
+    data() {
       return {
-        activeTab: '1'
+        activeTab: '1',
+        selectedAccountNumber: 0,
       }
     },
-    computed: mapState({
+    computed: {
+      selectedAccountConfig: {
+        get () {
+          return this.$store.state.account.clientConfig[this.selectedAccountNumber] || `Error. No config for account #${this.selectedAccountNumber+1}`
+        }
+      },
+      accountUsername: {
+        get () {
+          return this.$store.state.account.accounts[this.selectedAccountNumber].username || 'N/A'
+        }
+      },
+      accountPassword: {
+        get () {
+          return this.$store.state.account.accounts[this.selectedAccountNumber].password || 'N/A'
+        }
+      },
+      shadowsocksPort: {
+        get () {
+          return 8381 + this.selectedAccountNumber
+        }
+      },
+      shadowsocksConnect: {
+        get () {
+          return `ss://${btoa(`chacha20-ietf-poly1305:${this.accountPassword}@${this.$store.state.server.ipv4}:${this.shadowsocksPort}`)}`
+        }
+      },
+      ...mapState({
       selectedProvider: state => state.provider.name,
       configuredSuccess: state => state.provider.configuredSuccess,
       connectionType: state => state.type.selected,
       serverName: state => state.server.name,
       serverSlug: state => state.server.slug,
-      serverIp: state => state.server.ipv4,
+      serverIp: state => state.server.ipv4 || '0.0.0.0',
       serverPassword: state => state.server.password,
       keypairPrivate: state => state.keypair.private,
       keypairPublic: state => state.keypair.public,
       keypairSshPublic: state => state.keypair.sshPublic,
-      accountUsername: state => state.account.username,
-      accountPassword: state => state.account.password,
+      accounts: state => state.account.accounts,
       accountPskKey: state => state.account.pskKey,
       clientConfig: state => state.account.clientConfig,
-      shadowsocksConnect: state => {
-        return `ss://${btoa(`chacha20-ietf-poly1305:${state.account.password}@${state.server.ipv4}:8388`)}`
-      },
       serverAccess: state => `Server Name: ${state.server.name}
 IP: ${state.server.ipv4}
 Username: root
@@ -256,7 +377,8 @@ ${state.keypair.public}
 
 Command:
 ssh -i myvpn.key root@${state.server.ipv4}`
-    }),
+    })
+  },
     mounted: function () {
       if (!this.configuredSuccess) {
         this.$router.push({ name: 'main' })
@@ -275,13 +397,13 @@ ssh -i myvpn.key root@${state.server.ipv4}`
         this.$router.push({ name: 'main' })
       },
       saveOpenvpn: function () {
-        this.saveFile(`myvpn-${this.serverName}.ovpn`, this.clientConfig)
+        this.saveFile(`myvpn-${this.serverName}.ovpn`, this.selectedAccountConfig)
       },
       saveWireguard: function () {
-        this.saveFile('wireguard.conf', this.clientConfig)
+        this.saveFile('wireguard.conf', this.selectedAccountConfig)
       },
       saveShadowsocks: function () {
-        this.saveFile('shadowsocks-client.json', this.clientConfig)
+        this.saveFile('shadowsocks-client.json', this.selectedAccountConfig)
       },
       savePrivateKey: function () {
         this.saveFile('myvpn.key', this.keypairPrivate)

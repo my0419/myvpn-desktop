@@ -8,14 +8,13 @@ app.getVersion = ()=> version;
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
-if (process.env.NODE_ENV !== 'development') {
+const isDev = process.env.NODE_ENV === 'development'
+if (!isDev) {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
 let mainWindow
-const winURL = process.env.NODE_ENV === 'development'
-  ? `http://localhost:9080`
-  : `file://${__dirname}/index.html`
+const winURL = isDev ? `http://localhost:9080` : `file://${__dirname}/index.html`
 
 function createWindow () {
   /**
@@ -26,7 +25,7 @@ function createWindow () {
     useContentSize: true,
     // transparent: true,
     // vibrancy: 'light',
-    width: 800,
+    width: isDev ? 1400 : 800,
     frame: false,
     transparent: true,
     webPreferences: {

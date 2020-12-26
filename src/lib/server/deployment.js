@@ -1,7 +1,18 @@
 import {sleep} from '../urils'
+import {ServerAgent} from "./agent";
+import Environment from "./environment";
 
 export class Deployment {
-  constructor (sshIp, sshPort, sshUser, sshPassword, sshPrivateKey, bash) {
+
+  /**
+   * @param sshIp
+   * @param sshPort
+   * @param sshUser
+   * @param sshPassword
+   * @param sshPrivateKey
+   * @param {BaseProtocol} protocol
+   */
+  constructor (sshIp, sshPort, sshUser, sshPassword, sshPrivateKey, protocol) {
     let Client = require('ssh2').Client
     this.sshConn = new Client()
     this.connectionConfig = {
@@ -15,12 +26,20 @@ export class Deployment {
     } else {
       this.connectionConfig.password = sshPassword
     }
+
+    const variables = protocol.envVariables()
+    const bash = ServerAgent.startupCommand(
+      new Environment(variables)
+    )
+
     this.bash = `
         #!/bin/sh
         echo '${bash} && exit 0' > /tmp/setup-vpn.sh &&
         sudo chmod +x /tmp/setup-vpn.sh &&
         sudo /tmp/setup-vpn.sh && exit 24
     `
+    console.log('[bash] custom server', this.bash)
+
     this.connectionOpen = false
     this.setupComplete = false
   }

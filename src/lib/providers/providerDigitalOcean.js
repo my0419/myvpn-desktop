@@ -75,7 +75,6 @@ export class ProviderDigitalOcean extends ProviderBase {
     return {
       name,
       slug: droplet.id,
-      aesKey: this.aesKey,
       ipv4: null
     }
   }
@@ -93,8 +92,7 @@ export class ProviderDigitalOcean extends ProviderBase {
     return {
       name: droplet.name,
       slug: id,
-      ipv4: droplet.networks.v4.filter(fv => fv.type === 'public')[0].ip_address,
-      aesKey: this.aesKey
+      ipv4: droplet.networks.v4.filter(fv => fv.type === 'public')[0].ip_address
     }
   }
 
