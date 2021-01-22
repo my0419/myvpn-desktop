@@ -8,6 +8,7 @@ class Socks5Protocol extends BaseProtocol {
   envVariables () {
     return Object.assign(super.envVariables(), {
       'ACCESS_TYPE': 'public',
+      'VPN_PORT': this.params.setting.customPort,
       'VPN_USER': '',
       'VPN_PASSWORD': '',
     })

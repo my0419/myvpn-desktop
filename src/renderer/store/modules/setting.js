@@ -71,10 +71,14 @@ const state = {
   shadowsocks: {
     v2rayPlugin: false
   },
+  customPort: 1080, // default socks5 only
   numberOfAccounts: 1,
 }
 
 const mutations = {
+  SET_CUSTOM_PORT (state, val) {
+    state.customPort = val
+  },
   SET_FIRST_DNS (state, val) {
     state.dns.first = val
   },
@@ -84,12 +88,15 @@ const mutations = {
   RESET_DNS (state) {
     state.dns.first = state.dns.list[0].first
     state.dns.second = state.dns.list[0].second
-  },
+  }
 }
 
 const actions = {
   setDNSFirst ({ commit, state }, val) {
     commit('SET_FIRST_DNS', val)
+  },
+  setCustomPort ({ commit, state }, val) {
+    commit('SET_CUSTOM_PORT', val)
   },
   setDNSSecond ({ commit, state }, val) {
     commit('SET_SECOND_DNS', val)

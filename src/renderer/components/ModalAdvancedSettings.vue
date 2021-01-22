@@ -15,6 +15,13 @@
                 </el-form-item>
             </el-form>
 
+            <el-form v-if="protocol === 'socks5'" ref="form" label-width="145px">
+              <h3>{{ protocol }}</h3>
+              <el-form-item :label="this.$root.$t('Port')">
+                <el-input-number v-model="customPort" :min="1" :max="65535"></el-input-number>
+              </el-form-item>
+            </el-form>
+
             <el-form v-if="protocol === 'shadowsocks'" ref="form" label-width="145px">
                 <h3>{{ protocol }}</h3>
                 <el-form-item :label="this.$root.$t('Accounts')">
@@ -104,6 +111,9 @@
         if (this.protocol === 'shadowsocks') {
           info.push('V2Ray Plugin')
         }
+        if (this.protocol === 'socks5') {
+          info.push(this.$root.$t('Port'))
+        }
 
         if (['shadowsocks', 'wireguard'].includes(this.protocol)) {
           info.push(`${this.$root.$t('Accounts')}:${this.numberOfAccounts}`)
@@ -127,6 +137,14 @@
         },
         set (value) {
           this.$store.dispatch('setDNSFirst', value)
+        }
+      },
+      customPort: {
+        get () {
+          return this.$store.state.setting.customPort
+        },
+        set (value) {
+          this.$store.dispatch('setCustomPort', value)
         }
       },
       dnsSecond: {

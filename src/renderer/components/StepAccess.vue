@@ -55,7 +55,7 @@
                                 <Copied :text="serverIp" />
                             </el-form-item>
                             <el-form-item :label="$root.$t('Port')">
-                                <Copied text="1080" />
+                                <Copied :text="customPort" />
                             </el-form-item>
                         </el-form>
                     </div>
@@ -326,6 +326,11 @@
       selectedAccountConfig: {
         get () {
           return this.$store.state.account.clientConfig[this.selectedAccountNumber] || `Error. No config for account #${this.selectedAccountNumber+1}`
+        }
+      },
+      customPort: {
+        get () {
+          return this.$store.state.setting.customPort
         }
       },
       accountUsername: {
