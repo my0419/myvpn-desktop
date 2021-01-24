@@ -30,7 +30,6 @@
   import ModalAdvancedSettings from './ModalAdvancedSettings'
   import { localStorageService } from '../../lib/utils'
   import { CRYPTOSERVERS_KEY } from '../../lib/providers'
-  import Store from 'electron-store'
 
   const isBrowser = process.browser
   const isDev = process.env.NODE_ENV === 'development'
@@ -112,7 +111,7 @@
         const access_token = initProviderParams()
         const provider_key = getProviderKey()
         if (access_token && provider_key) {
-          try {            
+          try {
             this.setToken(access_token, provider_key)
             this.handleProcessing()
           } catch (error) {
@@ -120,7 +119,7 @@
             this.$message({message: this.$root.$t('Authorization Error'), type: 'error'})
           }
         }
-      }      
+      }
     },
     methods: {
       setToken (value, providerKey) {
@@ -132,8 +131,8 @@
       },
       /* development debugging */
       handleDevelopmentStore: function () {
-        const store = new Store({ name: 'vuex' })
-        store.clear()
+        /*const store = new require('electron-store')({ name: 'vuex' })
+        store.clear()*/
       },
       handleDevelopmentAccess: function () {
         if (!isDev) {

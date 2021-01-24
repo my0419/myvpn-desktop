@@ -97,6 +97,7 @@
 <script>
   const isBrowser = process.browser
   import { redirectTo } from '../../lib/utils'
+  import { validateIPaddress } from '../../lib/string'
   export default {
     data () {
       return {
@@ -181,7 +182,7 @@
         this.dnsSecond = this.dnsList[val].second
       },
       handleApply () {
-        if (!require('net').isIP(this.dnsFirst) || !require('net').isIP(this.dnsSecond)) {
+        if (!validateIPaddress(this.dnsFirst) || !validateIPaddress(this.dnsSecond)) {
           this.invalidDNS = true
         } else {
           this.modalOpen = false

@@ -9,8 +9,8 @@
                     {{ $i18n.locale === 'ru' ? 'ENG' : 'RUS' }}
                 </a>
             </div>
-            <div class="app__window-line"></div>
-            <div class="app__window-control">
+            <div v-if="!isBrowser" class="app__window-line"></div>
+            <div v-if="!isBrowser" class="app__window-control">
                 <div class="app__window-control-icon">
                     <a href="#" v-on:click.prevent="windowMinimize">
                         <img :src="staticPath + '/img/window/minimize.svg'"/>
@@ -32,11 +32,15 @@
 </template>
 
 <script>
-    const { remote } = require('electron')
+    const isBrowser = process.browser
+    if (!isBrowser) {
+      const { remote } = require('electron')
+    }
     export default {
         data() {
             return {
                 staticPath: process.browser || process.env.NODE_ENV === 'development' ? 'static' : __static,
+                isBrowser
             }
         },
         methods: {
@@ -102,6 +106,8 @@
             -webkit-app-region: no-drag;
             display: flex;
             align-items: center;
+            height: 27px;
+            padding-right: 10px;
         }
 
         &__window-control {
@@ -117,8 +123,6 @@
                 cursor: pointer;
                 height: 24px;
             }
-
-            padding-right: 10px;
         }
 
         &__window-control-icon {
