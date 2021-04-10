@@ -3,7 +3,6 @@ import axios from 'axios'
 import aesjs from 'aes-js'
 import {generateRandomString} from "../string";
 
-export const AGENT_HTTP_PORT = 8400;
 export const CONFIG_SPLIT_ACCOUNTS_LINE = '----- next account config ------'
 
 export class ServerAgent {
@@ -14,7 +13,7 @@ export class ServerAgent {
   }
 
   async getState() {
-    const agentUrl = `http://${this.serverIp}:${AGENT_HTTP_PORT}`
+    const agentUrl = `https://${this.serverIp}.nip.io`
     const client = axios.create({ baseURL: agentUrl, timeout: 5000 });
     let retries = 30
     axiosRetry(client, {

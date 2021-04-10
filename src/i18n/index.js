@@ -114,7 +114,7 @@ export default {
     'Private Key Authorization': 'Авторизация по приватному ключу',
     'Paste in the server private key': 'Вставьте приватный ключ',
     'IP field is not filled in correctly': 'Неверно заполнено поле IP',
-    'Starting MyVPN Agent. Make sure that port 8400 is open on your server.': 'Запуск MyVPN Agent. Убедитесь что на вашем сервере открыт порт 8400.',
+    'Starting MyVPN Agent. Make sure that port 443 is open on your server.': 'Запуск MyVPN Agent. Убедитесь что на вашем сервере открыт порт 443.',
     'Requires a clean Debian 9 server': 'Требуется чистый Debian 9 сервер',
     'Server Port': 'Порт сервера',
     'Local Port': 'Порт локальный',

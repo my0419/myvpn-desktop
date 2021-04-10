@@ -54,7 +54,7 @@ const actions = {
     let result = null
     try {
       await deploy.openConnection()
-      dispatch('log', 'Starting MyVPN Agent. Make sure that port 8400 is open on your server.')
+      dispatch('log', 'Starting MyVPN Agent. Make sure that port 443 is open on your server.')
       await deploy.setup()
 
       const agent = new ServerAgent(sshIp, configuration.aesKey)
@@ -86,7 +86,7 @@ const actions = {
           return null
         }, err => {
           console.log('myvpn agent http failed:', err)
-          commit('PROCESSING_ERROR', 'Failed to connect to MyVPN Agent, port 8400 is not available.')
+          commit('PROCESSING_ERROR', 'Failed to connect to MyVPN Agent, port 443 is not available.')
           return err
         })
         if (result === null) {
