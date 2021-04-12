@@ -1,32 +1,67 @@
 <template>
-    <div class="app-page">
+    <div class="app-page processing-page">
         <el-alert v-show="lockedIp && $i18n.locale === 'ru'" title="Повторная попытка создать новый сервер в выбранном регионе" :description="`IP созданного сервера ${lockedIp} заблокирован надзорными органами вашей страны`" type="warning" show-icon></el-alert>
         <el-alert v-show="lockedIp && $i18n.locale !== 'ru'" title="Trying to create a new server in the selected region again" :description="`The IP of the created server ${lockedIp} is blocked in your country`" type="warning" show-icon></el-alert>
         <Preloader />
         <div class="wrapper">
-            <h1 class="glitch" :text="$t(journalLastLog)">{{ $t(journalLastLog) }}</h1>
+            <h1 class="glitch proccesing-heading" :text="$t(journalLastLog)">{{ $t(journalLastLog) }}</h1>
         </div>
-        <h4 class="text-center">{{ $t('It can take 3 to 5 minutes to set up the environment') }}</h4>
+        <h4 class="text-center proccesing-description">{{ $t('It can take 3 to 5 minutes to set up the environment') }}</h4>
         <!--<div class="text-center" v-show="allowCancel">
             <el-button type="primary" v-on:click="handleCancel" icon="el-icon-close">{{ $t('Cancel') }}</el-button>
         </div>-->
     </div>
 </template>
 
-<style scoped>
-    .wrapper {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+<style lang="scss" scoped>
+  @import '~mixins';
+  .wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @include mqMAX($XS) {
+        height: auto;
+      }
+  }
+  .wrapper h1 {
+      font-family: 'Roboto Mono';
+      font-weight: 500;
+      font-size: 1.8rem;
+      color: #fff;
+      @include mqMAX($XS) {
+        font-size: .9rem;
+      }
+      @include mqMAX($XXS) {
+        font-size: .7rem;
+      }
+  }
+  .processing-page {
+    @include mqMAX($XS) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 0;
     }
-    .wrapper h1 {
-        font-family: 'Roboto Mono';
-        font-weight: 500;
-        font-size: 1.8rem;
-        color: #fff;
+  }
+  .proccesing-heading {
+    @include mqMAX($XS) {
+      padding: 15px;
+      &::before,
+      &::after {
+        padding: 15px;
+      }
     }
+  }
+  .proccesing-description {
+    @include mqMAX($XS) {
+      margin-top: 0;
+      font-size: .8rem;
+    }
+  }
 </style>
 
 <script>

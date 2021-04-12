@@ -13,8 +13,39 @@
   color: #fa7600;
 }
 .el-dialog {
+  width: 500px;
   background: linear-gradient(5.41deg,#191919,#313131);
+  margin-top: 22px !important;
   &__title {
     color: #c1c1c1;
+  }
+  @include mqMAX($XS) {
+    width: calc(100% - 20px);
+    max-height: 95vh;
+    margin-top: auto !important;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: auto;
+  }
+}
+.el-dialog__wrapper {
+  @include mqMAX($XS) {
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+}
+.el-dialog__header,
+.el-dialog__body {
+  @include mqMAX($XXS) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+.el-dialog__body {
+  @include mqMAX($XXS) {
+    padding-bottom: 10px;
   }
 }

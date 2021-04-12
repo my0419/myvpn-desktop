@@ -1,0 +1,31 @@
+@use 'sass:map';
+@import 'variables.scss';
+
+$XXS: #{map-get($media-breakpoints, 'xxs')}px;
+$XS: #{map-get($media-breakpoints, 'xs')}px;
+$MD: #{map-get($media-breakpoints, 'md')}px;
+$LG: #{map-get($media-breakpoints, 'lg')}px;
+
+@mixin mqMIN($min) {
+  @media screen and (min-width: $min) {
+    @content;
+  }
+}
+
+@mixin mqMAX($max) {
+  @media screen and (max-width: $max) {
+    @content;
+  }
+}
+
+@mixin hr() {
+  & {
+    display: flex;
+    flex: 0 0 auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    height: 1px;
+    background-color: #3b3b3b;
+  }
+}

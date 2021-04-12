@@ -6,10 +6,10 @@
                 <el-button v-if="selectedProvider !== 'custom'" type="danger" size="mini" v-on:click="deleteServer" icon="el-icon-delete">{{ $t('Delete server') }}</el-button>
             </el-row>
 
-            <el-tabs class="step-access__tabs" v-model="activeTab">
+            <el-tabs class="step-access__tabs" data-tabs="access-tabs" v-model="activeTab">
                 <el-tab-pane :label="$t('My VPN')" name="1">
                     <div v-if="connectionType === 'l2tp'">
-                        <el-form class="step-access__form" label-width="160px">
+                        <el-form class="step-access__form step-access__form-vpn">
                             <el-form-item :label="$root.$t('Type of connection')">
                                 L2TP / IPsec
                             </el-form-item>
@@ -171,7 +171,7 @@
                     </div>
                 </el-tab-pane>
                 <el-tab-pane :label="$t('My Server')" name="2" v-if="selectedProvider !== 'custom'">
-                    <el-form class="step-access__form" label-width="160px">
+                    <el-form class="step-access__form step-access__form-server">
                         <el-form-item>
                           <el-button size="small"  type="primary" icon="el-icon-document-copy" v-clipboard="serverAccess" v-clipboard:success="clipboardSuccessHandler">{{ $t('Copy all accesses') }}</el-button>
                           <el-button size="small"  type="primary" icon="el-icon-download" v-on:click="saveServerAccess">{{ $t('Save all accesses') }}</el-button>
@@ -221,6 +221,19 @@
 </template>
 
 <style lang="scss" >
+@import '~mixins';
+.step-access {
+  & &__tabs[data-tabs=access-tabs] {
+    @include mqMAX($XS) {
+      margin-top: 15px;
+    }
+  }
+  .selectable {
+    @include mqMAX($XS) {
+      margin-top: 0;
+    }
+  }
+}
 .step-access__nav {
   z-index: 4;
   align-items: center;
@@ -229,6 +242,29 @@
   position: absolute;
   right: 20px;
   top: 40px;
+  @include mqMAX($XS) {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    top: 0;
+    left: 0;
+    right: initial;
+    position: relative;
+    width: initial;
+    text-align: left;
+  }
+  .el-button--mini {
+    @include mqMAX($XS) {
+      height: 36px;
+      &:first-child {
+        width: 100px;
+      }
+      &:last-child {
+        margin-left: auto;
+        width: calc(100% - 110px);
+      }
+    }
+  }
 }
 .v-line {
   display: inline-block;
@@ -239,7 +275,48 @@
 }
 .step-access__form {
   color: #fbfbfb;
-
+  &-server {
+    margin-left: 160px;
+    @include mqMAX($XS) {
+      margin-left: 0;
+      .el-form-item {
+        display: flex;
+        flex-direction: column;
+        &:not(:first-child):not(:last-child)::after {
+          content: '';
+          @include hr();
+        }
+      }
+      .el-button {
+        margin-right: 0;
+        width: 100%;
+        height: 36px;
+      }
+      .el-button +.el-button {
+        margin-top: 15px;
+        margin-right: 0;
+        margin-left: 0;
+      }
+    }
+  }
+  &-vpn {
+    .el-form-item {
+      @include mqMAX($XS) {
+        display: flex;
+        flex-direction: column;
+        &:not(:last-child)::after {
+          content: '';
+          @include hr();
+        }
+      }
+    }
+    .el-form-item__content {
+      margin-left: 160px;
+      @include mqMAX($XS) {
+        margin-left: 0;
+      }
+    }
+  }
   .el-form-item {
     margin-bottom: 0;
   }
@@ -250,16 +327,15 @@
 </style>
 
 <style scoped>
-    h3 {
-        text-transform: none;
-    }
-    .copied-section {
-        margin-top: 10px;
-    }
-    .step-access__tabs {
-        margin-top: -15px;
-    }
-
+  h3 {
+    text-transform: none;
+  }
+  .copied-section {
+      margin-top: 10px;
+  }
+  .step-access__tabs {
+      margin-top: -15px;
+  }
 </style>
 
 <script>
@@ -274,7 +350,7 @@
   if (!isBrowser) {
     const { remote } = require('electron')
     electron = { remote }
-  }  
+  }
 
   function renderMessage(message, type, options) {
     return this.$message({message: this.$root.$t(message), type, ...options})
@@ -301,7 +377,7 @@
 
   function saveFileHandler(filename, fileData) {
     if (isBrowser) {
-      try {        
+      try {
         saveFileFromBrowser.call(this, filename, fileData)
       } catch(error) {
         displayErrorMessage.call(this, error)

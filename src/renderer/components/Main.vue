@@ -7,19 +7,38 @@
     <h3>{{ $t('Select the connection protocol') }}</h3>
     <FormTypes />
     <ModalAdvancedSettings />
-    <div class="m-top">
-      <el-button type="primary" :disabled="!configuredSuccess" v-on:click="handleProcessing" icon="el-icon-magic-stick">
+    <div class="m-top main-footer">
+      <el-button class="btn-group-item btn-group-item--fill" type="primary" :disabled="!configuredSuccess" v-on:click="handleProcessing" icon="el-icon-magic-stick">
         <span v-if="selectedProvider !== 'custom'">{{ $t('Create a server and configure the VPN') }}</span>
         <span v-else>{{ $t('Connect to the server and configure the VPN') }}</span>
       </el-button>
-      <el-button v-if="isDev" type="primary" v-on:click="handleDevelopmentAccess" icon="el-icon-brush">[Dev] Access Page</el-button>
-      <el-button v-if="isDev" type="primary" v-on:click="handleDevelopmentStore" icon="el-icon-brush">[Dev] Reset Store</el-button>
+      <el-button class="btn-group-item btn-group-item--fill" v-if="isDev" type="primary" v-on:click="handleDevelopmentAccess" icon="el-icon-brush">[Dev] Access Page</el-button>
+      <el-button class="btn-group-item btn-group-item--fill" v-if="isDev" type="primary" v-on:click="handleDevelopmentStore" icon="el-icon-brush">[Dev] Reset Store</el-button>
     </div>
     <div class="app-version">
       {{ $t('Version')}}: {{ appVersion }}
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+  @import '~mixins';
+  .main-footer {
+    @include mqMAX($MD) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .el-button {
+      @include mqMAX($MD) {
+        &:not(:first-child) {
+          margin-top: 20px;
+          margin-left: 0;
+        }
+      }
+    }
+  }
+</style>
 
 <script>
   import { mapState } from 'vuex'
@@ -41,7 +60,7 @@
     electron = { app, remote, shell }
   }
 
-  const getVersion = () => 
+  const getVersion = () =>
     isBrowser ? '.Online' : electron.remote.app.getVersion()
 
   const redirectToLinkUpdate = () =>

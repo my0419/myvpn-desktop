@@ -1,0 +1,12 @@
+$media-breakpoints: (
+  xxs: 550,
+  xs: 768,
+  md: 850,
+  lg: 1200
+);
+
+:export {
+  @each $key, $value in $media-breakpoints {
+    #{unquote($key)}: $value;
+  }
+};

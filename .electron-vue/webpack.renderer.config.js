@@ -48,20 +48,17 @@ let rendererConfig = {
         options: { allowTsInNodeModules: true }
       },
       {
-        test: /\.scss$/,
-        use: ['vue-style-loader', 'css-loader', 'sass-loader']
-      },
-      {
-        test: /\.sass$/,
-        use: ['vue-style-loader', 'css-loader', 'sass-loader?indentedSyntax']
-      },
-      {
-        test: /\.less$/,
-        use: ['vue-style-loader', 'css-loader', 'less-loader']
-      },
-      {
-        test: /\.css$/,
-        use: ['vue-style-loader', 'css-loader']
+        test: /.*\.(sa|sc|c)ss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: require('sass'),
+            },
+          },
+        ]
       },
       {
         test: /\.html$/,
@@ -163,7 +160,9 @@ let rendererConfig = {
     alias: {
       '@': path.join(__dirname, '../src/renderer'),
       '~': path.join(__dirname, '../node_modules'),
-      'vue$': 'vue/dist/vue.esm.js'
+      './fonts': path.join(__dirname, '../src/renderer/assets/css/fonts'),
+      '~mixins': path.join(__dirname, '../src/renderer/assets/css/mixins'),
+      'vue$': 'vue/dist/vue.esm.js',
     },
     extensions: ['.js', '.ts', '.tsx', '.vue', '.json', '.css', '.node']
   },

@@ -22,6 +22,7 @@
 </template>
 
 <style lang="scss" scoped>
+    @import '~mixins';
     $bolb-color: #ff6715;
 
     // Loader
@@ -34,7 +35,10 @@
         border-radius: 70px;
         transform-style: preserve-3d;
         margin: 0 auto;
-
+        @include mqMAX($XS) {
+            width: 200px;
+            height: 200px;
+        }
         // Blob center item
         .blob-center {
             transform-style: preserve-3d;

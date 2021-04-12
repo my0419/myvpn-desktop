@@ -4,6 +4,11 @@
   background: linear-gradient(77.02deg, #131313 -85.04%, #383838 162.69%);
   color: #c1c1c1;
   border-color: #444;
+  @include mqMAX($XXS) {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 12px;
+  }
   &:hover {
     background: linear-gradient(77.02deg, #3a3a3a -85.04%, #505050 162.69%);
     color: #c1c1c1;

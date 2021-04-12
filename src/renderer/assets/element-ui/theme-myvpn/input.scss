@@ -53,6 +53,11 @@
 .el-scrollbar__wrap {
   overflow-x: hidden;
 }
+.el-select {
+  @include mqMAX($XXS) {
+    width: 100%;
+  }
+}
 .el-select-dropdown {
   background-color: #343434;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -91,6 +96,11 @@
     &:hover {
       border-color: #d4682c;
     }
+  }
+}
+.el-form-item__label {
+  @include mqMAX($XS) {
+    text-align: left;
   }
 }
 .el-checkbox__input.is-checked .el-checkbox__inner,

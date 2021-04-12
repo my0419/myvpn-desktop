@@ -2,7 +2,7 @@
     <div>
         <h3 class="title">{{ $t('Setup SSH Connection') }}</h3>
         <div class="notice"><i class="el-icon-warning"></i> {{ $t('Requires a clean Debian 9 server')}}</div>
-        <el-form :inline="true">
+        <el-form :inline="true" class="provider-self-form">
             <el-form-item :label="$t('User')">
                 <el-input v-model="user" class="input-user" placeholder="root"></el-input>
             </el-form-item>
@@ -13,7 +13,7 @@
                 <el-input-number v-model="port" class="input-port" controls-position="right" :min="1" :max="65535" />
             </el-form-item>
         </el-form>
-        <el-form>
+        <el-form class="provider-self-form">
             <el-form-item>
                 <el-checkbox v-model="isPrivateKey">{{ $t('Private Key Authorization') }}</el-checkbox>
             </el-form-item>
@@ -28,20 +28,46 @@
     </div>
 </template>
 
-<style scoped>
-    .notice {
-        color: #c00000;
-        padding-bottom: 15px;
+<style lang="scss" scoped>
+  @import '~mixins';
+  .notice {
+    color: #c00000;
+    padding-bottom: 15px;
+  }
+  .input-user {
+    width: 100px;
+  }
+  .input-port {
+    width: 100px;
+  }
+  .el-form-item {
+    margin-bottom: 0;
+  }
+  .provider-self-form {
+    &:nth-of-type(2) {
+      @include mqMAX($XS) {
+        margin-top: 20px;
+      }
     }
-    .input-user {
-        width: 100px;
-    }
-    .input-port {
-        width: 100px;
+    @include mqMAX($XS) {
+      display: flex;
+      flex-direction: column;
     }
     .el-form-item {
-        margin-bottom: 0;
+      @include mqMAX($XS) {
+        display: flex;
+        flex-direction: column;
+        margin-right: 0;
+        &:not(:first-child) {
+          margin-top: 5px;
+        }
+        .el-input,
+        .input-port {
+          width: 100%;
+        }
+      }
     }
+  }
 </style>
 
 <script>

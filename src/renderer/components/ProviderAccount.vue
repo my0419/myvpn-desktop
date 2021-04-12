@@ -1,24 +1,24 @@
 <template>
     <el-row v-loading.lock=processing>
-        <div v-if="tokenInput">
+        <div v-if="tokenInput" class="provider-token-wrapper">
           <el-row :gutter="24">
-            <el-col v-if="token && configuredSuccess" :span="4">
-              <el-button type="primary" icon="el-icon-receiving" v-on:click="goToDroplets">{{ $t('Servers') }}</el-button>
+            <el-col class="btn-group" v-if="token && configuredSuccess" :span="4">
+              <el-button class="btn-group-item btn-group-item--fill" type="primary" icon="el-icon-receiving" v-on:click="goToDroplets">{{ $t('Servers') }}</el-button>
             </el-col>
-            <el-col :span="token && configuredSuccess ? 20 : 24">
+            <el-col class="provider-token-field" :span="token && configuredSuccess ? 20 : 24">
               <el-input prefix-icon="el-icon-key" :placeholder="$t(`Insert the API key from your ${providerName} account`)" :value="token" @input="setToken" autofocus clearable></el-input>
             </el-col>
           </el-row>
         </div>
-        <div v-else>
-            <el-button type="primary" v-if="token" icon="el-icon-receiving" v-on:click="goToDroplets">{{ $t('Servers') }}</el-button>
-            <el-button type="info" v-if="token" icon="el-icon-connection" v-on:click="logout">{{ $t('Logout') }}</el-button>
-            <el-button type="success" :name="providerName" v-else icon="el-icon-connection" v-on:click="login">{{ $t(`Log in to the ${providerName} account`) }}</el-button>
+        <div class="btn-group" v-else>
+            <el-button class="btn-group-item btn-group-item--left" type="primary" v-if="token" icon="el-icon-receiving" v-on:click="goToDroplets">{{ $t('Servers') }}</el-button>
+            <el-button class="btn-group-item btn-group-item--right" type="info" v-if="token" icon="el-icon-connection" v-on:click="logout">{{ $t('Logout') }}</el-button>
+            <el-button class="btn-group-item btn-group-item--fill" type="success" :name="providerName" v-else icon="el-icon-connection" v-on:click="login">{{ $t(`Log in to the ${providerName} account`) }}</el-button>
         </div>
         <p>
             <el-alert v-if="configuredError !== '' && token !== ''" :title="$t(configuredError)" type="error" show-icon :closable=false />
         </p>
-        <div>
+        <div class="provider-connect-links">
             <el-link v-if="tokenInput && !viaKey" v-on:click="tokenInput = false">{{ $t('Connect via login and password') }}<i class="el-icon-user-solid el-icon--right"></i> </el-link>
             <el-link v-if="!tokenInput" v-on:click="tokenInput = true">{{ $t('Connect via API key') }}<i class="el-icon-key el-icon--right"></i> </el-link>
             <el-divider v-if="!viaKey" direction="vertical"></el-divider>
@@ -28,6 +28,44 @@
         </div>
     </el-row>
 </template>
+
+<style lang="scss" scoped>
+  @import '~mixins';
+  .provider-token-wrapper {
+    @include mqMAX($MD) {
+      .el-row {
+        display: flex;
+        flex-direction: column;
+      }
+      .el-col {
+        .el-button {
+          margin-bottom: 10px;
+        }
+      }
+    }
+    @include mqMAX($XXS) {
+      .btn-group {
+        width: 100%;
+      }
+      .provider-token-field {
+        width: 100%;
+      }
+    }
+  }
+  .provider-choose-content {
+
+  }
+  .provider-connect-links {
+    @include mqMAX($XXS) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      .el-divider {
+        visibility: hidden;
+      }
+    }
+  }
+</style>
 
 <script>
   import { mapState } from 'vuex'

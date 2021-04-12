@@ -30,20 +30,17 @@ let webConfig = {
         }*/
       },
       {
-        test: /\.scss$/,
-        use: ['vue-style-loader', 'css-loader', 'sass-loader']
-      },
-      {
-        test: /\.sass$/,
-        use: ['vue-style-loader', 'css-loader', 'sass-loader?indentedSyntax']
-      },
-      {
-        test: /\.less$/,
-        use: ['vue-style-loader', 'css-loader', 'less-loader']
-      },
-      {
-        test: /\.css$/,
-        use: ['vue-style-loader', 'css-loader']
+        test: /.*\.(sa|sc|c)ss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: require('sass'),
+            },
+          },
+        ]
       },
       {
         test: /\.html$/,
@@ -141,6 +138,8 @@ let webConfig = {
   resolve: {
     alias: {
       '@': path.join(__dirname, '../src/renderer'),
+      './fonts': path.join(__dirname, '../src/renderer/assets/css/fonts'),
+      '~mixins': path.join(__dirname, '../src/renderer/assets/css/mixins'),
       'vue$': 'vue/dist/vue.esm.js'
     },
     extensions: ['.ts', '.tsx', '.js', '.vue', '.json', '.css']
@@ -162,7 +161,15 @@ if (process.env.NODE_ENV === 'production') {
         from: path.join(__dirname, '../static'),
         to: path.join(__dirname, '../dist/web/static'),
         ignore: ['.*']
-      }
+      },
+      {
+        from: path.join(__dirname, '../manifest.json'),
+        to: path.join(__dirname, '../dist/web'),
+      },
+      {
+        from: path.join(__dirname, '../service-worker.js'),
+        to: path.join(__dirname, '../dist/web'),
+      },
     ]),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'

@@ -31,6 +31,12 @@
   margin-top: 10px;
   box-shadow: 0 0 20px rgba(0,0,0,0.2);
   border: none;
+  @include mqMAX($XXS) {
+    width: calc(100% - 20px);
+    margin-left: auto;
+    margin-right: auto;
+    min-width: unset;
+  }
   &--info {
     background-color: #1c1c1c;
   }

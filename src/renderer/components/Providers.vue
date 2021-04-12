@@ -1,91 +1,29 @@
 <template>
-  <el-tabs :value="selectedProvider" @tab-click="handleChangeProvider" class="providers" type="border-card">
-    <el-tab-pane v-for="provider in providers" :key="provider.name" type="card" :name="provider.name" :disabled="apikey.length > 0 && activeProvider() !== provider.name">
-      <span slot="label">
-        <img class="provider-choose-logo" :src="staticPath + provider.logo" v-if="provider.logo" />
-        <span class="provider-choose-title" v-if="provider.name === 'custom'">{{ $t(provider.title) }}</span>
-      </span>
-      <div v-if="activeProvider() === provider.name">
+  <ProviderChoosen>
+    <template v-slot:providerItem="{ provider }">
+      <div>
         <ProviderSelf v-if="provider.name === 'custom'" />
         <ProviderAccount v-else
-                :provider-key="provider.name"
-                :provider-name="provider.title"
-                :provider-website="provider.website"
-                :faq-link="provider.faq"
-                :oauthConfig="provider.oauthConfig || null"
-                :oauth-window-height="(provider.oauthWindow) ? provider.oauthWindow.height : null"
-                :oauth-window-width="(provider.oauthWindow) ? provider.oauthWindow.width : null"
-                :via-key="provider.viaKey || false"
+          :provider-key="provider.name"
+          :provider-name="provider.title"
+          :provider-website="provider.website"
+          :faq-link="provider.faq"
+          :oauthConfig="provider.oauthConfig || null"
+          :oauth-window-height="(provider.oauthWindow) ? provider.oauthWindow.height : null"
+          :oauth-window-width="(provider.oauthWindow) ? provider.oauthWindow.width : null"
+          :via-key="provider.viaKey || false"
         />
       </div>
-    </el-tab-pane>
-  </el-tabs>
+    </template>
+  </ProviderChoosen>
 </template>
 
-<style scoped>
-  .providers .provider-choose-title {
-    font-weight: 400;
-    font-size: 1rem;
-    color: #ffffff;
-    opacity: 0.8;
-  }
-  .providers .provider-choose-logo {
-    height: 21px;
-    position: relative;
-    top: 6px;
-    opacity: 0.8;
-  }
-</style>
-<style>
-  .providers {
-    box-shadow: none !important;
-  }
-  .el-tabs__item.is-disabled {
-    display: none;
-  }
-  .el-tabs__item {
-    height: 50px;
-    padding: 0 10px !important;
-    border-right: 1px solid #ddd;
-  }
-  .el-tabs__item:last-child {
-    border-right: none !important;
-  }
-  .el-tabs__nav {
-    height: 42px;
-  }
-</style>
-
 <script>
-  import { mapState } from 'vuex'
-  import { CRYPTOSERVERS_KEY } from '../../lib/providers'
   import ProviderAccount from './ProviderAccount'
-  import providers from '../../config/providers'
   import ProviderSelf from "./ProviderSelf";
+  import ProviderChoosen from './ProviderChoosen';
 
   export default {
-    components: {ProviderSelf, ProviderAccount},
-    computed: mapState({
-      selectedProvider: state => state.provider.name || CRYPTOSERVERS_KEY,
-      apikey: state => state.provider.config.apikey || '',
-    }),
-    data () {
-      return {
-        staticPath: process.browser || process.env.NODE_ENV === 'development' ? 'static' :  __static,
-        activeTab: null,
-        providers: providers[process.browser ? 'web' : 'desktop'],
-      }
-    },
-    methods: {
-      activeProvider () {
-        return this.activeTab || this.selectedProvider
-      },
-      handleChangeProvider (tab) {
-        if (tab.paneName !== this.selectedProvider) {
-          this.$store.dispatch('configureProvider', {name: tab.paneName, config: {apikey: ''}}) // clear
-        }
-        this.activeTab = tab.paneName
-      }
-    }
+    components: {ProviderSelf, ProviderAccount, ProviderChoosen}
   }
 </script>

@@ -1,0 +1,22 @@
+{
+  "short_name": "MyVPN",
+  "name": "MyVPN",
+  "icons": [
+    {
+      "src": "/static/img/logo-small.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "/static/img/logo-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#343434",
+  "display": "fullscreen",
+  "scope": "/",
+  "theme_color": "#343434",
+  "description": "This program is helpful to quickly configure a personal VPN server."
+}

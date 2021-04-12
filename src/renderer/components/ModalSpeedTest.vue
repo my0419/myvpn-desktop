@@ -166,41 +166,37 @@
   }
 </script>
 
-<style scoped>
-    .wrapper {
-        overflow-x: scroll;
-    }
-    table {
-        display: table;
-        border-collapse: collapse;
-        border-spacing: 0;
-        width: 100%;
-        color: #c1c1c1;
-    }
-    th {
-        text-align: center;
-    }
-    tr {
-        cursor: default;
-        border-bottom: 1px solid rgba(0,0,0,0.12);
-    }
-    td {
-        padding: 5px 5px;
-        display: table-cell;
-        vertical-align: middle;
-        border-radius: 2px;
-        min-width: 80px;
-        text-align: center;
-    }
-    td.info {
-        min-width: 130px !important;
-    }
-    tr:hover {
-        background-color: #3e3e3e;
-    }
-</style>
-<style>
-    .el-dialog__wrapper > div {
-        margin-top: 22px !important;
-    }
+<style lang="scss" scoped>
+  @import '~mixins';
+  .wrapper {
+      overflow-x: scroll;
+  }
+  table {
+      display: table;
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      color: #c1c1c1;
+  }
+  th {
+      text-align: center;
+  }
+  tr {
+      cursor: default;
+      border-bottom: 1px solid rgba(0,0,0,0.12);
+  }
+  td {
+      padding: 5px 5px;
+      display: table-cell;
+      vertical-align: middle;
+      border-radius: 2px;
+      min-width: 80px;
+      text-align: center;
+  }
+  td.info {
+      min-width: 130px !important;
+  }
+  tr:hover {
+      background-color: #3e3e3e;
+  }
 </style>

@@ -1,16 +1,18 @@
 <template>
-    <div class="app-page">
+    <div class="app-page page-droplets">
         <h1>{{ $t('Your Servers') }}</h1>
         <hr />
-        <el-button type="success" v-on:click="handleMainPage" icon="el-icon-arrow-left" round>{{ $t('Go Back') }}</el-button>
-        <el-button type="primary" :disabled="dropletLoading" round @click="handleUpdateDroplets">
-            <i v-if="dropletLoading" class="el-icon-loading"></i>
-            <i v-else class="el-icon-refresh-right"></i> {{ $t('Update the list') }}
-        </el-button>
+        <div class="page-droplets-nav">
+          <el-button class="droplets-btn droplets-btn--left" type="success" v-on:click="handleMainPage" icon="el-icon-arrow-left" round>{{ $t('Go Back') }}</el-button>
+          <el-button class="droplets-btn droplets-btn--right" type="primary" :disabled="dropletLoading" round @click="handleUpdateDroplets">
+              <i v-if="dropletLoading" class="el-icon-loading"></i>
+              <i v-else class="el-icon-refresh-right"></i> {{ $t('Update the list') }}
+          </el-button>
+        </div>
         <div>
             <el-alert class="m-top" v-if="dropletEmpty === true" :title="$t('The list of servers is empty')" type="info" />
             <el-row v-loading.lock="deleteLoading" v-else>
-                <el-col :span="11" v-for="(droplet, index) in dropletList" :key="index" :offset="index % 2 ? 1 : 0">
+                <el-col class="box-card-col" :span="11" v-for="(droplet, index) in dropletList" :key="index" :offset="index % 2 ? 1 : 0">
                     <el-card class="box-card m-top" v-bind:style="{ opacity: deletedDroplets.indexOf(droplet.id) === -1 ? 1 : 0.3 }">
                         <div slot="header" class="clearfix">
                             <strong>{{ droplet.name }}, {{ droplet.image.distribution }} {{ droplet.image.name }}</strong>
@@ -31,16 +33,53 @@
     </div>
 </template>
 
-<style scoped>
-    h4 {
-        margin: 4px 0;
+<style lang='scss' scoped>
+  @import '~mixins';
+  h4 {
+      margin: 4px 0;
+  }
+  .page-droplets {
+    @include mqMAX($XXS) {
+      display: flex;
+      flex-direction: column;
+    }
+    .page-droplets-nav {
+      @include mqMAX($XXS) {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+      }
+    }
+    .box-card-col {
+      @include mqMAX($XS) {
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+    .droplets-btn {
+      @include mqMAX($XXS) {
+        border-radius: 4px;
+        &--left {
+          width: 100px;
+        }
+        &--right {
+          margin-left: auto;
+          width: calc(100% - 110px);
+        }
+      }
     }
     .delete-button {
-        margin-top: 10px;
-        color: #d4682c;
-        padding: 7px;
-        font-size: 0.7rem;
+      margin-top: 10px;
+      color: #d4682c;
+      padding: 7px;
+      font-size: 0.7rem;
+      @include mqMAX($XXS) {
+        margin-top: 12px;
+        width: 100%;
+        height: 30px;
+      }
     }
+  }
 </style>
 
 <script>
