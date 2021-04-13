@@ -114,3 +114,17 @@
 .el-input-number__increase {
   border-left: 1px solid #272727;
 }
+
+.el-radio,
+.el-radio:active,
+.el-radio:focus,
+.el-radio:active .el-radio__input .el-radio__inner,
+.el-radio:focus .el-radio__input .el-radio__inner {
+  outline: none;
+  box-shadow: none;
+}
+
+.el-radio:focus:not(.is-focus):not(:active):not(.is-disabled) .el-radio__inner {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}

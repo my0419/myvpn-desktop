@@ -28,7 +28,7 @@
                         </el-form>
                     </div>
                     <div v-if="connectionType === 'pptp'">
-                        <el-form class="step-access__form" label-width="160px">
+                        <el-form class="step-access__form step-access__form-vpn">
                             <el-form-item :label="$root.$t('Type of connection')">
                                 PPTP
                             </el-form-item>
@@ -47,7 +47,7 @@
                       </el-form>
                     </div>
                     <div v-if="connectionType === 'socks5'">
-                        <el-form class="step-access__form" label-width="160px">
+                        <el-form class="step-access__form step-access__form-vpn">
                             <el-form-item :label="$root.$t('Type of connection')">
                               SOCKS5
                             </el-form-item>
@@ -60,7 +60,7 @@
                         </el-form>
                     </div>
                     <div v-if="connectionType === 'openvpn'">
-                        <el-form class="step-access__form" label-width="160px">
+                        <el-form class="step-access__form step-access__form-vpn">
                             <el-form-item :label="$root.$t('Type of connection')">
                                 OpenVPN
                             </el-form-item>
@@ -73,9 +73,9 @@
                         </el-form>
                     </div>
                     <div v-if="connectionType === 'wireguard'">
-                        <el-row :gutter="20">
-                            <el-col :span="14">
-                                <el-form class="step-access__form" label-width="160px">
+                        <el-row :gutter="20" class="step-access__form-wrapper">
+                            <el-col :span="14" class="step-access__form-col">
+                                <el-form class="step-access__form step-access__form-vpn">
                                     <el-form-item :label="$root.$t('Type of connection')">
                                         WireGuard
                                     </el-form-item>
@@ -86,7 +86,7 @@
                                         <Copied :text="serverIp" />
                                     </el-form-item>
                                     <el-form-item :label="$root.$t('Config')">
-                                        <el-select v-model="selectedAccountNumber" placeholder="Account" style="width: 240px">
+                                        <el-select v-model="selectedAccountNumber" placeholder="Account">
                                             <el-option
                                                 v-for="(_, index) in accounts"
                                                 :key="`account_wg_${index}`"
@@ -96,12 +96,12 @@
                                         </el-select>
                                     </el-form-item>
                                     <el-form-item class="m-top">
-                                        <el-button type="primary" v-on:click="saveWireguard" icon="el-icon-download">{{ $t('Save Configuration') }}</el-button>
+                                        <el-button type="primary" class="btn-group-item btn-group-item--fill" v-on:click="saveWireguard" icon="el-icon-download">{{ $t('Save Configuration') }}</el-button>
                                     </el-form-item>
                                 </el-form>
 
                             </el-col>
-                            <el-col :span="10">
+                            <el-col :span="10" class="step-access__form-col">
                               <h2>{{ $t('Connect via QR Code') }}</h2>
                               <qrcode-vue class="m-top" :value="selectedAccountConfig" :size="300" level="L"></qrcode-vue>
                               <div class="m-top">
@@ -113,9 +113,9 @@
                         </el-row>
                     </div>
                     <div v-if="connectionType === 'shadowsocks'">
-                        <el-row :gutter="20">
-                            <el-col :span="14">
-                              <el-form class="step-access__form" label-width="160px">
+                        <el-row :gutter="20" class="step-access__form-wrapper">
+                            <el-col :span="14" class="step-access__form-col">
+                              <el-form class="step-access__form step-access__form-vpn">
                                 <el-form-item :label="$root.$t('Type of connection')">
                                   ShadowSocks
                                 </el-form-item>
@@ -154,11 +154,11 @@
                                   </div>
                                 </el-form-item>
                                 <el-form-item>
-                                  <el-button size="small"  type="primary" icon="el-icon-download" v-on:click="saveShadowsocks">{{ $t('Save Configuration') }}</el-button>
+                                  <el-button class="btn-group-item btn-group-item--fill" type="primary" icon="el-icon-download" v-on:click="saveShadowsocks">{{ $t('Save Configuration') }}</el-button>
                                 </el-form-item>
                               </el-form>
                             </el-col>
-                            <el-col :span="10">
+                            <el-col :span="10" class="step-access__form-col">
                               <h2>{{ $t('Connect via QR Code') }}</h2>
                               <qrcode-vue :value="shadowsocksConnect" :size="300" level="L"></qrcode-vue>
                               <div class="m-top">
@@ -274,6 +274,20 @@
   top: 6px;
 }
 .step-access__form {
+  &-wrapper {
+    @include mqMAX($XS) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  &-col {
+    @include mqMAX($XS) {
+      width: 100%;
+      &:not(:first-child) {
+        margin-top: 20px;
+      }
+    }
+  }
   color: #fbfbfb;
   &-server {
     margin-left: 160px;

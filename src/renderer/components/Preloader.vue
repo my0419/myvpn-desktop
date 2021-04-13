@@ -36,6 +36,7 @@
         transform-style: preserve-3d;
         margin: 0 auto;
         @include mqMAX($XS) {
+            margin-top: -10vh;
             width: 200px;
             height: 200px;
         }

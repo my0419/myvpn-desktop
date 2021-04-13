@@ -2,8 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, initial-scale=1, maximum-scale=1 user-scalable=no">
     <title>MyVPN</title>
+    <link rel="apple-touch-icon" href="static/img/logo-small.png">
     <link rel="manifest" href="/manifest.json">
     <% if (htmlWebpackPlugin.options.nodeModules) { %>
       <!-- Add `node_modules/` to global paths so `require` works properly in development -->
@@ -13,14 +14,26 @@
     <% } %>
     <style>
       body {
+        width: 100%;
         background: linear-gradient(5.41deg,#191919,#313131) no-repeat;
         background-attachment: fixed;
+      }
+      html, body {
+        position: fixed;
+        overflow: hidden;
       }
       #app, html, body {
         padding: 0;
         margin: 0;
         height: 100%;
         -webkit-overflow-scrolling: auto;
+        overscroll-behavior-x: none;
+        overscroll-behavior-y: none;
+      }
+      #app {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
       }
       .loading-logo {
         height: 100%;
