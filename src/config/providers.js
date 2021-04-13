@@ -42,7 +42,7 @@ const providers = {
     logo: '/img/providers/cryptoservers.svg',
     website: 'https://cryptoservers.net',
     faq: 'https://myvpn.run/faq/setup/cryptoservers',
-    oauthConfig: {client_id: "199", redirect_uri: "http://tool.myvpn.run", scope: "*", authorize_url: "https://cryptoservers.net/oauth/authorize", response_type: "token" },
+    oauthConfig: {client_id: "199", redirect_uri: "https://tool.myvpn.run", scope: "*", authorize_url: "https://cryptoservers.net/oauth/authorize", response_type: "token" },
     oauthWindow: {width: 600, height: 540}
   }, {
     name: 'digitalocean',

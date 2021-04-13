@@ -15,7 +15,7 @@
   ],
   "start_url": "/",
   "background_color": "#343434",
-  "display": "fullscreen",
+  "display": "minimal-ui",
   "scope": "/",
   "theme_color": "#343434",
   "description": "This program is helpful to quickly configure a personal VPN server."
