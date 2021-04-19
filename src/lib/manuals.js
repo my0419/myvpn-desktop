@@ -1,9 +1,9 @@
 const manuals = {
   Safari: {
     steps: [
-      '/static/img/instructions/ios1.png',
-      '/static/img/instructions/ios2.png',
-      '/static/img/instructions/ios3.png',
+      '/static/img/instructions/ios1.PNG',
+      '/static/img/instructions/ios2.PNG',
+      '/static/img/instructions/ios3.PNG',
     ]
   },
   Firefox: {
