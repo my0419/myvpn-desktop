@@ -9,7 +9,7 @@ export default new Router({
     {
       path: '/',
       name: 'main',
-      component: require('@/components/Main').default
+      component: require('@/components/Main').default,
     },
     {
       path: '/processing',

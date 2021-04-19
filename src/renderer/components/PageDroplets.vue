@@ -48,6 +48,7 @@
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
+        margin-top: -25px;
       }
     }
     .box-card-col {
@@ -116,10 +117,10 @@
         this.deleteLoading = true
         res.then(res => {
           this.deletedDroplets.push(droplet.id)
-          this.$message({message: this.$root.$t('Server successfully removed'), type: 'success'})
+          this.$message({message: this.$root.$t('Server successfully removed'), type: 'success', showClose: true})
           this.handleUpdateDroplets()
         }, res => {
-          this.$message({message: this.$root.$t('Deletion error. Please update the list and try again.'), type: 'error'})
+          this.$message({message: this.$root.$t('Deletion error. Please update the list and try again.'), type: 'error', showClose: true})
         }).finally(_ => this.deleteLoading = false)
       },
       handleUpdateDroplets: function () {

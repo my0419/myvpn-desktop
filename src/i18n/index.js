@@ -133,6 +133,7 @@ export default {
     'Version': 'Версия',
     'Add to home screen this app?': 'Добавить приложение на домашний экран?',
     'Install the MyVPN app directly from your browser': 'Установите приложение MyVPN прямо из вашего браузера',
+    'Wait for the server creation process to complete.': 'Дождитесь процесса завершения создания сервера.',
     'Do not show again': 'Больше не показывать',
     'Step': 'Шаг',
     'Next Step': 'Вперед',

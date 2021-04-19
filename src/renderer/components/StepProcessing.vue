@@ -17,7 +17,6 @@
   @import '~mixins';
   .wrapper {
       width: 100%;
-      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -38,14 +37,12 @@
       }
   }
   .processing-page {
-    @include mqMAX($XS) {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      padding: 0;
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100% - 64px);
+    padding: 0;
   }
   .proccesing-heading {
     @include mqMAX($XS) {
@@ -142,18 +139,18 @@
         let unsubscribe = this.$store.subscribe((mutation, state) => {
           switch (mutation.type) {
             case 'PROCESSING_COMPLETE':
-              this.$message({message: this.$root.$t('The server is successfully configured. Save the accesses.'), type: 'success'})
+              this.$message({message: this.$root.$t('The server is successfully configured. Save the accesses.'), type: 'success', showClose: true})
               unsubscribe()
               this.$router.push({ name: 'access' })
               break
             case 'PROCESSING_CANCEL':
-              this.$message({message: this.$root.$t('The process of building the VPN server is cancelled. If you have build problems, try changing the region.'), type: 'error', duration: 8000})
+              this.$message({message: this.$root.$t('The process of building the VPN server is cancelled. If you have build problems, try changing the region.'), type: 'error', duration: 8000, showClose: true})
               unsubscribe()
               this.$router.push({ name: 'main' })
               break
             case 'PROCESSING_ERROR':
               if (mutation.payload !== 'cancel') {
-                this.$message({dangerouslyUseHTMLString: true, message: `${this.$root.$t('A server configuration error has occurred.')}<br/>${mutation.payload}`, type: 'error', duration: 15000})
+                this.$message({dangerouslyUseHTMLString: true, message: `${this.$root.$t('A server configuration error has occurred.')}<br/>${mutation.payload}`, type: 'error', duration: 15000, showClose: true})
                 unsubscribe()
                 this.$router.push({ name: 'main' })
               }
@@ -170,6 +167,14 @@
       },
       handleCancel: function () {
         this.$store.dispatch('cancelProcessing')
+      }
+    },
+    beforeRouteLeave(to, from, next) {
+      if (from.name === 'processing' && to.name === 'main') {
+        this.$message({message: this.$root.$t('Wait for the server creation process to complete.'), type: 'error', showClose: true});
+        return next(false);
+      } else {
+        next()
       }
     }
   }

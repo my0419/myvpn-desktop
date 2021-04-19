@@ -17,10 +17,10 @@
     background-size: 100%;
     background-position-x: 50px;
     background-position-y: -100px;
+    min-height: calc(100vh - 64px);
     @include mqMAX($XS) {
         padding-left: 10px;
         padding-right: 10px;
-        min-height: calc(100vh - 64px);
         background-size: cover;
         background-position-x: 30%;
         background-position-y: -50px;

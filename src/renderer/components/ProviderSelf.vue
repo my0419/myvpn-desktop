@@ -130,7 +130,7 @@
         let configured = this.$store.state.provider.configuredSuccess = require('net').isIP(this.ip)
         if (!configured) {
           this.ip = ''
-          this.$message({message: this.$root.$t('IP field is not filled in correctly'), type: 'error'})
+          this.$message({message: this.$root.$t('IP field is not filled in correctly'), type: 'error', showClose: true})
         }
       }
     }

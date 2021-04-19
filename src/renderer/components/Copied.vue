@@ -11,7 +11,7 @@
     props: ['text', 'hiddenText'],
     methods: {
       clipboardSuccessHandler ({ value, event }) {
-        this.$message({message: this.$root.$t('Copied!'), type: 'success', duration: 800})
+        this.$message({message: this.$root.$t('Copied!'), type: 'success', duration: 800, showClose: true})
       },
 
       clipboardErrorHandler ({ value, event }) {

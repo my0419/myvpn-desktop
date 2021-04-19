@@ -118,7 +118,7 @@
               closeApp()
             })
               .catch(_ => {
-                this.$message({message: this.$root.$t('We recommend that you do not ignore updates.'), type: 'info'})
+                this.$message({message: this.$root.$t('We recommend that you do not ignore updates.'), type: 'info', showClose: true})
               })
           }
         })
@@ -135,7 +135,7 @@
             this.handleProcessing()
           } catch (error) {
             console.log(error.message)
-            this.$message({message: this.$root.$t('Authorization Error'), type: 'error'})
+            this.$message({message: this.$root.$t('Authorization Error'), type: 'error', showClose: true})
           }
         }
       }

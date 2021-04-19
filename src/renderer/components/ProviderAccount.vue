@@ -160,7 +160,7 @@
             this.setToken((new URLSearchParams(resp)).get('access_token'))
             window.close()
           }, err => {
-            this.$message({message: this.$root.$t('Please try again'), type: 'error'})
+            this.$message({message: this.$root.$t('Please try again'), type: 'error', showClose: true})
             window.close()
           })
       }
@@ -168,7 +168,7 @@
     watch: {
       configuredSuccess: function (val) {
         if (val) {
-          this.$message({message: this.$root.$t('Successful connection to the account'), type: 'success'})
+          this.$message({message: this.$root.$t('Successful connection to the account'), type: 'success', showClose: true})
         }
       },
     }

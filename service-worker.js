@@ -4,10 +4,10 @@ const CURRENT_CACHE = `main-${CACHE_VERSION}`;
 
 // these are the routes we are going to cache for offline support
 const cacheFiles = [
-  '/',
-  '/index.html',
-  '/web.js',
-  '/manifest.json'
+  // '/',
+  // '/index.html',
+  // '/web.js',
+  // '/manifest.json'
 ];
 
 // on activation we clean up the previously registered service workers

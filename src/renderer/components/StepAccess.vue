@@ -367,7 +367,7 @@
   }
 
   function renderMessage(message, type, options) {
-    return this.$message({message: this.$root.$t(message), type, ...options})
+    return this.$message({message: this.$root.$t(message), type, ...options, showClose: true})
   }
 
   function displaySuccessfulMessage() {
@@ -481,7 +481,7 @@ ssh -i myvpn.key root@${state.server.ipv4}`
     },
     methods: {
       clipboardSuccessHandler ({ value, event }) {
-        this.$message({message: this.$root.$t('Copied!'), type: 'success', duration: 800})
+        this.$message({message: this.$root.$t('Copied!'), type: 'success', duration: 800, showClose: true})
       },
       handleMainPage: function () {
         this.$router.push({ name: 'main' })
@@ -522,6 +522,13 @@ ssh -i myvpn.key root@${state.server.ipv4}`
           }
           reader.readAsBinaryString(blob);
         })
+      }
+    },
+    beforeRouteLeave(to, from, next) {
+      if (from.name === 'access' && to.name === 'processing') {
+        return next({ name: 'main' });
+      } else {
+        next()
       }
     }
   }
