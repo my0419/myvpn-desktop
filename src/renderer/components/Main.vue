@@ -132,7 +132,6 @@
         if (access_token && provider_key) {
           try {
             this.setToken(access_token, provider_key)
-            this.handleProcessing()
           } catch (error) {
             console.log(error.message)
             this.$message({message: this.$root.$t('Authorization Error'), type: 'error', showClose: true})
