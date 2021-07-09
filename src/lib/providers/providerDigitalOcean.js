@@ -2,7 +2,6 @@
 import {sleep} from '../urils'
 import {ProviderBase} from './providerBase'
 import storeType from '../../renderer/store/modules/type'
-import {min} from "moment";
 
 export class ProviderDigitalOcean extends ProviderBase {
 
