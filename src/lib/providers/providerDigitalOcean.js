@@ -2,6 +2,7 @@
 import {sleep} from '../urils'
 import {ProviderBase} from './providerBase'
 import storeType from '../../renderer/store/modules/type'
+import {min} from "moment";
 
 export class ProviderDigitalOcean extends ProviderBase {
 
@@ -25,7 +26,7 @@ export class ProviderDigitalOcean extends ProviderBase {
 
   async regions () {
     let regions = await this.client.regions.list()
-    return regions.filter(v => v.name).map(v => ({
+    return regions.filter(v => v.name && v.available).map(v => ({
       name: v.name.replace(' 1', ''),
       slug: v.slug,
       available: v.available,
@@ -60,12 +61,16 @@ export class ProviderDigitalOcean extends ProviderBase {
   }
 
   async createServer (sshKeyId, region, protocol, startupCommand) {
+
+    let sizes = await this.client.sizes.list()
+    const [minimalSize] = sizes.filter(v => v.regions.includes(region) && v.memory >= 1024 && v.available).sort((a, b) => a.price_monthly - b.price_monthly)
+
     let protocolCode = storeType.codes.filter(v => v.type === protocol)[0].code
     let name = 'vpn-'+protocolCode+'-' + Math.random().toString(36).substring(7)
     let dropletCfg = {
       name,
       region,
-      size: '1gb',
+      size: minimalSize.slug,
       image: 'debian-9-x64',
       ssh_keys: [sshKeyId],
       user_data: startupCommand,
