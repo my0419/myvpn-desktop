@@ -76,7 +76,7 @@ export class ProviderCryptoServers extends ProviderBase {
   async createServer (sshKeyId, region, protocol, startupCommand) {
     let protocolCode = storeType.codes.filter(v => v.type === protocol)[0].code
     let name = 'vpn-'+protocolCode+'-' + Math.random().toString(36).substring(7)
-    const params = {name, region, ssh_key_id: sshKeyId, user_data: startupCommand}
+    const params = {name, region, ssh_key_id: sshKeyId, user_data: startupCommand, image: 'debian-11-x64'}
     let droplet = await this.client.post('/droplet/create', params).then(res => {
       return res.data.droplet
     },res => {

@@ -64,7 +64,7 @@
                 </el-alert>
 
                 <div class="link">
-                    <el-link v-on:click.prevent="handleLinkTo('https://myvpn.run/faq/setup/dns')"><i class="el-icon-link el-icon--right"></i> {{ $t('We recommend that you additionally set the DNS in your system.')}}</el-link>
+                    <el-link v-on:click.prevent="handleLinkTo('https://myvpn.run/faq/setup/dns')"><i class="el-icon-link el-icon--right"></i> {{ $t('We recommend you additionally set the DNS in your system.')}}</el-link>
                 </div>
 
                 <el-form-item class="btn-group">

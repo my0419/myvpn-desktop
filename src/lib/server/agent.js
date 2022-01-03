@@ -13,7 +13,8 @@ export class ServerAgent {
   }
 
   async getState() {
-    const agentUrl = `https://${this.serverIp}.nip.io`
+    const isBrowser = process.browser
+    const agentUrl = isBrowser ? `https://${this.serverIp}.nip.io` : `http://${this.serverIp}:8400`
     const client = axios.create({ baseURL: agentUrl, timeout: 5000 });
     let retries = 30
     axiosRetry(client, {

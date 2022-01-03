@@ -99,7 +99,7 @@ export class ProviderHetznerCloud extends ProviderBase {
       name,
       server_type: type.id,
       start_after_create: true,
-      image: 'debian-9',
+      image: 'debian-11',
       ssh_keys: [sshKeyId],
       user_data: startupCommand,
       location: region,

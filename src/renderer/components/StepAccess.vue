@@ -102,7 +102,7 @@
 
                             </el-col>
                             <el-col :span="10" class="step-access__form-col">
-                              <h2>{{ $t('Connect via QR Code') }}</h2>
+                              <h2>{{ $t('Connect using QR Code') }}</h2>
                               <qrcode-vue class="m-top" :value="selectedAccountConfig" :size="300" level="L"></qrcode-vue>
                               <div class="m-top">
                                 <a href="#" v-on:click.prevent="saveQrCode">
@@ -159,7 +159,7 @@
                               </el-form>
                             </el-col>
                             <el-col :span="10" class="step-access__form-col">
-                              <h2>{{ $t('Connect via QR Code') }}</h2>
+                              <h2>{{ $t('Connect using QR Code') }}</h2>
                               <qrcode-vue :value="shadowsocksConnect" :size="300" level="L"></qrcode-vue>
                               <div class="m-top">
                                 <a href="#" v-on:click.prevent="saveQrCode">

@@ -2,9 +2,9 @@
   <div class="app-page">
     <h3>{{ $t('Choose a hosting provider and connect your account') }}</h3>
     <Providers />
-    <h3 v-if="selectedProvider !== 'custom'">{{ $t('Select a server region')}}</h3>
+    <h3 v-if="selectedProvider !== 'custom'">{{ $t('Choose the server region')}}</h3>
     <FormRegions v-if="selectedProvider !== 'custom'" />
-    <h3>{{ $t('Select the connection protocol') }}</h3>
+    <h3>{{ $t('Choose the connection protocol') }}</h3>
     <FormTypes />
     <ModalAdvancedSettings />
     <div class="m-top main-footer">

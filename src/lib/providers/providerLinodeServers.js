@@ -109,7 +109,7 @@ export class ProviderLinodeServers extends ProviderBase {
       root_pass: this.rootPassword,
       authorized_keys: [this.sshKey],
       stackscript_id: this.stackScriptId,
-      image: 'linode/debian9'
+      image: 'linode/debian11'
     }).then(res => {
       this.deleteStackScript()
       return {

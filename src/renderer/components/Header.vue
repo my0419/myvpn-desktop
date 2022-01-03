@@ -1,3 +1,4 @@
+const remote;
 <template>
     <div class="app__head">
         <div class="app__window-icon">
@@ -32,10 +33,10 @@
 </template>
 
 <script>
+
     const isBrowser = process.browser
-    if (!isBrowser) {
-      const { remote } = require('electron')
-    }
+    const { remote } = isBrowser ? null : require('electron')
+
     export default {
         data() {
             return {
