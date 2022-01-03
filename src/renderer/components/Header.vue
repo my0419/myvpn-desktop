@@ -1,4 +1,3 @@
-const remote;
 <template>
     <div class="app__head">
         <div class="app__window-icon">
@@ -33,9 +32,7 @@ const remote;
 </template>
 
 <script>
-
     const isBrowser = process.browser
-    const { remote } = isBrowser ? null : require('electron')
 
     export default {
         data() {
@@ -46,9 +43,11 @@ const remote;
         },
         methods: {
             windowMinimize: () => {
+                const { remote } = require('electron')
                 remote.BrowserWindow.getFocusedWindow().minimize()
             },
             windowMaximize: () => {
+                const { remote } = require('electron')
                 if (remote.BrowserWindow.getFocusedWindow().isMaximized()) {
                     remote.BrowserWindow.getFocusedWindow().unmaximize();
                 } else {
@@ -56,6 +55,7 @@ const remote;
                 }
             },
             windowClose: () => {
+                const { remote } = require('electron')
                 remote.BrowserWindow.getFocusedWindow().close()
             },
             changeLang: function () {
