@@ -84,7 +84,7 @@
     "axios-retry": "^3.1.2",
     "digitalocean": "^1.2.0",
     "element-ui": "^2.13.0",
-    "keypair": "^1.0.1",
+    "keypair": "^1.0.4",
     "moment": "^2.24.0",
     "qrcode.vue": "^1.7.0",
     "ssh2": "^0.8.7",
