@@ -2,6 +2,16 @@
 
 Open source desktop application for the personal VPN server.
 
+### Website
+
+https://myvpn.run
+
+### Online version
+
+https://tool.myvpn.run
+
+### Preview
+
 ![Screenshot](preview.png)
 ![Screenshot](preview2.png)
 
