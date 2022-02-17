@@ -1,6 +1,6 @@
 {
   "name": "myvpn",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "author": {
     "name": "MyVPN",
     "email": "support@myvpn.run"
@@ -14,7 +14,7 @@
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
     "build:windows": "node .electron-vue/build.js && electron-builder --windows --x64",
-    "build:linux": "node .electron-vue/build.js && electron-builder --linux deb tar.bz2",
+    "build:linux": "node .electron-vue/build.js && electron-builder --linux deb tar.bz2 AppImage",
     "build:mac": "node .electron-vue/build.js && electron-builder --mac dmg",
     "publish:windows": "node .electron-vue/build.js && electron-builder --windows --x64 -p always",
     "publish:linux": "node .electron-vue/build.js && electron-builder --linux AppImage deb tar.bz2 -p always",

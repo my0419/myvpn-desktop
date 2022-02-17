@@ -21,7 +21,7 @@ function createWindow () {
      * Initial window optionshttp://localhost:9080/static/img/background.svg
      */
     mainWindow = new BrowserWindow({
-        height: 560,
+        height: 600,
         useContentSize: true,
         // transparent: true,
         // vibrancy: 'light',

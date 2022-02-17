@@ -4,6 +4,7 @@ import OpenvpnProtocol from "./openvpn";
 import WireguardProtocol from "./wireguard";
 import ShadowsocksProtocol from "./shadowsocks";
 import Socks5Protocol from "./socks5";
+import OwncloudProtocol from "./owncloud";
 
 export const TYPE_L2TP = 'l2tp'
 export const TYPE_PPTP = 'pptp'
@@ -11,6 +12,8 @@ export const TYPE_OPENVPN = 'openvpn'
 export const TYPE_WIREGUARD = 'wireguard'
 export const TYPE_SHADOWSOCKS = 'shadowsocks'
 export const TYPE_SOCKS5 = 'socks5'
+// extra
+export const TYPE_OWNCLOUD = 'owncloud'
 
 export class ProtocolFactory {
   static create (name, params) {
@@ -27,6 +30,8 @@ export class ProtocolFactory {
         return new ShadowsocksProtocol(params)
       case TYPE_SOCKS5:
         return new Socks5Protocol(params)
+      case TYPE_OWNCLOUD:
+        return new OwncloudProtocol(params)
       default:
         throw new Error(`Unknown protocol ${name}`)
     }
@@ -40,6 +45,7 @@ export const PROTOCOL_CODES = [
   {code: 4, type: TYPE_WIREGUARD},
   {code: 5, type: TYPE_SHADOWSOCKS},
   {code: 6, type: TYPE_SOCKS5},
+  {code: 7, type: TYPE_OWNCLOUD},
 ]
 
 export const PROTOCOL_LIST = [
@@ -66,5 +72,9 @@ export const PROTOCOL_LIST = [
   {
     key: TYPE_SOCKS5,
     title: 'SOCKS5'
-  }
+  },
+  {
+    key: TYPE_OWNCLOUD,
+    title: 'ownCloud'
+  },
 ]

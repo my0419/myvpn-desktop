@@ -4,16 +4,16 @@
     <Providers />
     <h3 v-if="selectedProvider !== 'custom'">{{ $t('Choose the server region')}}</h3>
     <FormRegions v-if="selectedProvider !== 'custom'" />
-    <h3>{{ $t('Choose the connection protocol') }}</h3>
+    <h3>{{ $t('Choose the software') }}</h3>
     <FormTypes />
     <ModalAdvancedSettings />
     <div class="m-top main-footer">
       <el-button class="btn-group-item btn-group-item--fill" type="primary" :disabled="!configuredSuccess" v-on:click="handleProcessing" icon="el-icon-magic-stick">
-        <span v-if="selectedProvider !== 'custom'">{{ $t('Create a server and configure the VPN') }}</span>
-        <span v-else>{{ $t('Connect to the server and configure the VPN') }}</span>
+        <span v-if="selectedProvider !== 'custom'">{{ $t('Create and configure a server') }}</span>
+        <span v-else>{{ $t('Connect to the server and configure the protocol') }}</span>
       </el-button>
-      <el-button class="btn-group-item btn-group-item--fill" v-if="isDev" type="primary" v-on:click="handleDevelopmentAccess" icon="el-icon-brush">[Dev] Access Page</el-button>
-      <el-button class="btn-group-item btn-group-item--fill" v-if="isDev" type="primary" v-on:click="handleDevelopmentStore" icon="el-icon-brush">[Dev] Reset Store</el-button>
+      <el-button class="btn-group-item btn-group-item--fill" v-if="isDev" type="primary" v-on:click="handleDevelopmentAccess" icon="el-icon-brush">Access Page</el-button>
+      <el-button class="btn-group-item btn-group-item--fill" v-if="isDev" type="primary" v-on:click="handleDevelopmentStore" icon="el-icon-brush">Reset Store</el-button>
     </div>
     <div class="app-version">
       {{ $t('Version')}}: {{ appVersion }}

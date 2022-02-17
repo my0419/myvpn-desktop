@@ -7,7 +7,7 @@
             </el-row>
 
             <el-tabs class="step-access__tabs" data-tabs="access-tabs" v-model="activeTab">
-                <el-tab-pane :label="$t('My VPN')" name="1">
+                <el-tab-pane :label="$t('Configuration')" name="1">
                     <div v-if="connectionType === 'l2tp'">
                         <el-form class="step-access__form step-access__form-vpn">
                             <el-form-item :label="$root.$t('Type of connection')">
@@ -169,6 +169,27 @@
                             </el-col>
                         </el-row>
                     </div>
+                    <div v-if="connectionType === 'owncloud'">
+                      <el-form class="step-access__form step-access__form-vpn">
+                        <el-form-item :label="$root.$t('Type')">
+                          ownCloud
+                        </el-form-item>
+                        <el-form-item :label="$root.$t('Address')">
+                          <Copied :text="`http://${serverIp}`" />
+                          <div class="note-block">
+                            {{ $t('Note') }}:<br />
+                            {{ $t('If you want to use a domain name you need to follow 2 simple steps.')}}
+                            <ol class="no-margin">
+                              <li>{{ $t('Go to your domain control panel and create a DNS record referencing the IP') }} <strong>{{ serverIp }}</strong></li>
+                              <li>{{ $t('Go to this domain and configure the cloud by creating an administrator account.')}}</li>
+                            </ol>
+                          </div>
+                        </el-form-item>
+                        <el-form-item :label="$root.$t('IP')">
+                          <Copied :text="serverIp" />
+                        </el-form-item>
+                      </el-form>
+                    </div>
                 </el-tab-pane>
                 <el-tab-pane :label="$t('My Server')" name="2" v-if="selectedProvider !== 'custom'">
                     <el-form class="step-access__form step-access__form-server">
@@ -290,7 +311,6 @@
   }
   color: #fbfbfb;
   &-server {
-    margin-left: 160px;
     @include mqMAX($XS) {
       margin-left: 0;
       .el-form-item {

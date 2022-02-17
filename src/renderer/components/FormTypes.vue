@@ -7,6 +7,8 @@
 <style lang="scss" scoped>
     @import '~mixins';
     .type-radio-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
       @include mqMAX($XXS) {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -15,13 +17,11 @@
       }
     }
     .type-radio {
-        margin: 10px 10px 10px 0 !important;
-        @include mqMAX($XXS) {
-          margin: 0 !important;
-        }
-    }
-    .type-radio:last-child {
-        margin-right: 0 !important;
+      background: rgba(0,0,0,0.2);
+      margin: 10px 10px 10px 0 !important;
+      @include mqMAX($XXS) {
+        margin: 0 !important;
+      }
     }
 </style>
 
