@@ -142,6 +142,7 @@ export default {
     'If you want to use a domain name you need to follow 2 simple steps.': 'Если вы хотите использовать доменное имя вам необходимо выполнить 2 простых шага.',
     'Go to your domain control panel and create a DNS record referencing the IP': 'Перейти в панель управления домена и создать А запись DNS ссылающуюся на IP',
     'Go to this domain and configure the cloud by creating an administrator account.': 'Перейти к домену и произвести настройку облака создав учетную запись администратора.',
-    'Address': 'Адрес'
+    'Address': 'Адрес',
+    'Open tor browser, then click "Tor Network Settings". Under the "Bridges" section, select the checkbox "Use a bridge", choose "Provide a bridge" and enter bridge address on a separate line.': 'Откройте браузер tor, затем нажмите "Tor Network Settings". В разделе "Bridges" установите флажок "Use a bridge", выберите "Provide a bridge" и введите адрес моста в отдельной строке.'
   }
 }

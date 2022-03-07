@@ -169,10 +169,10 @@
                             </el-col>
                         </el-row>
                     </div>
-                    <div v-if="connectionType === 'owncloud'">
+                    <div v-if="connectionType === 'owncloud' || connectionType === 'nextcloud'">
                       <el-form class="step-access__form step-access__form-vpn">
                         <el-form-item :label="$root.$t('Type')">
-                          ownCloud
+                          {{ connectionType }}
                         </el-form-item>
                         <el-form-item :label="$root.$t('Address')">
                           <Copied :text="`http://${serverIp}`" />
@@ -187,6 +187,36 @@
                         </el-form-item>
                         <el-form-item :label="$root.$t('IP')">
                           <Copied :text="serverIp" />
+                        </el-form-item>
+                      </el-form>
+                    </div>
+                    <div v-if="connectionType === 'torbridge'">
+                      <el-form class="step-access__form step-access__form-vpn">
+                        <el-form-item :label="$root.$t('Type')">
+                          TorBridge
+                        </el-form-item>
+                        <el-form-item :label="$root.$t('Bridge Address')">
+                          <el-input  type="textarea" :value="clientConfig" :readonly="true"/>
+                          <Copied :text="clientConfig" :hiddenText="true" />
+                          <div class="note-block">
+                            {{ $t('Note') }}:<br />
+                            {{ $t('Open tor browser, then click "Tor Network Settings". Under the "Bridges" section, select the checkbox "Use a bridge", choose "Provide a bridge" and enter bridge address on a separate line.')}}
+                          </div>
+                        </el-form-item>
+                        <el-form-item :label="$root.$t('IP')">
+                          <Copied :text="serverIp" />
+                        </el-form-item>
+                        <el-form-item :label="$root.$t('OR Port')">
+                          <Copied :text="torbridge.orPort" />
+                        </el-form-item>
+                        <el-form-item :label="$root.$t('PT Port')">
+                          <Copied :text="torbridge.ptPort" />
+                        </el-form-item>
+                        <el-form-item :label="$root.$t('Nickname')">
+                          <Copied :text="torbridge.nickname" />
+                        </el-form-item>
+                        <el-form-item :label="$root.$t('Email')">
+                          <Copied :text="torbridge.email" />
                         </el-form-item>
                       </el-form>
                     </div>
@@ -441,6 +471,11 @@
       customPort: {
         get () {
           return this.$store.state.setting.customPort
+        }
+      },
+      torbridge: {
+        get () {
+          return this.$store.state.setting.torbridge
         }
       },
       accountUsername: {

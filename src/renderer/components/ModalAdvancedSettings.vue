@@ -31,6 +31,22 @@
                 </el-form-item>
             </el-form>
 
+            <el-form v-if="protocol === 'torbridge'" ref="form">
+              <h3>{{ protocol }}</h3>
+              <el-form-item :label="this.$root.$t('OR Port')">
+                <el-input-number v-model="torbridgeOrPort" :min="1" :max="65535"></el-input-number>
+              </el-form-item>
+              <el-form-item :label="this.$root.$t('PT Port')">
+                <el-input-number v-model="torbridgePtPort" :min="1" :max="65535"></el-input-number>
+              </el-form-item>
+              <el-form-item :label="this.$root.$t('Nickname')">
+                <el-input v-model="torbridgeNickname"></el-input>
+              </el-form-item>
+              <el-form-item :label="this.$root.$t('Email')">
+                <el-input v-model="torbridgeEmail"></el-input>
+              </el-form-item>
+            </el-form>
+
             <h3>DNS</h3>
             <el-form ref="form">
                 <el-form-item label="dns-list">
@@ -66,6 +82,14 @@
                 <div class="link">
                     <el-link v-on:click.prevent="handleLinkTo('https://myvpn.run/faq/setup/dns')"><i class="el-icon-link el-icon--right"></i> {{ $t('We recommend you additionally set the DNS in your system.')}}</el-link>
                 </div>
+
+                <el-alert
+                    v-show="invalidTorbridgePort"
+                    class="notify"
+                    :title="$t('Ports should be unique')"
+                    :closable="false"
+                    type="error">
+                </el-alert>
 
                 <el-form-item class="btn-group">
                     <el-button class="btn-group-item btn-group-item--fill" type="primary" @click="handleApply">{{ $t('Apply') }}</el-button>
@@ -134,6 +158,7 @@
       return {
         modalOpen: false,
         invalidDNS: false,
+        invalidTorbridgePort: false,
         selectedDNS: 0, // default
       }
     },
@@ -143,8 +168,15 @@
         if (this.protocol === 'shadowsocks') {
           info.push('V2Ray Plugin')
         }
+
         if (this.protocol === 'socks5') {
           info.push(this.$root.$t('Port'))
+        }
+
+        if (this.protocol === 'torbridge') {
+          info.push(this.$root.$t('Port'))
+          info.push(this.$root.$t('Nickname'))
+          info.push(this.$root.$t('Email'))
         }
 
         if (['shadowsocks', 'wireguard'].includes(this.protocol)) {
@@ -203,6 +235,38 @@
           this.$store.state.setting.numberOfAccounts = value
         }
       },
+      torbridgeOrPort: {
+        get () {
+          return this.$store.state.setting.torbridge.orPort
+        },
+        set (value) {
+          this.$store.state.setting.torbridge.orPort = value
+        }
+      },
+      torbridgePtPort: {
+        get () {
+          return this.$store.state.setting.torbridge.ptPort
+        },
+        set (value) {
+          this.$store.state.setting.torbridge.ptPort = value
+        }
+      },
+      torbridgeNickname: {
+        get () {
+          return this.$store.state.setting.torbridge.nickname
+        },
+        set (value) {
+          this.$store.state.setting.torbridge.nickname = value
+        }
+      },
+      torbridgeEmail: {
+        get () {
+          return this.$store.state.setting.torbridge.email
+        },
+        set (value) {
+          this.$store.state.setting.torbridge.email = value
+        }
+      },
     },
     methods: {
       changeDNS (val) {
@@ -213,16 +277,21 @@
         this.dnsSecond = this.dnsList[val].second
       },
       handleApply () {
-        if (!validateIPaddress(this.dnsFirst) || !validateIPaddress(this.dnsSecond)) {
+        if (this.torbridgePtPort === this.torbridgeOrPort) {
+          this.invalidTorbridgePort = true
+        }
+        else if (!validateIPaddress(this.dnsFirst) || !validateIPaddress(this.dnsSecond)) {
           this.invalidDNS = true
         } else {
           this.modalOpen = false
           this.invalidDNS = false
+          this.invalidTorbridgePort = false
         }
       },
       handleCancel () {
         this.modalOpen = false
         this.invalidDNS = false
+        this.invalidTorbridgePort = false
         this.selectedDNS = 0
         this.shadowsocksV2RayPlugin = false
         this.$store.dispatch('resetDNS')

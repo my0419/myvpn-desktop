@@ -71,6 +71,12 @@ const state = {
   shadowsocks: {
     v2rayPlugin: false
   },
+  torbridge: {
+    orPort: 1088,
+    ptPort: 1090,
+    nickname: 'bridge',
+    email: 'bridge@unknown.domain',
+  },
   customPort: 1080, // default socks5 only
   numberOfAccounts: 1,
 }

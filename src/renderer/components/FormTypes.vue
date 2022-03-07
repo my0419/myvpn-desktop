@@ -8,7 +8,7 @@
     @import '~mixins';
     .type-radio-list {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
       @include mqMAX($XXS) {
         display: grid;
         grid-template-columns: 1fr 1fr;

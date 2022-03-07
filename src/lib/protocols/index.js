@@ -5,6 +5,8 @@ import WireguardProtocol from "./wireguard";
 import ShadowsocksProtocol from "./shadowsocks";
 import Socks5Protocol from "./socks5";
 import OwncloudProtocol from "./owncloud";
+import NextcloudProtocol from "./owncloud";
+import TorbridgeProtocol from "./torbridge";
 
 export const TYPE_L2TP = 'l2tp'
 export const TYPE_PPTP = 'pptp'
@@ -14,6 +16,8 @@ export const TYPE_SHADOWSOCKS = 'shadowsocks'
 export const TYPE_SOCKS5 = 'socks5'
 // extra
 export const TYPE_OWNCLOUD = 'owncloud'
+export const TYPE_NEXTCLOUD = 'nextcloud'
+export const TYPE_TORBRIDGE = 'torbridge'
 
 export class ProtocolFactory {
   static create (name, params) {
@@ -32,6 +36,10 @@ export class ProtocolFactory {
         return new Socks5Protocol(params)
       case TYPE_OWNCLOUD:
         return new OwncloudProtocol(params)
+      case TYPE_NEXTCLOUD:
+        return new NextcloudProtocol(params)
+      case TYPE_TORBRIDGE:
+        return new TorbridgeProtocol(params)
       default:
         throw new Error(`Unknown protocol ${name}`)
     }
@@ -46,6 +54,8 @@ export const PROTOCOL_CODES = [
   {code: 5, type: TYPE_SHADOWSOCKS},
   {code: 6, type: TYPE_SOCKS5},
   {code: 7, type: TYPE_OWNCLOUD},
+  {code: 8, type: TYPE_NEXTCLOUD},
+  {code: 9, type: TYPE_TORBRIDGE},
 ]
 
 export const PROTOCOL_LIST = [
@@ -76,5 +86,13 @@ export const PROTOCOL_LIST = [
   {
     key: TYPE_OWNCLOUD,
     title: 'ownCloud'
+  },
+  {
+    key: TYPE_NEXTCLOUD,
+    title: 'NextCloud'
+  },
+  {
+    key: TYPE_TORBRIDGE,
+    title: 'Tor Bridge'
   },
 ]

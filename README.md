@@ -39,6 +39,13 @@ https://tool.myvpn.run
 * OpenVPN
 * [WireGuard](https://www.wireguard.com/)
 * Shadowsocks (with optional V2Ray Plugin)
+* SOCKS5
+
+### Other Software
+
+* ownCloud
+* NextCloud
+* Tor Bridge
 
 ### Languages
 

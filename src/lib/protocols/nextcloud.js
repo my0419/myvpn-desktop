@@ -1,6 +1,6 @@
 import BaseProtocol from "./base";
 
-class NextcloudProtocol extends BaseProtocol {
+class OwncloudProtocol extends BaseProtocol {
 
     /**
      * @returns {Object}
@@ -13,4 +13,4 @@ class NextcloudProtocol extends BaseProtocol {
 
 }
 
-export default NextcloudProtocol
+export default OwncloudProtocol
