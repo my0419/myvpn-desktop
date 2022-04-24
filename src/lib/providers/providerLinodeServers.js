@@ -149,7 +149,7 @@ export class ProviderLinodeServers extends ProviderBase {
 
   async createStackScript (script) {
     return await this.client.post('linode/stackscripts', {
-      images: ['linode/debian9'],
+      images: ['linode/debian11'],
       label: `myvpn-agent-${generateRandomString(8)}`,
       script,
       is_public: false,
