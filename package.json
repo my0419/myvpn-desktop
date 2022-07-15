@@ -85,7 +85,7 @@
     "digitalocean": "^1.2.0",
     "element-ui": "^2.13.0",
     "keypair": "^1.0.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "qrcode.vue": "^1.7.0",
     "ssh2": "^0.8.7",
     "v-clipboard": "^2.2.2",
