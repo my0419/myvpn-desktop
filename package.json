@@ -1,12 +1,12 @@
 {
   "name": "myvpn",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "author": {
     "name": "MyVPN",
     "email": "support@myvpn.run"
   },
   "homepage": "https://myvpn.run",
-  "description": "MyVPN - your personal VPN",
+  "description": "MyVPN - VPN for myself",
   "category": "Network",
   "license": null,
   "main": "./dist/electron/main.js",

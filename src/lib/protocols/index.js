@@ -5,7 +5,7 @@ import WireguardProtocol from "./wireguard";
 import ShadowsocksProtocol from "./shadowsocks";
 import Socks5Protocol from "./socks5";
 import OwncloudProtocol from "./owncloud";
-import NextcloudProtocol from "./owncloud";
+import NextcloudProtocol from "./nextcloud";
 import TorbridgeProtocol from "./torbridge";
 
 export const TYPE_L2TP = 'l2tp'

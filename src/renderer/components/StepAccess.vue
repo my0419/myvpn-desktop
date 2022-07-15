@@ -175,15 +175,19 @@
                           {{ connectionType }}
                         </el-form-item>
                         <el-form-item :label="$root.$t('Address')">
-                          <Copied :text="`http://${serverIp}`" />
-                          <div class="note-block">
-                            {{ $t('Note') }}:<br />
-                            {{ $t('If you want to use a domain name you need to follow 2 simple steps.')}}
+                          <Copied :text="`https://${clientConfig[0] || 'invalid'}`" />
+                          <p class="note-block">
+                            <strong>{{ $t('Let\'s Encrypt certificate') }}:</strong><br />
+                            {{ $t('The certificate will be issued automatically within 2-3 minutes. At the first visit may be invalid, refresh the page.')}}
+                          </p>
+                          <p class="note-block">
+                            <strong>{{ $t('Domain Binding') }}:</strong><br />
+                            {{ $t('If you use own domain name you need to follow 2 simple steps.')}}
                             <ol class="no-margin">
                               <li>{{ $t('Go to your domain control panel and create a DNS record referencing the IP') }} <strong>{{ serverIp }}</strong></li>
                               <li>{{ $t('Go to this domain and configure the cloud by creating an administrator account.')}}</li>
                             </ol>
-                          </div>
+                          </p>
                         </el-form-item>
                         <el-form-item :label="$root.$t('IP')">
                           <Copied :text="serverIp" />

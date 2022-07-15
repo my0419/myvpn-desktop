@@ -1,16 +1,19 @@
 import BaseProtocol from "./base";
 
-class OwncloudProtocol extends BaseProtocol {
+class NextcloudProtocol extends BaseProtocol {
 
     /**
      * @returns {Object}
      */
-/*    envVariables () {
+    envVariables () {
+        const nextcloud = this.params.setting.nextcloud
         return Object.assign(super.envVariables(), {
-            'DB_ROOT_PASSWORD': this.params.account.accounts[0].password,
+            'NC_DOMAIN': nextcloud.domain,
+            'NC_DB_DRIVER': nextcloud.db,
+            'NC_LETSENCRYPT_EMAIL': nextcloud.email,
         })
-    }*/
+    }
 
 }
 
-export default OwncloudProtocol
+export default NextcloudProtocol

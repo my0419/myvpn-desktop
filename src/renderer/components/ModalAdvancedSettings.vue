@@ -47,6 +47,26 @@
               </el-form-item>
             </el-form>
 
+            <el-form v-if="protocol === 'nextcloud'" ref="form">
+              <h3>{{ protocol }}</h3>
+
+              <el-form-item :label="this.$root.$t('Domain')">
+                <el-input v-model="nextcloudDomain" :placeholder="this.$root.$t('*.nip.io')"></el-input>
+              </el-form-item>
+
+              <el-form-item :label="this.$root.$t('Let\'s Encrypt Email')">
+                <el-input v-model="nextcloudEmail"></el-input>
+              </el-form-item>
+
+              <el-form-item :label="this.$root.$t('Database')">
+                <el-radio-group v-model="nextcloudDb">
+                  <el-radio label="mysql">MySQL</el-radio>
+                  <el-radio label="pgsql">PostgreSQL</el-radio>
+                </el-radio-group>
+              </el-form-item>
+
+            </el-form>
+
             <h3>DNS</h3>
             <el-form ref="form">
                 <el-form-item label="dns-list">
@@ -183,6 +203,11 @@
           info.push(`${this.$root.$t('Accounts')}:${this.numberOfAccounts}`)
         }
 
+        if (this.protocol === 'nextcloud') {
+          info.push(this.$root.$t('Domain'))
+          info.push(this.$root.$t('Database'))
+        }
+
         return info.join(', ')
       },
       protocol: {
@@ -265,6 +290,31 @@
         },
         set (value) {
           this.$store.state.setting.torbridge.email = value
+        }
+      },
+      nextcloudEmail: {
+        get () {
+          return this.$store.state.setting.nextcloud.email
+        },
+        set (value) {
+          this.$store.state.setting.nextcloud.email = value
+        }
+      },
+      nextcloudDomain: {
+        get () {
+          return this.$store.state.setting.nextcloud.domain
+        },
+        set (value) {
+          value = value.replace('http://', '').replace('https://', '').replace('/', '')
+          this.$store.state.setting.nextcloud.domain = value
+        }
+      },
+      nextcloudDb: {
+        get () {
+          return this.$store.state.setting.nextcloud.db
+        },
+        set (value) {
+          this.$store.state.setting.nextcloud.db = value
         }
       },
     },

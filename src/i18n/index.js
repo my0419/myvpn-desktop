@@ -113,8 +113,6 @@ export default {
     'Private Key Authorization': 'Авторизация по приватному ключу',
     'Paste in the server private key': 'Вставьте приватный ключ',
     'IP field is not filled in correctly': 'Неверно заполнено поле IP',
-    'Starting MyVPN Agent. Make sure that port 443 is open on your server.': 'Запуск MyVPN Agent. Убедитесь что на вашем сервере открыт порт 443.',
-    'Starting MyVPN Agent. Make sure that port 8400 is open on your server.': 'Запуск MyVPN Agent. Убедитесь что на вашем сервере открыт порт 8400.',
     'Requires a clean Debian 11 server': 'Требуется чистый Debian 11 сервер',
     'Server Port': 'Порт сервера',
     'Local Port': 'Порт локальный',
@@ -139,10 +137,15 @@ export default {
     'Next Step': 'Вперед',
     'Prev Step': 'Назад',
     'Note': 'Примечание',
-    'If you want to use a domain name you need to follow 2 simple steps.': 'Если вы хотите использовать доменное имя вам необходимо выполнить 2 простых шага.',
+    'Domain Binding': 'Привязка домена',
+    'If you use own domain name you need to follow 2 simple steps.': 'Если вы используете собственное доменное имя вам необходимо выполнить 2 простых шага.',
     'Go to your domain control panel and create a DNS record referencing the IP': 'Перейти в панель управления домена и создать А запись DNS ссылающуюся на IP',
     'Go to this domain and configure the cloud by creating an administrator account.': 'Перейти к домену и произвести настройку облака создав учетную запись администратора.',
     'Address': 'Адрес',
-    'Open tor browser, then click "Tor Network Settings". Under the "Bridges" section, select the checkbox "Use a bridge", choose "Provide a bridge" and enter bridge address on a separate line.': 'Откройте браузер tor, затем нажмите "Tor Network Settings". В разделе "Bridges" установите флажок "Use a bridge", выберите "Provide a bridge" и введите адрес моста в отдельной строке.'
+    'Open tor browser, then click "Tor Network Settings". Under the "Bridges" section, select the checkbox "Use a bridge", choose "Provide a bridge" and enter bridge address on a separate line.': 'Откройте браузер tor, затем нажмите "Tor Network Settings". В разделе "Bridges" установите флажок "Use a bridge", выберите "Provide a bridge" и введите адрес моста в отдельной строке.',
+    'Database': 'База данных',
+    'The certificate will be issued automatically within 2-3 minutes. At the first visit may be invalid, refresh the page.': 'Сертификат будет выпущен автоматически в течении 2-3 минут. При первом посещении может быть невалидным, обновляйте страницу.',
+    'Let\'s Encrypt certificate':'Let\'s Encrypt сертификат',
+    'Domain': 'Домен',
   }
 }

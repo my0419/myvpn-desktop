@@ -77,6 +77,11 @@ const state = {
     nickname: 'bridge',
     email: 'bridge@unknown.domain',
   },
+  nextcloud: {
+    domain: '',
+    db: 'mysql',
+    email: 'admin@myvpn.run',
+  },
   customPort: 1080, // default socks5 only
   numberOfAccounts: 1,
 }
