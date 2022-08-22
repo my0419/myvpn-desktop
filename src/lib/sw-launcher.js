@@ -1,6 +1,6 @@
-import { isMobile, localStorageService } from '../lib/utils'
+import { isMobile, localStorageService } from './utils'
 
-function swLauncher (isBrowser, document) {
+function swLauncher(isBrowser, document) {
   const isMobileOS = isMobile.iOS() || isMobile.Android()
   if (isBrowser && isMobileOS) {
     let deferredPrompt = null
@@ -19,7 +19,7 @@ function swLauncher (isBrowser, document) {
     } else {
       window.addEventListener('load', function (e) {
         const isNeedShowInstructions = !JSON.parse(
-          localStorageService.get('my_vpn_never_show_instructions')
+          localStorageService.get('my_vpn_never_show_instructions'),
         )
         if (isNeedShowInstructions) {
           // Show instruction
@@ -29,13 +29,14 @@ function swLauncher (isBrowser, document) {
     }
 
     // Detect to install app
-    window.addEventListener('appinstalled', (evt) => {
+    window.addEventListener('appinstalled', evt => {
       localStorageService.set('my_vpn_never_show_instructions', true)
     })
 
     window.addEventListener('load', async e => {
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js')
+        navigator.serviceWorker
+          .register('service-worker.js')
           .then(function (reg) {
             console.log('Service Worker Registered')
 
@@ -70,32 +71,35 @@ function swLauncher (isBrowser, document) {
                 }
               }
             }
-          }).catch(function (e) {
+          })
+          .catch(function (e) {
             console.error('Error during service worker registration:', e)
           })
       }
     })
 
-    function addToHomeScreen () {
+    // eslint-disable-next-line no-inner-declarations
+    function addToHomeScreen() {
       if (deferredPrompt) {
         deferredPrompt.prompt()
-        deferredPrompt.userChoice
-          .then(function (choiceResult) {
-            console.log(choiceResult, choiceResult.outcome)
-            deferredPrompt = null
-          })
+        deferredPrompt.userChoice.then(function (choiceResult) {
+          console.log(choiceResult, choiceResult.outcome)
+          deferredPrompt = null
+        })
       }
-    };
+    }
 
-    function showInstallPromotion () {
+    // eslint-disable-next-line no-inner-declarations
+    function showInstallPromotion() {
       const pwaPopup = document.querySelector('.pwa-popup')
       if (pwaPopup) {
         pwaPopup.classList.add('pwa-popup--visible')
         document.getElementById('pwa_ok').addEventListener('click', addToHomeScreen)
       }
-    };
+    }
 
-    function showInstallInstruction () {
+    // eslint-disable-next-line no-inner-declarations
+    function showInstallInstruction() {
       const pwaInstruction = document.querySelector('.pwa-instruction')
       if (pwaInstruction) {
         pwaInstruction.classList.add('pwa-instruction--visible')

@@ -1,19 +1,17 @@
-import BaseProtocol from "./base";
+import BaseProtocol from './base'
 
 class Socks5Protocol extends BaseProtocol {
-
   /**
    * @returns {Object}
    */
-  envVariables () {
+  envVariables() {
     return Object.assign(super.envVariables(), {
-      'ACCESS_TYPE': 'public',
-      'VPN_PORT': this.params.setting.customPort,
-      'VPN_USER': '',
-      'VPN_PASSWORD': '',
+      ACCESS_TYPE: 'public',
+      VPN_PORT: this.params.setting.customPort,
+      VPN_USER: '',
+      VPN_PASSWORD: '',
     })
   }
-
 }
 
 export default Socks5Protocol

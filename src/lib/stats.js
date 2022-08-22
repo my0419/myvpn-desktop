@@ -1,12 +1,12 @@
 export const ping = {
-  mean: (values) => {
+  mean: values => {
     let sum = 0
-    values.forEach((value) => {
+    values.forEach(value => {
       sum = sum + value
     })
     return sum / values.length
   },
-  median: (values) => {
+  median: values => {
     values.sort((a, b) => {
       return a - b
     })
@@ -17,10 +17,10 @@ export const ping = {
       return (values[half - 1] + values[half]) / 2.0
     }
   },
-  lowest: (values) => {
+  lowest: values => {
     return Math.min.apply(null, values)
   },
-  highest: (values) => {
+  highest: values => {
     return Math.max.apply(null, values)
   },
   highlight: (values, stepValue) => {
@@ -36,6 +36,6 @@ export const ping = {
     let leastLatency = values[0]
     let mostLatency = values[values.length - 1]
     let diffLatency = mostLatency - leastLatency
-    return 'hsl(' + ((mostLatency - stepValue) * 135 / diffLatency) + ', 100%, 50%)'
-  }
+    return 'hsl(' + ((mostLatency - stepValue) * 135) / diffLatency + ', 100%, 50%)'
+  },
 }

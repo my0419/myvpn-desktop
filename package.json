@@ -1,35 +1,109 @@
 {
   "name": "myvpn",
   "version": "0.4.4",
+  "description": "MyVPN - VPN for myself",
   "author": {
     "name": "MyVPN",
     "email": "support@myvpn.run"
   },
-  "homepage": "https://myvpn.run",
-  "description": "MyVPN - VPN for myself",
-  "category": "Network",
-  "license": null,
-  "main": "./dist/electron/main.js",
-  "release": "build",
   "scripts": {
-    "build": "node .electron-vue/build.js && electron-builder",
-    "build:windows": "node .electron-vue/build.js && electron-builder --windows --x64",
-    "build:linux": "node .electron-vue/build.js && electron-builder --linux deb tar.bz2 AppImage",
-    "build:mac": "node .electron-vue/build.js && electron-builder --mac dmg",
-    "publish:windows": "node .electron-vue/build.js && electron-builder --windows --x64 -p always",
-    "publish:linux": "node .electron-vue/build.js && electron-builder --linux AppImage deb tar.bz2 -p always",
-    "publish:mac": "node .electron-vue/build.js && electron-builder --mac dmg -p always",
-    "release": "node .electron-vue/build.js && electron-builder --publish always",
-    "build:dir": "node .electron-vue/build.js && electron-builder --dir",
-    "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
-    "build:web": "cross-env BUILD_TARGET=web node --max_old_space_size=4096 .electron-vue/build.js",
-    "dev": "node .electron-vue/dev-runner.js",
-    "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src",
-    "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix src",
-    "pack": "npm run pack:main && npm run pack:renderer",
-    "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
-    "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
-    "postinstall": "npm run lint:fix"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps"
+  },
+  "main": "background.js",
+  "dependencies": {
+    "@my0419/electron-oauth-helper": "^6.0.0",
+    "aes-js": "^3.1.2",
+    "axios": "^0.27.2",
+    "axios-retry": "^3.3.1",
+    "core-js": "^3.8.3",
+    "digitalocean": "^1.2.1",
+    "dotenv": "^16.0.1",
+    "element-ui": "^2.15.9",
+    "keypair": "^1.0.4",
+    "moment": "^2.29.4",
+    "qrcode.vue": "^1.7.0",
+    "register-service-worker": "^1.7.2",
+    "ssh2": "^0.8.9",
+    "v-clipboard": "^2.2.3",
+    "v-offline": "^2.3.0",
+    "vue": "^2.7.9",
+    "vue-i18n": "^8.27.2",
+    "vue-router": "^3.5.1",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-pwa": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.7.1",
+    "electron": "^13.0.0",
+    "electron-devtools-installer": "^3.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "postcss-loader": "^7.0.1",
+    "prettier": "^2.4.1",
+    "sass": "^1.32.7",
+    "sass-loader": "^12.0.0",
+    "style-loader": "^3.3.1",
+    "vue-cli-plugin-electron-builder": "~2.1.1",
+    "vue-style-loader": "^4.1.3",
+    "vue-template-compiler": "^2.6.14"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended",
+      "plugin:prettier/recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {
+      "vue/multi-word-component-names": 0,
+      "vue/no-unused-components": 1,
+      "vue/require-v-for-key": 1,
+      "prettier/prettier": "warn",
+      "indent": [
+        0,
+        2,
+        {
+          "SwitchCase": 1
+        }
+      ],
+      "linebreak-style": [
+        "warn",
+        "unix"
+      ],
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "semi": [
+        "error",
+        "never"
+      ],
+      "no-undef": "warn",
+      "no-unused-vars": "warn"
+    }
   },
   "build": {
     "productName": "MyVPN",
@@ -77,78 +151,16 @@
       ]
     }
   },
-  "dependencies": {
-    "@my0419/electron-oauth-helper": "6.0.0",
-    "aes-js": "^3.1.2",
-    "axios": "^0.19.0",
-    "axios-retry": "^3.1.2",
-    "digitalocean": "^1.2.0",
-    "element-ui": "^2.13.0",
-    "keypair": "^1.0.1",
-    "moment": "^2.24.0",
-    "qrcode.vue": "^1.7.0",
-    "ssh2": "^0.8.7",
-    "v-clipboard": "^2.2.2",
-    "v-offline": "^1.1.0",
-    "vue": "^2.6.11",
-    "vue-electron": "^1.0.6",
-    "vue-i18n": "^8.14.0",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.0.1",
-    "vuex-electron": "^1.0.0"
-  },
-  "devDependencies": {
-    "ajv": "^6.5.0",
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^8.2.3",
-    "babel-loader": "^7.1.4",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-0": "^6.24.1",
-    "babel-register": "^6.26.0",
-    "babili-webpack-plugin": "^0.1.2",
-    "cfonts": "^2.4.8",
-    "chalk": "^2.4.2",
-    "copy-webpack-plugin": "^4.5.1",
-    "cross-env": "^5.1.6",
-    "css-loader": "^0.28.11",
-    "del": "^3.0.0",
-    "devtron": "^1.4.0",
-    "electron": "^4.2.12",
-    "electron-builder": "^21.2.0",
-    "electron-debug": "^3.0.1",
-    "electron-devtools-installer": "^2.2.4",
-    "eslint": "^4.19.1",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-friendly-formatter": "^4.0.1",
-    "eslint-loader": "^2.0.0",
-    "eslint-plugin-html": "^4.0.3",
-    "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.8.0",
-    "eslint-plugin-standard": "^3.1.0",
-    "file-loader": "^1.1.11",
-    "html-webpack-plugin": "^3.2.0",
-    "mini-css-extract-plugin": "0.4.0",
-    "multispinner": "^0.2.1",
-    "node-loader": "^0.6.0",
-    "sass": "^1.32.8",
-    "sass-loader": "^7.0.3",
-    "style-loader": "^0.21.0",
-    "ts-loader": "^6.2.1",
-    "typescript": "^3.7.3",
-    "url-loader": "^1.0.1",
-    "vue-html-loader": "^1.2.4",
-    "vue-loader": "^15.2.4",
-    "vue-style-loader": "^4.1.0",
-    "vue-template-compiler": "^2.5.16",
-    "webpack": "^4.15.1",
-    "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.4",
-    "webpack-hot-middleware": "^2.22.2",
-    "webpack-merge": "^4.1.3"
-  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "category": "Network",
+  "homepage": "https://myvpn.run",
+  "license": null,
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
-  }
+  },
+  "release": "build"
 }
