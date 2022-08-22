@@ -1,25 +1,22 @@
-.idea
-.DS_Store
-dist/electron/*
-dist/web/*
 build/*
 !build/icons
-node_modules/
 npm-debug.log
 npm-debug.log.*
 thumbs.db
 !.gitkeep
-dist/index.d.ts
-dist/index.d.ts.map
-dist/oauth2
-dist/utils
 
 #Electron-builder output
 /dist_electron
+/dist/electron/*
+/dist/web/*
+/dist/index.d.ts
+/dist/index.d.ts.map
+/dist/oauth2
+/dist/utils
+/dist
 
 .DS_Store
 node_modules
-/dist
 
 # local env files
 .env.local
