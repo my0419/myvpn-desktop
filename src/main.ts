@@ -9,7 +9,7 @@ import 'element-ui/lib/theme-chalk/reset.css'
 import './assets/element-ui/theme-myvpn/index.scss'
 import './registerServiceWorker'
 
-import App from './App'
+import App from './App.vue'
 import router from './router'
 import store from './store'
 import translate from './i18n'
@@ -18,7 +18,7 @@ import Clipboard from 'v-clipboard'
 Vue.config.productionTip = false
 
 // if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
-Vue.http = Vue.prototype.$http = axios
+Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueI18n)
@@ -35,7 +35,7 @@ const i18n = new VueI18n({
 
 /* eslint-disable no-new */
 new Vue({
-  components: { App },
+  components: { App } as any,
   i18n,
   router,
   store,
