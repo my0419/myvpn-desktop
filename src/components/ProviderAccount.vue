@@ -214,14 +214,6 @@ export default {
         },
       })
 
-      // provider
-      //   .perform(window)
-      //   .then(response => {
-      //     console.log('RESPONSE', response)
-      //   })
-      //   .catch(error => {
-      //     console.log('error', error)
-      //   })
       provider.perform(window).then(
         resp => {
           session.defaultSession.clearStorageData()

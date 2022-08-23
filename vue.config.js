@@ -5,11 +5,45 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = defineConfig({
+  publicPath: './',
+  runtimeCompiler: true,
   transpileDependencies: true,
+  productionSourceMap: false,
   pluginOptions: {
     electronBuilder: {
+      productName: 'MyVPN',
+      appId: 'com.myvpn.app',
+      directories: {
+        output: 'build',
+      },
+      dmg: {
+        contents: [
+          {
+            x: 410,
+            y: 150,
+            type: 'link',
+            path: '/Applications',
+          },
+          {
+            x: 130,
+            y: 150,
+            type: 'file',
+          },
+        ],
+        publish: ['github'],
+      },
+      mac: {
+        publish: ['github'],
+      },
+      win: {
+        publish: ['github'],
+      },
+      linux: {
+        publish: ['github'],
+      },
       nodeIntegration: true,
       enableRemoteModule: true,
+      outputDir: path.resolve(__dirname, 'build'),
     },
   },
   configureWebpack: {

@@ -77,7 +77,8 @@ const isDev = process.env.NODE_ENV === 'development'
 let electron = null
 
 if (!isBrowser) {
-  const { app, remote, shell } = require('electron')
+  const { remote, shell } = require('electron')
+  const app = remote.app
   electron = { app, remote, shell }
 }
 
