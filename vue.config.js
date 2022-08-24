@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 const { defineConfig } = require('@vue/cli-service')
 const path = require('path')
 const webpack = require('webpack')
@@ -48,6 +49,10 @@ module.exports = defineConfig({
   },
   configureWebpack: {
     plugins: [
+      new NodePolyfillPlugin({ excludeAliases: ['process'] }),
+      // new webpack.ProvidePlugin({
+      //   process: 'process/browser',
+      // }),
       new webpack.DefinePlugin({
         __static: process.env.BASE_URL,
       }),
@@ -61,6 +66,7 @@ module.exports = defineConfig({
         path: false,
         zlib: false,
         child_process: false,
+        process: require.resolve('process'),
         http: require.resolve('stream-http'),
         https: require.resolve('https-browserify'),
         crypto: require.resolve('crypto-browserify'),

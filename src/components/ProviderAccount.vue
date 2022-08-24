@@ -30,6 +30,7 @@
         v-if="token"
         icon="el-icon-receiving"
         v-on:click="goToDroplets"
+        :disabled="!configuredSuccess"
         >{{ $t('Servers') }}</el-button
       >
       <el-button
@@ -123,14 +124,17 @@ import providers from '@/config/providers'
 import { redirectTo, localStorageService } from '@/lib/utils'
 import OAuth2Provider from '@my0419/electron-oauth-helper/lib/oauth2'
 
-const isBrowser = process.browser
+const isElectron = process.env.IS_ELECTRON
+
 let electron = null
-if (!isBrowser) {
-  const { shell, remote } = require('electron')
-  electron = { shell, remote }
+
+if (isElectron) {
+  const remote = require('@electron/remote')
+  electron = { shell: remote.shell, remote }
 }
+
 const redirectToUrl = url =>
-  isBrowser ? redirectTo(url) : electron.shell.openExternal(url)
+  isElectron ? electron.shell.openExternal(url) : redirectTo(url)
 const saveProviderKey = value => localStorageService.set('my_vpn_provider_key', value)
 const removeProviderKey = () => localStorageService.remove('my_vpn_provider_key')
 export default {
@@ -169,13 +173,13 @@ export default {
       }) // attach client
     },
     login(e) {
-      isBrowser
-        ? this.loginOnSiteProvider(e.currentTarget.name)
-        : this.createLoginWindow()
+      isElectron
+        ? this.createLoginWindow()
+        : this.loginOnSiteProvider(e.currentTarget.name)
     },
     logout() {
       this.setToken('')
-      if (isBrowser) {
+      if (!isElectron) {
         removeProviderKey()
       }
     },
@@ -204,31 +208,30 @@ export default {
       const { BrowserWindow, session } = electron.remote
 
       const provider = new OAuth2Provider(this.oauthConfig)
+
       let window = new BrowserWindow({
         width: this.oauthWindowWidth || 600,
         height: this.oauthWindowHeight || 540,
         webPreferences: {
-          nodeIntegration: true,
-          contextIsolation: false,
-          enableRemoteModule: true,
+          nodeIntegration: false,
+          contextIsolation: true,
         },
       })
-
-      provider.perform(window).then(
-        resp => {
+      provider
+        .perform(window)
+        .then(response => {
           session.defaultSession.clearStorageData()
-          this.setToken(new URLSearchParams(resp).get('access_token'))
+          this.setToken(new URLSearchParams(response).get('access_token'))
           window.close()
-        },
-        err => {
+        })
+        .catch(() => {
           this.$message({
             message: this.$root.$t('Please try again'),
             type: 'error',
             showClose: true,
           })
           window.close()
-        },
-      )
+        })
     },
   },
   watch: {

@@ -9,8 +9,8 @@
           {{ $i18n.locale === 'ru' ? 'ENG' : 'RUS' }}
         </a>
       </div>
-      <div v-if="!isBrowser" class="app__window-line"></div>
-      <div v-if="!isBrowser" class="app__window-control">
+      <div v-if="!isElectron" class="app__window-line"></div>
+      <div v-if="!isElectron" class="app__window-control">
         <div class="app__window-control-icon">
           <a href="#" v-on:click.prevent="windowMinimize">
             <img :src="imgPath + 'window/minimize.svg'" />
@@ -32,31 +32,40 @@
 </template>
 
 <script>
-const isBrowser = process.browser
+const isElectron = process.env.IS_ELECTRON
+
+let remote = null
+
+if (isElectron) {
+  remote = require('@electron/remote')
+}
 
 export default {
   data() {
     return {
       imgPath: `${process.env.BASE_URL}img/`,
-      isBrowser,
+      isElectron,
     }
   },
   methods: {
     windowMinimize: () => {
-      const { remote } = require('electron')
-      remote.BrowserWindow.getFocusedWindow().minimize()
+      if (remote) {
+        remote.BrowserWindow.getFocusedWindow().minimize()
+      }
     },
     windowMaximize: () => {
-      const { remote } = require('electron')
-      if (remote.BrowserWindow.getFocusedWindow().isMaximized()) {
-        remote.BrowserWindow.getFocusedWindow().unmaximize()
-      } else {
-        remote.BrowserWindow.getFocusedWindow().maximize()
+      if (remote) {
+        if (remote.BrowserWindow.getFocusedWindow().isMaximized()) {
+          remote.BrowserWindow.getFocusedWindow().unmaximize()
+        } else {
+          remote.BrowserWindow.getFocusedWindow().maximize()
+        }
       }
     },
     windowClose: () => {
-      const { remote } = require('electron')
-      remote.BrowserWindow.getFocusedWindow().close()
+      if (remote) {
+        remote.BrowserWindow.getFocusedWindow().close()
+      }
     },
     changeLang: function () {
       this.$i18n.locale = this.$i18n.locale === 'ru' ? 'en' : 'ru'

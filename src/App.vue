@@ -1,13 +1,13 @@
 <template>
   <div id="app" class="root-app">
     <Header />
-    <Offline>
+    <!-- <Offline>
       <div slot="offline">
         <el-alert :title="$t('Connect to the network!')" type="error" effect="dark">{{
           $t('To work with the application you need to connect to the Internet.')
         }}</el-alert>
       </div>
-    </Offline>
+    </Offline> -->
     <router-view></router-view>
     <PWAPopup
       :icon="imgPath + 'logo-small.png'"
@@ -26,15 +26,15 @@ import swLauncher from '@/lib/sw-launcher'
 import manuals from '@/lib/manuals'
 import { getBrowserName } from '@/lib/utils'
 
-const isBrowser = process.browser
+const isElectron = process.env.IS_ELECTRON
 let electron = null
 
-if (!isBrowser) {
+if (isElectron) {
   const { remote } = require('electron')
   electron = { remote }
 }
 
-swLauncher(isBrowser, document)
+swLauncher(!isElectron, document)
 
 const checkBrowsers = ['Safari', 'Firefox', 'Opera']
 
@@ -55,7 +55,7 @@ export default {
     window.addEventListener(
       'contextmenu',
       e => {
-        if (!isBrowser) {
+        if (isElectron) {
           const { Menu, getCurrentWindow } = electron.remote
           Menu.buildFromTemplate(menuElements).popup(getCurrentWindow())
           e.preventDefault()

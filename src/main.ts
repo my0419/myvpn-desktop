@@ -15,9 +15,6 @@ import store from './store'
 import translate from './i18n'
 import Clipboard from 'v-clipboard'
 
-Vue.config.productionTip = false
-
-// if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.use(ElementUI)
@@ -33,7 +30,6 @@ const i18n = new VueI18n({
   messages: translate,
 })
 
-/* eslint-disable no-new */
 new Vue({
   components: { App } as any,
   i18n,

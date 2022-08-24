@@ -413,11 +413,12 @@
   import Copied from './Copied'
 
   const fs = require('fs')
-  const isBrowser = process.browser
+  const isElectron = process.env.IS_ELECTRON
+
   let electron = null
 
-  if (!isBrowser) {
-    const { remote } = require('electron')
+  if (isElectron) {
+    const remote = require('@electron/remote')
     electron = { remote }
   }
 
@@ -445,17 +446,17 @@
   }
 
   function saveFileHandler(filename, fileData) {
-    if (isBrowser) {
+    if (isElectron) {
+      const savePath = electron.remote.dialog.showSaveDialog({defaultPath: filename})
+      fs.writeFile(savePath, fileData, 'binary', (err) => {
+        err !== null ? displayErrorMessage.call(this, err) : displaySuccessfulMessage.call(this)
+      })
+    } else {
       try {
         saveFileFromBrowser.call(this, filename, fileData)
       } catch(error) {
         displayErrorMessage.call(this, error)
       }
-    } else {
-      const savePath = electron.remote.dialog.showSaveDialog({defaultPath: filename})
-      fs.writeFile(savePath, fileData, 'binary', (err) => {
-        err !== null ? displayErrorMessage.call(this, err) : displaySuccessfulMessage.call(this)
-      })
     }
   }
 

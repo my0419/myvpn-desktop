@@ -201,9 +201,11 @@
 </style>
 
 <script>
-const isBrowser = process.browser
 import { redirectTo } from '@/lib/utils'
 import { validateIPaddress } from '@/lib/string'
+
+const isElectron = process.env.IS_ELECTRON
+
 export default {
   data() {
     return {
@@ -380,7 +382,7 @@ export default {
       this.$store.dispatch('resetDNS')
     },
     handleLinkTo(url) {
-      isBrowser ? redirectTo(url) : require('electron').shell.openExternal(url)
+      isElectron ? require('electron').shell.openExternal(url) : redirectTo(url)
     },
   },
 }

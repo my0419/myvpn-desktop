@@ -3,6 +3,10 @@
 import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
+import * as remoteMain from '@electron/remote/main'
+
+// @electron/remote/main must be initialized in the main process before it can be used from the renderer
+remoteMain.initialize()
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -21,9 +25,10 @@ async function createWindow() {
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: true,
       contextIsolation: false,
-      enableRemoteModule: true,
     },
   })
+
+  remoteMain.enable(win.webContents)
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode

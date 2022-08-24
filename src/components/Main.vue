@@ -71,19 +71,19 @@ import ModalAdvancedSettings from './ModalAdvancedSettings'
 import { localStorageService } from '@/lib/utils'
 import { CRYPTOSERVERS_KEY } from '@/lib/providers'
 
-const isBrowser = process.browser
+const isElectron = process.env.IS_ELECTRON
 const isDev = process.env.NODE_ENV === 'development'
 
 let electron = null
 
-if (!isBrowser) {
-  const { remote, shell } = require('electron')
+if (isElectron) {
+  const remote = require('@electron/remote')
   const app = remote.app
-  electron = { app, remote, shell }
+  electron = { app, remote, shell: remote.shell }
 }
 
 const getVersion = () =>
-  isBrowser ? '.Online' : electron.remote && electron.remote.app.getVersion()
+  isElectron ? electron.remote && electron.app.getVersion() : '.Online'
 
 const redirectToLinkUpdate = () =>
   electron && electron.shell.openExternal('https://myvpn.run/#download')
@@ -116,8 +116,7 @@ export default {
   }),
   data() {
     return {
-      staticPath:
-        process.browser || process.env.NODE_ENV === 'development' ? 'static' : __static,
+      imgPath: `${process.env.BASE_URL}/img/`,
       isDev,
     }
   },
@@ -158,7 +157,7 @@ export default {
         console.log('Skip application update check.', error)
       })
 
-    if (isBrowser) {
+    if (!isElectron) {
       const access_token = initProviderParams()
       const provider_key = getProviderKey()
       if (access_token && provider_key) {
