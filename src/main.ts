@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue, { VueConstructor, PluginObject } from 'vue'
 
 import VueI18n from 'vue-i18n'
 import axios from 'axios'
@@ -14,12 +14,14 @@ import router from './router'
 import store from './store'
 import translate from './i18n'
 import Clipboard from 'v-clipboard'
+import VOffline from 'v-offline'
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueI18n)
 Vue.use(Clipboard)
+Vue.use(VOffline as unknown as PluginObject<typeof VOffline>)
 
 const i18n = new VueI18n({
   locale: navigator.language
@@ -31,7 +33,7 @@ const i18n = new VueI18n({
 })
 
 new Vue({
-  components: { App } as any,
+  components: { App: App as VueConstructor<Vue> },
   i18n,
   router,
   store,

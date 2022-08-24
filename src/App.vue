@@ -1,13 +1,13 @@
 <template>
   <div id="app" class="root-app">
     <Header />
-    <!-- <Offline>
+    <v-offline>
       <div slot="offline">
         <el-alert :title="$t('Connect to the network!')" type="error" effect="dark">{{
           $t('To work with the application you need to connect to the Internet.')
         }}</el-alert>
       </div>
-    </Offline> -->
+    </v-offline>
     <router-view></router-view>
     <PWAPopup
       :icon="imgPath + 'logo-small.png'"
@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import Offline from 'v-offline'
 import Header from './components/Header'
 import PWAPopup from './components/PWAPopup'
 import PWAInstruction from './components/PWAInstruction'
@@ -40,7 +39,7 @@ const checkBrowsers = ['Safari', 'Firefox', 'Opera']
 
 export default {
   name: 'vpn',
-  components: { Offline, Header, PWAPopup, PWAInstruction },
+  components: { Header, PWAPopup, PWAInstruction },
   data() {
     return {
       imgPath: `${process.env.BASE_URL}/img/`,
