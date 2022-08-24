@@ -6,45 +6,34 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = defineConfig({
-  publicPath: './',
+  // publicPath: './',
   runtimeCompiler: true,
   transpileDependencies: true,
   productionSourceMap: false,
   pluginOptions: {
     electronBuilder: {
+      nodeIntegration: true,
+      outputDir: path.resolve(__dirname, 'dist'),
       productName: 'MyVPN',
       appId: 'com.myvpn.app',
+      icon: `${process.env.BASE_URL}/512x512.png`,
+      publish: [''],
       directories: {
-        output: 'build',
+        output: 'dist',
       },
-      dmg: {
-        contents: [
-          {
-            x: 410,
-            y: 150,
-            type: 'link',
-            path: '/Applications',
-          },
-          {
-            x: 130,
-            y: 150,
-            type: 'file',
-          },
-        ],
-        publish: ['github'],
+    },
+  },
+  css: {
+    loaderOptions: {
+      css: {},
+      sass: {
+        sassOptions: {
+          includePaths: [path.resolve(__dirname, 'node_modules')],
+        },
+        additionalData: `
+          @import "@/assets/element-ui/theme-myvpn/index.scss";
+        `,
       },
-      mac: {
-        publish: ['github'],
-      },
-      win: {
-        publish: ['github'],
-      },
-      linux: {
-        publish: ['github'],
-      },
-      nodeIntegration: true,
-      enableRemoteModule: true,
-      outputDir: path.resolve(__dirname, 'build'),
     },
   },
   configureWebpack: {
@@ -79,9 +68,8 @@ module.exports = defineConfig({
       extensions: ['.ts', '.js', '.json', '.node'],
       alias: {
         '@': path.resolve(__dirname, 'src/'),
-        './fonts': path.join(__dirname, 'src/assets/css/fonts'),
-        sassMixins: path.join(__dirname, 'src/assets/css/mixins'),
         vue$: 'vue/dist/vue.esm.js',
+        sassMixins: path.resolve(__dirname, 'src/assets/css/mixins'),
       },
     },
   },

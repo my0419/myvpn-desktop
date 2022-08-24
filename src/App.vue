@@ -21,7 +21,7 @@
 import Header from './components/Header'
 import PWAPopup from './components/PWAPopup'
 import PWAInstruction from './components/PWAInstruction'
-import swLauncher from '@/lib/sw-launcher'
+import launcherServiceWorker from './launcherServiceWorker'
 import manuals from '@/lib/manuals'
 import { getBrowserName } from '@/lib/utils'
 
@@ -33,7 +33,7 @@ if (isElectron) {
   electron = { remote }
 }
 
-swLauncher(!isElectron, document)
+launcherServiceWorker(!isElectron, document)
 
 const checkBrowsers = ['Safari', 'Firefox', 'Opera']
 

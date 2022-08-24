@@ -1,4 +1,4 @@
-import Vue, { VueConstructor, PluginObject } from 'vue'
+import Vue, { PluginObject } from 'vue'
 
 import VueI18n from 'vue-i18n'
 import axios from 'axios'
@@ -6,7 +6,6 @@ import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/reset.css'
-import './assets/element-ui/theme-myvpn/index.scss'
 import './registerServiceWorker'
 
 import App from './App.vue'
@@ -33,7 +32,7 @@ const i18n = new VueI18n({
 })
 
 new Vue({
-  components: { App: App as VueConstructor<Vue> },
+  components: { App },
   i18n,
   router,
   store,

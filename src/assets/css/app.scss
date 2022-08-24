@@ -1,6 +1,8 @@
-@import "scroll.scss";
-@import "fonts.scss";
 @import "mixins.scss";
+
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+
 
 .root-app {
     font-family: 'Roboto Mono';
@@ -110,3 +112,44 @@ h3 {
         padding-left: 20px;
     }
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-button {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #535353;
+  border: 71px none #2f2f2f;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2f2f2f;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #6a6a6a;
+}
+
+::-webkit-scrollbar-track {
+  background: #828282;
+  border: 65px none #535353;
+}
+
+::-webkit-scrollbar-track:hover {
+  background: #8e8e8e;
+}
+
+::-webkit-scrollbar-track:active {
+  background: #aaa;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
