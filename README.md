@@ -52,14 +52,18 @@ https://tool.myvpn.run
 * English
 * Russian
 
+### Requirements
+
+* [Yarn](https://classic.yarnpkg.com/lang/en/docs/install)
+
 ### Build Setup
 
 ``` bash
 # install dependencies
-npm install
+yarn
 
 # serve with hot reload
-npm run dev
+yarn dev
 
 ```
 
@@ -68,19 +72,19 @@ npm run dev
 #### Windows x64 (.exe)
 
 ``` bash
-npm run build:windows
+yarn build:windows
 ```
 
 #### Linux Debian / Ubuntu (.deb) and Other (.tar.bz2)
 
 ``` bash
-npm run build:linux
+yarn build:linux
 ```
 
 #### MacOS (.dmg)
 
 ``` bash
-npm run build:mac
+yarn build:mac
 ```
 
 ### Official Website
