@@ -9,8 +9,8 @@
           {{ $i18n.locale === 'ru' ? 'ENG' : 'RUS' }}
         </a>
       </div>
-      <div v-if="!isElectron" class="app__window-line"></div>
-      <div v-if="!isElectron" class="app__window-control">
+      <div v-if="isElectron" class="app__window-line"></div>
+      <div v-if="isElectron" class="app__window-control">
         <div class="app__window-control-icon">
           <a href="#" v-on:click.prevent="windowMinimize">
             <img :src="imgPath + 'window/minimize.svg'" />
