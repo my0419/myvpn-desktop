@@ -5,8 +5,10 @@ const { defineConfig } = require('@vue/cli-service')
 const path = require('path')
 const webpack = require('webpack')
 
+const staticPath = [path.resolve(__dirname, 'public')]
+
 module.exports = defineConfig({
-  // publicPath: './',
+  publicPath: './',
   runtimeCompiler: true,
   transpileDependencies: true,
   productionSourceMap: false,
@@ -16,16 +18,19 @@ module.exports = defineConfig({
       outputDir: path.resolve(__dirname, 'dist'),
       productName: 'MyVPN',
       appId: 'com.myvpn.app',
-      icon: `${process.env.BASE_URL}/512x512.png`,
-      publish: [''],
+      icon: `${staticPath}/512x512.png`,
+      publish: ['github'],
       directories: {
         output: 'dist',
+      },
+      nsis: {
+        installerIcon: `${staticPath}/512x512.png`,
+        uninstallerIcon: `${staticPath}/512x512.png`,
       },
     },
   },
   css: {
     loaderOptions: {
-      css: {},
       sass: {
         sassOptions: {
           includePaths: [path.resolve(__dirname, 'node_modules')],
@@ -43,7 +48,7 @@ module.exports = defineConfig({
       //   process: 'process/browser',
       // }),
       new webpack.DefinePlugin({
-        __static: process.env.BASE_URL,
+        __static: staticPath,
       }),
     ],
     resolve: {

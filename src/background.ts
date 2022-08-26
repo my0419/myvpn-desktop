@@ -36,9 +36,10 @@ async function createWindow() {
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
     if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
+    const appURL = process.env.IS_ELECTRON ? 'app://./index.html' : './index.html'
     createProtocol('app')
     // Load the index.html when not in development
-    win.loadURL('app://./index.html')
+    win.loadURL(appURL)
   }
 }
 
