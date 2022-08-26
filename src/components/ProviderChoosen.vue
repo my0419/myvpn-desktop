@@ -122,7 +122,10 @@ import { useBreakpoints } from '@/lib/utils'
 import { CRYPTOSERVERS_KEY } from '@/lib/providers'
 import providers from '@/config/providers'
 
-const default_provider = providers[process.browser ? 'web' : 'desktop'][0].name
+const isElectron = process.env.IS_ELECTRON
+
+const platform = isElectron ? 'desktop' : 'web'
+const [defaultProvider] = providers[platform]
 
 export default {
   computed: mapState({
@@ -139,8 +142,8 @@ export default {
   data() {
     return {
       imgPath: `${process.env.BASE_URL}img/`,
-      activeTab: default_provider,
-      providers: providers[process.browser ? 'web' : 'desktop'],
+      activeTab: defaultProvider.name,
+      providers: providers[platform],
       mq: null,
     }
   },

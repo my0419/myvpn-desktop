@@ -23,7 +23,7 @@
         </el-col>
       </el-row>
     </div>
-    <div class="btn-group" v-else>
+    <div v-else class="btn-group">
       <el-button
         class="btn-group-item btn-group-item--left"
         type="primary"
@@ -61,21 +61,24 @@
       />
     </p>
     <div class="provider-connect-links">
-      <el-link v-if="tokenInput && !viaKey" v-on:click="tokenInput = false"
-        >{{ $t('Connect using login and password')
-        }}<i class="el-icon-user-solid el-icon--right"></i>
+      <el-link v-if="tokenInput && !viaKey" v-on:click="tokenInput = false">
+        {{ $t('Connect using login and password') }}
+        <i class="el-icon-user-solid el-icon--right"></i>
       </el-link>
-      <el-link v-if="!tokenInput" v-on:click="tokenInput = true"
-        >{{ $t('Connect using the API key') }}<i class="el-icon-key el-icon--right"></i>
+      <el-link v-if="!tokenInput" v-on:click="tokenInput = true">
+        {{ $t('Connect using the API key') }}
+        <i class="el-icon-key el-icon--right"></i>
       </el-link>
       <el-divider v-if="!viaKey" direction="vertical"></el-divider>
-      <el-link v-on:click.prevent="handleLinkTo(providerWebsite)"
-        >{{ $t('Go to website') }}<i class="el-icon-link el-icon--right"></i
+      <el-link v-on:click.prevent="handleLinkTo(providerWebsite)">
+        {{ $t('Go to website') }}
+        <i class="el-icon-link el-icon--right"></i
       ></el-link>
       <el-divider direction="vertical"></el-divider>
-      <el-link v-on:click.prevent="handleLinkTo(faqLink)"
-        >{{ $t('How to setup') }}<i class="el-icon-question el-icon--right"></i
-      ></el-link>
+      <el-link v-on:click.prevent="handleLinkTo(faqLink)">
+        {{ $t('How to setup') }}
+        <i class="el-icon-question el-icon--right"></i>
+      </el-link>
     </div>
   </el-row>
 </template>
