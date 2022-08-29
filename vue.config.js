@@ -16,17 +16,17 @@ module.exports = defineConfig({
     cordovaPath: 'cordova',
     electronBuilder: {
       nodeIntegration: true,
-      outputDir: '/Users/alex/Projects/myvpn-desktop/dist',
+      outputDir: path.resolve(__dirname, '/dist'),
       productName: 'MyVPN',
       appId: 'com.myvpn.app',
-      icon: '/Users/alex/Projects/myvpn-desktop/public/512x512.png',
+      icon: path.resolve(__dirname, 'public/512x512.png'),
       publish: ['github'],
       directories: {
         output: 'dist',
       },
       nsis: {
-        installerIcon: '/Users/alex/Projects/myvpn-desktop/public/512x512.png',
-        uninstallerIcon: '/Users/alex/Projects/myvpn-desktop/public/512x512.png',
+        installerIcon: path.resolve(__dirname, 'public/512x512.png'),
+        uninstallerIcon: path.resolve(__dirname, 'public/512x512.png'),
       },
     },
   },
