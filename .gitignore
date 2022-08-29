@@ -39,3 +39,18 @@ pnpm-debug.log*
 
 #Electron-builder output
 /diet_electron
+
+# Cordova
+/cordova/platforms
+/cordova/plugins
+/public/cordova.js
+
+# Cordova
+/mobile-app/platforms
+/mobile-app/plugins
+/public/cordova.js
+
+# Cordova
+/cordova/platforms
+/cordova/plugins
+/public/cordova.js
