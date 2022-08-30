@@ -11,12 +11,4 @@
     <content src="index.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
-    <platform name="android">
-      <icon background="www/512x512.png" density="ldpi" />
-      <icon background="www/512x512.png" density="mdpi" />
-      <icon background="www/512x512.png" density="hdpi" />
-      <icon background="www/512x512.png" density="xhdpi" />
-      <icon background="www/512x512.png" density="xxhdpi" />
-      <icon background="www/512x512.png" density="xxxhdpi" />
-    </platform>
 </widget>

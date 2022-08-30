@@ -17,6 +17,7 @@
     "build:web": "cross-env BUILD_TARGET=web vue-cli-service build",
     "build:windows": "vue-cli-service electron:build --windows --x64",
     "build:android": "npm run cordova:prepare && npm run cordova:build-android",
+    "build:android-debug": "cross-env npm run cordova:prepare && cd cordova && cordova build android -- --buildConfig && cd ..",
     "build:android-release": "cross-env npm run cordova:prepare && cd cordova && cordova build android --release -- --buildConfig && cd ..",
     "cordova:build-android": "cross-env CORDOVA_PLATFORM=android vue-cli-service cordova-build-android",
     "cordova:prepare": "cross-env vue-cli-service cordova-prepare",
