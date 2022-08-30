@@ -128,6 +128,7 @@ import { redirectTo, localStorageService } from '@/lib/utils'
 import OAuth2Provider from '@my0419/electron-oauth-helper/lib/oauth2'
 
 const isElectron = process.env.IS_ELECTRON
+const isCordova = !!cordova
 
 let electron = null
 
@@ -205,7 +206,26 @@ export default {
       const uri = `redirect_uri=${redirect_uri}&client_id=${client_id}&response_type=${response_type}&scope=${scope}`
       const encoded = baseURL + encodeURI(uri)
       saveProviderKey(name)
-      redirectTo(encoded, false)
+
+      if (isCordova) {
+        const inAppBrowserRef = cordova.InAppBrowser.open(
+          encoded,
+          '_self',
+          'beforeload=yes',
+        )
+
+        inAppBrowserRef.addEventListener('beforeload', params => {
+          const responseURL = new URL(params.url.replace(/#/g, '?'))
+          const token = responseURL.searchParams.get('access_token')
+
+          if (token) {
+            this.setToken(token)
+            inAppBrowserRef.close()
+          }
+        })
+      } else {
+        redirectTo(encoded, false)
+      }
     },
     createLoginWindow() {
       const { BrowserWindow, session } = electron.remote

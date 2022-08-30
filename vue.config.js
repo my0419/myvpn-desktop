@@ -47,7 +47,6 @@ module.exports = defineConfig({
       new NodePolyfillPlugin({ excludeAliases: ['process'] }),
       new webpack.DefinePlugin({
         __static: staticPath,
-        IS_MOBILE_APP: process.env.IS_MOBILE_APP,
       }),
     ],
     resolve: {
