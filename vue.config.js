@@ -16,7 +16,7 @@ module.exports = defineConfig({
     cordovaPath: 'cordova',
     electronBuilder: {
       nodeIntegration: true,
-      outputDir: path.resolve(__dirname, '/dist'),
+      outputDir: path.resolve(__dirname, 'dist'),
       productName: 'MyVPN',
       appId: 'com.myvpn.app',
       icon: path.resolve(__dirname, 'public/512x512.png'),

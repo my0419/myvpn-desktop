@@ -128,7 +128,6 @@ import { redirectTo, localStorageService } from '@/lib/utils'
 import OAuth2Provider from '@my0419/electron-oauth-helper/lib/oauth2'
 
 const isElectron = process.env.IS_ELECTRON
-const isCordova = !!cordova
 
 let electron = null
 
@@ -207,7 +206,7 @@ export default {
       const encoded = baseURL + encodeURI(uri)
       saveProviderKey(name)
 
-      if (isCordova) {
+      try {
         const inAppBrowserRef = cordova.InAppBrowser.open(
           encoded,
           '_self',
@@ -223,7 +222,7 @@ export default {
             inAppBrowserRef.close()
           }
         })
-      } else {
+      } catch (error) {
         redirectTo(encoded, false)
       }
     },
