@@ -276,16 +276,16 @@
 </template>
 
 <style lang="scss" >
-@import 'sassMixins';
+@import 'sass-mixins';
 
 .step-access {
   & &__tabs[data-tabs=access-tabs] {
-    @include mqMAX($XS) {
+    @include mq-max($XS) {
       margin-top: 15px;
     }
   }
   .selectable {
-    @include mqMAX($XS) {
+    @include mq-max($XS) {
       margin-top: 0;
     }
   }
@@ -298,7 +298,7 @@
   position: absolute;
   right: 20px;
   top: 40px;
-  @include mqMAX($XS) {
+  @include mq-max($XS) {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
@@ -310,7 +310,7 @@
     text-align: left;
   }
   .el-button--mini {
-    @include mqMAX($XS) {
+    @include mq-max($XS) {
       height: 36px;
       &:first-child {
         width: 100px;
@@ -331,13 +331,13 @@
 }
 .step-access__form {
   &-wrapper {
-    @include mqMAX($XS) {
+    @include mq-max($XS) {
       display: flex;
       flex-direction: column;
     }
   }
   &-col {
-    @include mqMAX($XS) {
+    @include mq-max($XS) {
       width: 100%;
       &:not(:first-child) {
         margin-top: 20px;
@@ -346,7 +346,7 @@
   }
   color: #fbfbfb;
   &-server {
-    @include mqMAX($XS) {
+    @include mq-max($XS) {
       margin-left: 0;
       .el-form-item {
         display: flex;
@@ -370,7 +370,7 @@
   }
   &-vpn {
     .el-form-item {
-      @include mqMAX($XS) {
+      @include mq-max($XS) {
         display: flex;
         flex-direction: column;
         &:not(:last-child)::after {
@@ -381,7 +381,7 @@
     }
     .el-form-item__content {
       margin-left: 160px;
-      @include mqMAX($XS) {
+      @include mq-max($XS) {
         margin-left: 0;
       }
     }

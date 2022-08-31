@@ -6,7 +6,6 @@ import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/reset.css'
-import './registerServiceWorker'
 
 import App from './App.vue'
 import router from './router'
@@ -14,6 +13,8 @@ import store from './store'
 import translate from './i18n'
 import Clipboard from 'v-clipboard'
 import VOffline from 'v-offline'
+
+import './registerServiceWorker'
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false

@@ -27,7 +27,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import 'sassMixins';
+@import 'sass-mixins';
 $bolb-color: #ff6715;
 
 // Loader
@@ -40,7 +40,7 @@ $bolb-color: #ff6715;
   border-radius: 70px;
   transform-style: preserve-3d;
   margin: 0 auto;
-  @include mqMAX($XS) {
+  @include mq-max($XS) {
     margin-top: -10vh;
     width: 200px;
     height: 200px;

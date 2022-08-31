@@ -14,6 +14,7 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "cordova-android": "^10.1.2",
+    "cordova-plugin-app-version": "^0.1.14",
     "cordova-plugin-inappbrowser": "^5.0.0"
   },
   "cordova": {
@@ -21,7 +22,8 @@
       "android"
     ],
     "plugins": {
-      "cordova-plugin-inappbrowser": {}
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-app-version": {}
     }
   }
 }

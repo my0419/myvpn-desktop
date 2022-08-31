@@ -88,18 +88,18 @@
 </template>
 
 <style lang="scss" scoped>
-@import 'sassMixins';
+@import 'sass-mixins';
 
 h4 {
   margin: 4px 0;
 }
 .page-droplets {
-  @include mqMAX($XXS) {
+  @include mq-max($XXS) {
     display: flex;
     flex-direction: column;
   }
   .page-droplets-nav {
-    @include mqMAX($XXS) {
+    @include mq-max($XXS) {
       display: flex;
       flex-flow: row nowrap;
       justify-content: space-between;
@@ -107,13 +107,13 @@ h4 {
     }
   }
   .box-card-col {
-    @include mqMAX($XS) {
+    @include mq-max($XS) {
       margin-left: 0;
       width: 100%;
     }
   }
   .droplets-btn {
-    @include mqMAX($XXS) {
+    @include mq-max($XXS) {
       border-radius: 4px;
       &--left {
         width: 100px;
@@ -129,7 +129,7 @@ h4 {
     color: #d4682c;
     padding: 7px;
     font-size: 0.7rem;
-    @include mqMAX($XXS) {
+    @include mq-max($XXS) {
       margin-top: 12px;
       width: 100%;
       height: 30px;

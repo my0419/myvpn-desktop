@@ -58,7 +58,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import 'sassMixins';
+@import 'sass-mixins';
 .pwa-instruction {
   position: fixed;
   display: none;

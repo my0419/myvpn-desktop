@@ -84,10 +84,10 @@
 </template>
 
 <style lang="scss" scoped>
-@import 'sassMixins';
+@import 'sass-mixins';
 
 .provider-token-wrapper {
-  @include mqMAX($MD) {
+  @include mq-max($MD) {
     .el-row {
       display: flex;
       flex-direction: column;
@@ -98,7 +98,7 @@
       }
     }
   }
-  @include mqMAX($XXS) {
+  @include mq-max($XXS) {
     .btn-group {
       width: 100%;
     }
@@ -110,7 +110,7 @@
 .provider-choose-content {
 }
 .provider-connect-links {
-  @include mqMAX($XXS) {
+  @include mq-max($XXS) {
     display: flex;
     flex-direction: column;
     align-items: flex-start;

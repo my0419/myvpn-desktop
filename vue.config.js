@@ -38,6 +38,8 @@ module.exports = defineConfig({
         },
         additionalData: `
           @import "@/assets/element-ui/theme-myvpn/index.scss";
+          @import "@/assets/css/global.scss";
+          @import "@/assets/css/app.scss";
         `,
       },
     },
@@ -71,8 +73,8 @@ module.exports = defineConfig({
       extensions: ['.ts', '.js', '.json', '.node'],
       alias: {
         '@': path.resolve(__dirname, 'src/'),
+        'sass-mixins': path.resolve(__dirname, 'src/assets/css/mixins'),
         vue$: 'vue/dist/vue.esm.js',
-        sassMixins: path.resolve(__dirname, 'src/assets/css/mixins'),
       },
     },
   },

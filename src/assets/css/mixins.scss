@@ -3,13 +3,13 @@ $XS: 768px;
 $MD: 850px;
 $LG: 1200px;
 
-@mixin mqMIN($min) {
+@mixin mq-min($min) {
   @media screen and (min-width: $min) {
     @content;
   }
 }
 
-@mixin mqMAX($max) {
+@mixin mq-max($max) {
   @media screen and (max-width: $max) {
     @content;
   }

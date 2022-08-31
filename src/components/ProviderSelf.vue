@@ -44,7 +44,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import 'sassMixins';
+@import 'sass-mixins';
 
 .notice {
   color: #c00000;
@@ -61,16 +61,16 @@
 }
 .provider-self-form {
   &:nth-of-type(2) {
-    @include mqMAX($XS) {
+    @include mq-max($XS) {
       margin-top: 20px;
     }
   }
-  @include mqMAX($XS) {
+  @include mq-max($XS) {
     display: flex;
     flex-direction: column;
   }
   .el-form-item {
-    @include mqMAX($XS) {
+    @include mq-max($XS) {
       display: flex;
       flex-direction: column;
       margin-right: 0;

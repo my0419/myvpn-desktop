@@ -64,7 +64,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import 'sassMixins';
+@import 'sass-mixins';
 
 .providers .provider-choose-title {
   font-weight: 400;
@@ -91,7 +91,7 @@
   object-fit: contain;
 }
 .provider-choose-content {
-  @include mqMAX($XS) {
+  @include mq-max($XS) {
     margin-top: 20px;
   }
 }

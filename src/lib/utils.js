@@ -1,6 +1,10 @@
-import { xs, lg } from '@/assets/css/variables.scss'
+const breakpoints = {
+  xs: 768,
+  lg: 1200,
+}
 
 export function useBreakpoints() {
+  const { xs, lg } = breakpoints
   const getWidth = () => window.innerWidth
 
   const xs_value = parseInt(xs)

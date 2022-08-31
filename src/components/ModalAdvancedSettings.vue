@@ -155,23 +155,23 @@
 </template>
 
 <style lang="scss" scoped>
-@import 'sassMixins';
+@import 'sass-mixins';
 .el-dialog__body {
   .el-form {
     .el-form-item {
-      @include mqMAX($XS) {
+      @include mq-max($XS) {
         display: flex;
         flex-direction: column;
       }
     }
     .el-form-item__content {
       margin-left: 145px;
-      @include mqMAX($XS) {
+      @include mq-max($XS) {
         margin-left: 0;
       }
     }
     .btn-group-item {
-      @include mqMAX($XXS) {
+      @include mq-max($XXS) {
         height: 36px;
         margin-left: 0;
         marker-end: 0;
@@ -181,7 +181,7 @@
       }
     }
     .el-input-number {
-      @include mqMAX($XXS) {
+      @include mq-max($XXS) {
         width: 100%;
       }
     }

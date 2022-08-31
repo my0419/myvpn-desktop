@@ -187,7 +187,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'sassMixins';
+@import 'sass-mixins';
 
 .wrapper {
   overflow-x: scroll;

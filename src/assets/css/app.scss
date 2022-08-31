@@ -2,15 +2,12 @@
 
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
-
-
 .root-app {
-    font-family: 'Roboto Mono';
-    word-spacing: -2px;
-    background: linear-gradient(5.41deg,#191919,#313131) no-repeat;
-    background-attachment: fixed;
-}
-.app-page {
+  font-family: 'Roboto Mono';
+  word-spacing: -2px;
+  background: linear-gradient(5.41deg,#191919,#313131) no-repeat;
+  background-attachment: fixed;
+  .app-page {
     -webkit-user-select: none;
     padding: 20px;
     padding-top: 40px;
@@ -20,37 +17,37 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     background-position-x: 50px;
     background-position-y: -100px;
     min-height: calc(100vh - 64px);
-    @include mqMAX($XS) {
-        padding-left: 10px;
-        padding-right: 10px;
-        background-size: cover;
-        background-position-x: 30%;
-        background-position-y: -50px;
+    @include mq-max($XS) {
+      padding-left: 10px;
+      padding-right: 10px;
+      background-size: cover;
+      background-position-x: 30%;
+      background-position-y: -50px;
     }
-}
-.el-aside {
+  }
+  .el-aside {
     height: 100vh;
-}
-.el-steps {
+  }
+  .el-steps {
     -webkit-user-select: none;
     cursor: default;
-}
-.el-collapse {
+  }
+  .el-collapse {
     border: none !important;
-}
-.selectable {
+  }
+  .selectable {
     -webkit-user-select: initial;
-}
-.cell, h3, .el-alert__content {
+  }
+  .cell, h3, .el-alert__content {
     cursor: default;
-}
-.m-top {
+  }
+  .m-top {
     margin-top: 15px;
-}
-h3 {
+  }
+  h3 {
     font-weight: bold;
-}
-.action-journal textarea {
+  }
+  .action-journal textarea {
     resize: none;
     background: #F5F7FA;
     color: #6a6a6a;
@@ -58,17 +55,17 @@ h3 {
     border-radius: 0;
     height: 150px;
     padding: 5px;
-}
-.text-center {
+  }
+  .text-center {
     text-align: center;
-}
-.logo__image {
+  }
+  .logo__image {
     height: 80px;
-}
-.text-warning {
+  }
+  .text-warning {
     color: #dd7b00;
-}
-.app-version {
+  }
+  .app-version {
     position: absolute;
     bottom: 15px;
     font-size: 10px;
@@ -76,41 +73,43 @@ h3 {
     color: #575757;
     user-select: none;
     font-weight: 100;
-}
-.btn-group {
-    @include mqMAX($XXS) {
+  }
+  .btn-group {
+    @include mq-max($XXS) {
       display: flex;
       justify-content: space-between;
     }
     &-item {
-        @include mqMAX($XXS) {
-            width: calc(50% - 5px);
-            margin-left: 0;
-            margin-right: 0;
+      @include mq-max($XXS) {
+        width: calc(50% - 5px);
+        margin-left: 0;
+        margin-right: 0;
+      }
+      &--fill {
+        @include mq-max($XXS) {
+            width: 100%;
         }
-        &--fill {
-            @include mqMAX($XXS) {
-                width: 100%;
-            }
+      }
+      &--left {
+        @include mq-max($XXS) {
+            margin-right: auto;
         }
-        &--left {
-            @include mqMAX($XXS) {
-                margin-right: auto;
-            }
+      }
+      &--right {
+        @include mq-max($XXS) {
+            margin-left: auto;
         }
-        &--right {
-            @include mqMAX($XXS) {
-                margin-left: auto;
-            }
-        }
+      }
     }
+  }
 }
+
 .note-block {
-    line-height: 22px;
-    font-size: 12px;
-    ol {
-        padding-left: 20px;
-    }
+  line-height: 22px;
+  font-size: 12px;
+  ol {
+    padding-left: 20px;
+  }
 }
 
 ::-webkit-scrollbar {

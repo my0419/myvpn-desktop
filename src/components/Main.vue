@@ -37,21 +37,21 @@
         >Reset Store</el-button
       >
     </div>
-    <div class="app-version">{{ $t('Version') }}: {{ appVersion }}</div>
+    <div v-if="appVersion" class="app-version">{{ $t('Version') }}: {{ appVersion }}</div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import 'sassMixins';
+@import 'sass-mixins';
 
 .main-footer {
-  @include mqMAX($MD) {
+  @include mq-max($MD) {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
   .el-button {
-    @include mqMAX($MD) {
+    @include mq-max($MD) {
       &:not(:first-child) {
         margin-top: 20px;
         margin-left: 0;
@@ -82,8 +82,18 @@ if (isElectron) {
   electron = { app, remote, shell: remote.shell }
 }
 
-const getVersion = () =>
-  isElectron ? electron.remote && electron.app.getVersion() : '.Online'
+const getVersion = async () => {
+  if (isElectron && electron.remote) {
+    return electron.app.getVersion()
+  } else {
+    try {
+      const appVesion = await cordova.getAppVersion.getVersionNumber()
+      return appVesion ?? null
+    } catch (error) {
+      return '.Online'
+    }
+  }
+}
 
 const redirectToLinkUpdate = () =>
   electron && electron.shell.openExternal('https://myvpn.run/#download')

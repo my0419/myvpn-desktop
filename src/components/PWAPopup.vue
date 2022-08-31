@@ -23,7 +23,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import 'sassMixins';
+@import 'sass-mixins';
 .pwa-popup {
   position: fixed;
   display: none;

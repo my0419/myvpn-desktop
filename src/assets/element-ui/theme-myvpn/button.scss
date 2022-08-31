@@ -1,53 +1,55 @@
-.el-button {
-  font-family: 'Roboto Mono';
-  word-spacing: -3px;
-  background: linear-gradient(77.02deg, #131313 -85.04%, #383838 162.69%);
-  color: #c1c1c1;
-  border-color: #444;
-  @include mqMAX($XXS) {
-    padding-left: 10px;
-    padding-right: 10px;
-    font-size: 12px;
+.root-app {
+  .el-button {
+    font-family: 'Roboto Mono';
+    word-spacing: -3px;
+    background: linear-gradient(77.02deg, #131313 -85.04%, #383838 162.69%);
+    color: #c1c1c1;
+    border-color: #444;
+    @include mq-max($XXS) {
+      padding-left: 10px;
+      padding-right: 10px;
+      font-size: 12px;
+    }
+    &:hover {
+      background: linear-gradient(77.02deg, #3a3a3a -85.04%, #505050 162.69%);
+      color: #c1c1c1;
+      border-color: #444;
+    }
   }
-  &:hover {
-    background: linear-gradient(77.02deg, #3a3a3a -85.04%, #505050 162.69%);
+  .el-button--info.is-active, .el-button--info:active,
+  .el-button--info:focus, .el-button--info:hover
+  {
+    background: linear-gradient(77.02deg, #1c1c1c -85.04%, #424242 162.69%);
     color: #c1c1c1;
     border-color: #444;
   }
-}
-.el-button--info.is-active, .el-button--info:active,
-.el-button--info:focus, .el-button--info:hover
-{
-  background: linear-gradient(77.02deg, #1c1c1c -85.04%, #424242 162.69%);
-  color: #c1c1c1;
-  border-color: #444;
-}
-.el-button--danger:focus, .el-button--danger:hover {
-  background: linear-gradient(77.02deg, #1c1c1c -85.04%, #424242 162.69%);
-  color: #c1c1c1;
-  border-color: #444;
-}
-.el-button--success, .el-button--primary {
-  color: #FFF;
-  background: linear-gradient(77.02deg,#ff5858 -85.04%,#f09819 162.69%);
-  box-shadow: 0 4px 4px rgba(0,0,0,.25);
-  border-radius: 4px;
-  border: 0;
-  outline: 0;
-  &:hover, &:active, &:focus {
-    background: linear-gradient(77.02deg, #e74848 -85.04%, #e28e17 162.69%);
-    color: #FFF;
+  .el-button--danger:focus, .el-button--danger:hover {
+    background: linear-gradient(77.02deg, #1c1c1c -85.04%, #424242 162.69%);
+    color: #c1c1c1;
+    border-color: #444;
   }
-  &.is-disabled {
-    background: linear-gradient(77.02deg, #8b8b8b -85.04%, #515151 162.69%);
+  .el-button--success, .el-button--primary {
+    color: #FFF;
+    background: linear-gradient(77.02deg,#ff5858 -85.04%,#f09819 162.69%);
+    box-shadow: 0 4px 4px rgba(0,0,0,.25);
+    border-radius: 4px;
+    border: 0;
+    outline: 0;
     &:hover, &:active, &:focus {
-      background: linear-gradient(77.02deg, #8b8b8b -85.04%, #515151 162.69%);
+      background: linear-gradient(77.02deg, #e74848 -85.04%, #e28e17 162.69%);
+      color: #FFF;
     }
-    color: #FFF;
+    &.is-disabled {
+      background: linear-gradient(77.02deg, #8b8b8b -85.04%, #515151 162.69%);
+      &:hover, &:active, &:focus {
+        background: linear-gradient(77.02deg, #8b8b8b -85.04%, #515151 162.69%);
+      }
+      color: #FFF;
+    }
   }
-}
-.el-button-group {
-  .el-button {
-    margin-right: 2px;
+  .el-button-group {
+    .el-button {
+      margin-right: 2px;
+    }
   }
 }

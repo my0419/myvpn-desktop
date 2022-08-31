@@ -30,14 +30,14 @@
 </template>
 
 <style lang="scss" scoped>
-@import 'sassMixins';
+@import 'sass-mixins';
 
 .wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  @include mqMAX($XS) {
+  @include mq-max($XS) {
     height: auto;
   }
 }
@@ -46,10 +46,10 @@
   font-weight: 500;
   font-size: 1.8rem;
   color: #fff;
-  @include mqMAX($XS) {
+  @include mq-max($XS) {
     font-size: 0.9rem;
   }
-  @include mqMAX($XXS) {
+  @include mq-max($XXS) {
     font-size: 0.7rem;
   }
 }
@@ -62,7 +62,7 @@
   padding: 0;
 }
 .proccesing-heading {
-  @include mqMAX($XS) {
+  @include mq-max($XS) {
     padding: 15px;
     &::before,
     &::after {
@@ -71,7 +71,7 @@
   }
 }
 .proccesing-description {
-  @include mqMAX($XS) {
+  @include mq-max($XS) {
     margin-top: 0;
     font-size: 0.8rem;
   }
