@@ -38,7 +38,6 @@ module.exports = defineConfig({
         },
         additionalData: `
           @import "@/assets/element-ui/theme-myvpn/index.scss";
-          @import "@/assets/css/global.scss";
           @import "@/assets/css/app.scss";
         `,
       },

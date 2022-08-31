@@ -13,6 +13,7 @@ import store from './store'
 import translate from './i18n'
 import Clipboard from 'v-clipboard'
 import VOffline from 'v-offline'
+import '@/assets/css/global.scss'
 
 import './registerServiceWorker'
 
@@ -32,10 +33,10 @@ const i18n = new VueI18n({
   messages: translate,
 })
 
-new Vue({
-  components: { App },
-  i18n,
-  router,
-  store,
-  template: '<App/>',
-}).$mount('#app')
+// new Vue({
+//   components: { App },
+//   i18n,
+//   router,
+//   store,
+//   template: '<App/>',
+// }).$mount('#app')

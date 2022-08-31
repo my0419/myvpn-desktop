@@ -37,7 +37,7 @@
         >Reset Store</el-button
       >
     </div>
-    <div v-if="appVersion" class="app-version">{{ $t('Version') }}: {{ appVersion }}</div>
+    <div v-if="version" class="app-version">{{ $t('Version') }}: {{ version }}</div>
   </div>
 </template>
 
@@ -116,18 +116,23 @@ function initProviderParams() {
   }
 }
 
+let version = null
+getVersion().then(currentVersion => {
+  version = currentVersion
+})
+
 export default {
   components: { Providers, Copied, FormTypes, FormRegions, ModalAdvancedSettings },
   computed: mapState({
     selectedProvider: state => state.provider.name || CRYPTOSERVERS_KEY,
     configuredSuccess: state => state.provider.configuredSuccess,
     token: state => state.provider.config.apikey,
-    appVersion: getVersion,
   }),
   data() {
     return {
       imgPath: `${process.env.BASE_URL}/img/`,
       isDev,
+      version,
     }
   },
   mounted() {
