@@ -33,10 +33,10 @@ const i18n = new VueI18n({
   messages: translate,
 })
 
-// new Vue({
-//   components: { App },
-//   i18n,
-//   router,
-//   store,
-//   template: '<App/>',
-// }).$mount('#app')
+new Vue({
+  components: { App },
+  i18n,
+  router,
+  store,
+  template: '<App/>',
+}).$mount('#app')
