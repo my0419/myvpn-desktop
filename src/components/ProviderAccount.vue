@@ -204,24 +204,35 @@ export default {
       const baseURL = `${authorize_url}?`
       const uri = `redirect_uri=${redirect_uri}&client_id=${client_id}&response_type=${response_type}&scope=${scope}`
       const encoded = baseURL + encodeURI(uri)
+
       saveProviderKey(name)
+
+      console.log('uri', uri)
+      console.log('encoded', encoded)
 
       try {
         const inAppBrowserRef = cordova.InAppBrowser.open(
           encoded,
-          '_self',
-          'beforeload=yes',
+          '_blank',
+          'beforeload=yes,location=yes',
         )
 
-        inAppBrowserRef.addEventListener('beforeload', params => {
-          const responseURL = new URL(params.url.replace(/#/g, '?'))
-          const token = responseURL.searchParams.get('access_token')
+        const handleToken = event => {
+          const urlStringParams = event.url.replace('#', '?')
+
+          const urlParams = Object.fromEntries(new URLSearchParams(urlStringParams))
+
+          console.log('urlParams', urlParams)
+
+          const token = urlParams.access_token
 
           if (token) {
             this.setToken(token)
             inAppBrowserRef.close()
           }
-        })
+        }
+
+        inAppBrowserRef.addEventListener('beforeload', handleToken)
       } catch (error) {
         redirectTo(encoded, false)
       }
