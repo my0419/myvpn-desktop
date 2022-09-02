@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vue-cli-service electron:serve",
-    "dev:browser": "vue-cli-service serve",
+    "dev:web": "vue-cli-service serve",
     "dev:android": "npm run cordova:serve-android --debug",
     "build": "vue-cli-service electron:build",
     "lint": "vue-cli-service lint",

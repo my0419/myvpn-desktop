@@ -203,12 +203,12 @@ export default {
       )
       const { client_id, redirect_uri, scope, authorize_url, response_type } = oauthConfig
 
-      const redirectTo = process.env.CORDOVA_PLATFORM
+      const platformRedirectURL = process.env.CORDOVA_PLATFORM
         ? providers.cordova.app_url
         : redirect_uri
 
       const baseURL = `${authorize_url}?`
-      const uri = `redirect_uri=${redirectTo}&client_id=${client_id}&response_type=${response_type}&scope=${scope}`
+      const uri = `redirect_uri=${platformRedirectURL}&client_id=${client_id}&response_type=${response_type}&scope=${scope}`
       const encoded = baseURL + encodeURI(uri)
 
       saveProviderKey(name)
