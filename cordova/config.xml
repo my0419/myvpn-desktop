@@ -11,4 +11,10 @@
     <content src="index.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    <universal-links>
+    <host name="myvpn-host.com">
+      <path url="/" event="openMainPage" />
+      <path url="*" event="launchedAppFromLink" />
+    </host>
+    </universal-links>
 </widget>

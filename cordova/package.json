@@ -15,6 +15,7 @@
   "devDependencies": {
     "cordova-android": "^10.1.2",
     "cordova-plugin-app-version": "^0.1.14",
+    "cordova-plugin-deeplinks": "^1.1.1",
     "cordova-plugin-inappbrowser": "^5.0.0"
   },
   "cordova": {
@@ -23,7 +24,8 @@
     ],
     "plugins": {
       "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-app-version": {}
+      "cordova-plugin-app-version": {},
+      "cordova-plugin-deeplinks": {}
     }
   }
 }

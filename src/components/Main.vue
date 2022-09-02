@@ -107,8 +107,8 @@ const closeApp = () =>
     }
   }, 500)
 
-function initProviderParams() {
-  const hash = window.location.hash.replace(/(^#\/#|\/#|#)/gm, '')
+function initProviderParams(redirectHash) {
+  const hash = redirectHash.replace(/(^#\/#|\/#|#)/gm, '')
   const params = new URLSearchParams(hash)
   const access_token = params.get('access_token')
   if (access_token) {
@@ -168,13 +168,14 @@ export default {
             })
         }
       })
-      .catch(error => {
-        console.log('Skip application update check.', error)
+      .catch(_ => {
+        console.log('Skip application update check.')
       })
 
-    if (!isElectron) {
-      const access_token = initProviderParams()
+    const initWebOAuth2 = redirectHash => {
+      const access_token = initProviderParams(redirectHash)
       const provider_key = getProviderKey()
+
       if (access_token && provider_key) {
         try {
           this.setToken(access_token, provider_key)
@@ -186,6 +187,33 @@ export default {
             showClose: true,
           })
         }
+      }
+    }
+
+    if (!isElectron) {
+      try {
+        const cordovaApp = {
+          // Application Constructor
+          initialize: function () {
+            this.bindEvents()
+          },
+          // Bind Event Listeners
+          bindEvents: function () {
+            document.addEventListener('deviceready', this.onDeviceReady, false)
+          },
+          // deviceready Event Handler
+          onDeviceReady: function () {
+            universalLinks.subscribe('openMainPage', cordovaApp.onOpenMainPage)
+          },
+          // launchedAppFromLink Event Handler
+          onOpenMainPage: function (eventData) {
+            console.log('Did launch app from the link: ' + eventData.url)
+            initWebOAuth2(eventData.url)
+          },
+        }
+        cordovaApp.initialize()
+      } catch (err) {
+        initWebOAuth2(window.location.hash)
       }
     }
   },

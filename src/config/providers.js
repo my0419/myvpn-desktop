@@ -1,4 +1,7 @@
 const providers = {
+  cordova: {
+    app_url: 'http://myvpn-host.com/',
+  },
   desktop: [
     {
       name: 'cryptoservers',

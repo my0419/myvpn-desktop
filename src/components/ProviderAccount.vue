@@ -140,6 +140,7 @@ const redirectToUrl = url =>
   isElectron ? electron.shell.openExternal(url) : redirectTo(url)
 const saveProviderKey = value => localStorageService.set('my_vpn_provider_key', value)
 const removeProviderKey = () => localStorageService.remove('my_vpn_provider_key')
+
 export default {
   props: [
     'providerKey',
@@ -201,38 +202,19 @@ export default {
         {},
       )
       const { client_id, redirect_uri, scope, authorize_url, response_type } = oauthConfig
+
+      const redirectTo = process.env.CORDOVA_PLATFORM
+        ? providers.cordova.app_url
+        : redirect_uri
+
       const baseURL = `${authorize_url}?`
-      const uri = `redirect_uri=${redirect_uri}&client_id=${client_id}&response_type=${response_type}&scope=${scope}`
+      const uri = `redirect_uri=${redirectTo}&client_id=${client_id}&response_type=${response_type}&scope=${scope}`
       const encoded = baseURL + encodeURI(uri)
 
       saveProviderKey(name)
 
-      console.log('uri', uri)
-      console.log('encoded', encoded)
-
       try {
-        const inAppBrowserRef = cordova.InAppBrowser.open(
-          encoded,
-          '_blank',
-          'beforeload=yes,location=yes',
-        )
-
-        const handleToken = event => {
-          const urlStringParams = event.url.replace('#', '?')
-
-          const urlParams = Object.fromEntries(new URLSearchParams(urlStringParams))
-
-          console.log('urlParams', urlParams)
-
-          const token = urlParams.access_token
-
-          if (token) {
-            this.setToken(token)
-            inAppBrowserRef.close()
-          }
-        }
-
-        inAppBrowserRef.addEventListener('beforeload', handleToken)
+        cordova.InAppBrowser.open(encoded, '_system', 'beforeload=yes,location=no')
       } catch (error) {
         redirectTo(encoded, false)
       }

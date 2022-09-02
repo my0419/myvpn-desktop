@@ -8,7 +8,7 @@ const webpack = require('webpack')
 const staticPath = [path.resolve(__dirname, 'public')]
 
 module.exports = defineConfig({
-  publicPath: '',
+  publicPath: './',
   runtimeCompiler: true,
   transpileDependencies: true,
   productionSourceMap: false,

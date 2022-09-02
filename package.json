@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vue-cli-service electron:serve",
     "dev:browser": "vue-cli-service serve",
-    "dev:android": "npm run cordova:serve-android",
+    "dev:android": "npm run cordova:serve-android --debug",
     "build": "vue-cli-service electron:build",
     "lint": "vue-cli-service lint",
     "build:linux": "vue-cli-service electron:build --linux deb tar.bz2 AppImage",
@@ -17,10 +17,10 @@
     "build:web": "cross-env BUILD_TARGET=web vue-cli-service build",
     "build:windows": "vue-cli-service electron:build --windows --x64",
     "build:android": "npm run cordova:prepare && npm run cordova:build-android",
-    "build:android-debug": "cross-env npm run cordova:prepare && cd cordova && cordova build android -- --buildConfig && cd ..",
+    "build:android-debug": "cross-env npm run cordova:prepare && cd cordova && cordova build android --debug -- --buildConfig && cd ..",
     "build:android-release": "cross-env npm run cordova:prepare && cd cordova && cordova build android --release -- --buildConfig && cd ..",
     "cordova:build-android": "cross-env CORDOVA_PLATFORM=android vue-cli-service cordova-build-android",
-    "cordova:prepare": "cross-env vue-cli-service cordova-prepare",
+    "cordova:prepare": "vue-cli-service cordova-prepare",
     "cordova:serve-android": "cross-env CORDOVA_PLATFORM=android vue-cli-service cordova-serve-android",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
