@@ -17,16 +17,16 @@ module.exports = defineConfig({
     electronBuilder: {
       nodeIntegration: true,
       outputDir: path.resolve(__dirname, 'dist'),
+      icon: path.resolve(__dirname, 'build/icons/icon.png'),
       productName: 'MyVPN',
       appId: 'com.myvpn.app',
-      icon: path.resolve(__dirname, 'public/512x512.png'),
-      publish: ['github'],
       directories: {
-        output: 'dist',
+        output: 'build',
       },
-      nsis: {
-        installerIcon: path.resolve(__dirname, 'public/512x512.png'),
-        uninstallerIcon: path.resolve(__dirname, 'public/512x512.png'),
+      linux: {
+        maintainer: 'MyVPN',
+        vendor: 'MyVPN',
+        category: 'Network',
       },
     },
   },
