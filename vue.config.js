@@ -29,6 +29,7 @@ module.exports = defineConfig({
           includePaths: [path.resolve(__dirname, 'node_modules')],
         },
         additionalData: `
+          @import "@/assets/css/variables.scss";
           @import "@/assets/element-ui/theme-myvpn/index.scss";
           @import "@/assets/css/app.scss";
         `,
