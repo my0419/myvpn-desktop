@@ -3,9 +3,6 @@ require('dotenv').config()
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 const { defineConfig } = require('@vue/cli-service')
 const path = require('path')
-const webpack = require('webpack')
-
-const staticPath = [path.resolve(__dirname, 'public')]
 
 module.exports = defineConfig({
   publicPath: './',
@@ -23,11 +20,6 @@ module.exports = defineConfig({
       directories: {
         output: 'build',
       },
-      linux: {
-        maintainer: 'MyVPN',
-        vendor: 'MyVPN',
-        category: 'Network',
-      },
     },
   },
   css: {
@@ -44,12 +36,7 @@ module.exports = defineConfig({
     },
   },
   configureWebpack: {
-    plugins: [
-      new NodePolyfillPlugin({ excludeAliases: ['process'] }),
-      new webpack.DefinePlugin({
-        __static: staticPath,
-      }),
-    ],
+    plugins: [new NodePolyfillPlugin({ excludeAliases: ['process'] })],
     resolve: {
       fallback: {
         fs: false,
