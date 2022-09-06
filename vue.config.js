@@ -14,11 +14,16 @@ module.exports = defineConfig({
     electronBuilder: {
       nodeIntegration: true,
       outputDir: path.resolve(__dirname, 'dist'),
-      icon: path.resolve(__dirname, 'build/icons/icon.png'),
-      productName: 'MyVPN',
-      appId: 'com.myvpn.app',
-      directories: {
-        output: 'build',
+      builderOptions: {
+        icon: path.resolve(__dirname, 'build/icons/icon.png'),
+        productName: 'MyVPN',
+        appId: 'com.myvpn.app',
+        linux: {
+          target: ['deb', 'tar.bz2', 'AppImage'],
+        },
+        mac: {
+          target: ['dmg'],
+        },
       },
     },
   },

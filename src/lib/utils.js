@@ -38,7 +38,7 @@ export const localStorageService = {
     return localStorage.getItem(key)
   },
   remove(key) {
-    localStorage.removeItem(key, value)
+    localStorage.removeItem(key)
   },
 }
 

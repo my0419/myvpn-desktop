@@ -35,8 +35,6 @@ if (isElectron) {
 
 launcherServiceWorker(!isElectron, document)
 
-const checkBrowsers = ['Safari', 'Firefox', 'Opera']
-
 export default {
   name: 'vpn',
   components: { Header, PWAPopup, PWAInstruction },
@@ -65,3 +63,4 @@ export default {
   },
 }
 </script>
+Footer
