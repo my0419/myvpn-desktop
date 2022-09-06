@@ -203,20 +203,25 @@ export default {
       )
       const { client_id, redirect_uri, scope, authorize_url, response_type } = oauthConfig
 
-      const platformRedirectURL = process.env.CORDOVA_PLATFORM
-        ? providers.cordova.app_url
-        : redirect_uri
-
       const baseURL = `${authorize_url}?`
-      const uri = `redirect_uri=${platformRedirectURL}&client_id=${client_id}&response_type=${response_type}&scope=${scope}`
-      const encoded = baseURL + encodeURI(uri)
+      const uri = `client_id=${client_id}&response_type=${response_type}&scope=${scope}`
 
       saveProviderKey(name)
 
+      const getEncoded = redirectUrl => {
+        return baseURL + encodeURI(uri + redirectUrl)
+      }
+
       try {
-        cordova.InAppBrowser.open(encoded, '_system', 'beforeload=yes,location=no')
+        const appRedirectUrlParams = `&redirect_uri=${providers.cordova.app_url}`
+        cordova.InAppBrowser.open(
+          getEncoded(appRedirectUrlParams),
+          '_system',
+          'beforeload=yes,location=no',
+        )
       } catch (error) {
-        redirectTo(encoded, false)
+        const webRedirectUrlParams = `&redirect_uri=${redirect_uri}`
+        redirectTo(getEncoded(webRedirectUrlParams), false)
       }
     },
     createLoginWindow() {

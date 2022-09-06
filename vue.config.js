@@ -1,7 +1,7 @@
 require('dotenv').config()
 
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 const { defineConfig } = require('@vue/cli-service')
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 const path = require('path')
 
 module.exports = defineConfig({
