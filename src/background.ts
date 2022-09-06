@@ -10,9 +10,11 @@ remoteMain.initialize()
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
+const appProtocol = process.env.CORDOVA_PLATFORM ? 'myvpn-host.com' : 'app'
+
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
-  { scheme: 'app', privileges: { secure: true, standard: true } },
+  { scheme: appProtocol, privileges: { secure: true, standard: true } },
 ])
 
 async function createWindow() {
@@ -36,8 +38,8 @@ async function createWindow() {
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
     if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
-    const appURL = 'app://./index.html'
-    createProtocol('app')
+    const appURL = `${appProtocol}://./index.html`
+    createProtocol(appProtocol)
     // Load the index.html when not in development
     win.loadURL(appURL)
   }

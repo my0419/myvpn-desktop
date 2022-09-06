@@ -21,6 +21,7 @@
     "cordova:serve-android": "cross-env CORDOVA_PLATFORM=android vue-cli-service cordova-serve-android",
     "dev": "vue-cli-service electron:serve",
     "dev:android": "npm run cordova:serve-android --debug",
+    "dev:android-release": "npm run cordova:serve-android --release -- --buildConfig",
     "dev:web": "vue-cli-service serve",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"

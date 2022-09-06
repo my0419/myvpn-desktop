@@ -2,7 +2,7 @@
 <widget id="com.myvpn.app" version="0.4.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>MyVPN</name>
     <description>MyVPN - VPN for myself</description>
-    <icon src="www/512x512.png" platform="android" width="57" height="57" density="mdpi" />
+    <icon src="www/icon.png" platform="android" width="57" height="57" density="mdpi" />
     <author email="support@myvpn.run" href="https://myvpn.run">
         MyVPN
     </author>
