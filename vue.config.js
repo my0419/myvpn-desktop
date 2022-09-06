@@ -20,9 +20,17 @@ module.exports = defineConfig({
         appId: 'com.myvpn.app',
         linux: {
           target: ['deb', 'tar.bz2', 'AppImage'],
+          category: 'Network',
+          publish: ['github'],
         },
         mac: {
           target: ['dmg'],
+          category: 'public.app-category.utilities',
+          publish: ['github'],
+        },
+        win: {
+          target: ['nsis', 'portable'],
+          publish: ['github'],
         },
       },
     },
