@@ -194,7 +194,19 @@ export default {
       this.$router.push({ name: 'droplets' })
     },
     loginOnSiteProvider(providerTitle) {
-      const { name, oauthConfig } = providers.web.reduce(
+      const getConfig = () => {
+        try {
+          if (cordova) {
+            return providers.android
+          }
+        } catch {
+          providers.web
+        }
+      }
+
+      const config = getConfig()
+
+      const { name, oauthConfig } = config.reduce(
         (cfg, provider) => ({
           ...cfg,
           ...(provider.title === providerTitle ? provider : {}),
@@ -213,7 +225,7 @@ export default {
       }
 
       try {
-        const appRedirectUrlParams = `&redirect_uri=${providers.cordova.app_url}`
+        const appRedirectUrlParams = `&redirect_uri=${redirect_uri}`
         cordova.InAppBrowser.open(
           getEncoded(appRedirectUrlParams),
           '_system',
