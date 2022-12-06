@@ -29,7 +29,7 @@ const isElectron = process.env.IS_ELECTRON
 let electron = null
 
 if (isElectron) {
-  const { remote } = require('electron')
+  const remote = require('@electron/remote')
   electron = { remote }
 }
 
