@@ -9,7 +9,12 @@
         <el-input v-model="user" class="input-user" placeholder="root"></el-input>
       </el-form-item>
       <el-form-item label="IP">
-        <el-input v-model="ip" class="input-ip" @change="handleChangeIp" />
+        <el-input
+          v-model="ip"
+          class="input-ip"
+          @change="handleChangeIp"
+          @input="handleInputIp"
+        />
       </el-form-item>
       <el-form-item :label="$t('Port')">
         <el-input-number
@@ -154,6 +159,9 @@ export default {
           showClose: true,
         })
       }
+    },
+    handleInputIp() {
+      this.$store.state.provider.configuredSuccess = require('isipaddress').test(this.ip)
     },
   },
 }
