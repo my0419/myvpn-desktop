@@ -200,7 +200,7 @@ export default {
             return providers.android
           }
         } catch {
-          providers.web
+          return providers.web
         }
       }
 
