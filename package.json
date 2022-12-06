@@ -37,6 +37,7 @@
     "digitalocean": "^1.2.1",
     "dotenv": "^16.0.1",
     "element-ui": "^2.15.9",
+    "isipaddress": "^0.0.2",
     "keypair": "^1.0.4",
     "moment": "^2.29.4",
     "qrcode.vue": "^1.7.0",

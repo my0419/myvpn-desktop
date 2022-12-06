@@ -89,7 +89,7 @@
 <script>
 export default {
   mounted() {
-    this.$store.state.provider.configuredSuccess = require('net').isIP(this.ip)
+    this.$store.state.provider.configuredSuccess = require('isipaddress').test(this.ip)
   },
   computed: {
     isPrivateKey: {
@@ -144,7 +144,8 @@ export default {
   methods: {
     handleChangeIp() {
       let configured = (this.$store.state.provider.configuredSuccess =
-        require('net').isIP(this.ip))
+        require('isipaddress').test(this.ip))
+
       if (!configured) {
         this.ip = ''
         this.$message({
