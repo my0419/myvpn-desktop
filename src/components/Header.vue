@@ -64,7 +64,7 @@ export default {
     },
     windowClose: () => {
       if (remote) {
-        remote.BrowserWindow.getFocusedWindow().close()
+        remote.app.exit()
       }
     },
     changeLang: function () {

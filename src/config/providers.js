@@ -46,6 +46,7 @@ const providers = {
       oauthWindow: { width: 600, height: 710 },
     },
   ],
+  
   desktop: [
     {
       name: 'cryptoservers',
