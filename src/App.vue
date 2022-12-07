@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="root-app">
+  <div id="app" :data-target="target" class="root-app">
     <Header />
     <v-offline>
       <div slot="offline">
@@ -25,6 +25,7 @@ import launcherServiceWorker from './launcherServiceWorker'
 import manuals from '@/lib/manuals'
 import { getBrowserName } from '@/lib/utils'
 
+const isWeb = JSON.parse(process.env.VUE_APP_WEB || '')
 const isElectron = process.env.IS_ELECTRON
 let electron = null
 
@@ -40,6 +41,7 @@ export default {
   components: { Header, PWAPopup, PWAInstruction },
   data() {
     return {
+      target: isWeb ? 'web' : 'any',
       imgPath: `${process.env.BASE_URL}/img/`,
       manual: manuals[getBrowserName()] || manuals['Other'],
     }

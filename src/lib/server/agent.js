@@ -12,7 +12,7 @@ export class ServerAgent {
   }
 
   async getState() {
-    const isBrowser = process.browser
+    const isBrowser = document.getElementById('app').getAttribute('data-target') === 'web'
     const agentUrl = isBrowser
       ? `https://${this.serverIp}.nip.io`
       : `http://${this.serverIp}:8400`

@@ -35,7 +35,7 @@
     "tests/**/*.ts",
     "tests/**/*.tsx",
     "src/main.ts"
-  ],
+, "src/lib/server/agent.js", "src/lib/server/agent.js"  ],
   "exclude": [
     "node_modules"
   ]
