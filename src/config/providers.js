@@ -55,7 +55,7 @@ const providers = {
       faq: 'https://myvpn.run/faq/setup/cryptoservers',
       oauthConfig: {
         client_id: '173',
-        redirect_uri: 'http://localhost/',
+        redirect_uri: 'http://localhost',
         scope: '*',
         authorize_url: 'https://cryptoservers.net/oauth/authorize',
         response_type: 'token',

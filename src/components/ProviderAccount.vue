@@ -125,7 +125,7 @@
 import { mapState } from 'vuex'
 import providers from '@/config/providers'
 import { redirectTo, localStorageService } from '@/lib/utils'
-import OAuth2Provider from '@my0419/electron-oauth-helper/lib/oauth2'
+import OAuth2Provider from '@/lib/auth-helper/oauth2'
 
 const isElectron = process.env.IS_ELECTRON
 
@@ -249,6 +249,7 @@ export default {
           contextIsolation: true,
         },
       })
+
       provider
         .perform(window)
         .then(response => {

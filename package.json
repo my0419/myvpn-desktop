@@ -29,7 +29,6 @@
   "main": "background.js",
   "dependencies": {
     "@electron/remote": "^2.0.8",
-    "@my0419/electron-oauth-helper": "^6.0.0",
     "aes-js": "^3.1.2",
     "axios": "^0.27.2",
     "axios-retry": "^3.3.1",
