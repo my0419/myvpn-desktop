@@ -2,11 +2,10 @@
  * Converts the object to ENV Variable format
  */
 class Environment {
-
   /**
    * @param {Object} variables - object with key / value
    */
-  constructor (variables) {
+  constructor(variables) {
     this.variables = variables
   }
 
@@ -17,7 +16,7 @@ class Environment {
    */
   convertToArray() {
     let envArray = []
-    Object.keys(this.variables).forEach((key) => {
+    Object.keys(this.variables).forEach(key => {
       const value = this.variables[key]
       let envValue = null
       switch (typeof value) {
@@ -35,13 +34,16 @@ class Environment {
              * to: VPN_USER_LOGIN_1=val1, VPN_USER_PASS_1=val2
              */
             value.forEach((subValue, index) => {
-              Object.keys(subValue).forEach((objKey) => {
+              Object.keys(subValue).forEach(objKey => {
                 const objValue = subValue[objKey]
-                envArray.push(`${key.toUpperCase()}_${objKey.toUpperCase()}_${index+1}=${objValue}`)
+                envArray.push(
+                  `${key.toUpperCase()}_${objKey.toUpperCase()}_${index + 1}=${objValue}`,
+                )
               })
             })
             break
           }
+        // eslint-disable-next-line no-fallthrough
         default:
           throw new Error(`Invalid type "${typeof value}" of environment value.`)
       }
@@ -49,7 +51,7 @@ class Environment {
       if (envValue !== null) {
         envArray.push(`${key.toUpperCase()}=${envValue}`)
       }
-    });
+    })
 
     return envArray
   }
@@ -67,9 +69,8 @@ class Environment {
         return `${prefix}${val}`
       })
     }
-    return envArray.join("\n")
+    return envArray.join('\n')
   }
-
 }
 
 export default Environment

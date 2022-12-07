@@ -1,0 +1,31 @@
+{
+  "name": "com.myvpn.app",
+  "displayName": "MyVPN",
+  "version": "0.4.4",
+  "description": "MyVPN - VPN for myself",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "MyVPN",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "cordova-android": "^10.1.2",
+    "cordova-plugin-app-version": "^0.1.14",
+    "cordova-plugin-deeplinks": "^1.1.1",
+    "cordova-plugin-inappbrowser": "^5.0.0"
+  },
+  "cordova": {
+    "platforms": [
+      "android"
+    ],
+    "plugins": {
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-app-version": {},
+      "cordova-plugin-deeplinks": {}
+    }
+  }
+}

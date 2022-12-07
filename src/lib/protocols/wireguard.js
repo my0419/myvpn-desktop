@@ -1,16 +1,14 @@
-import BaseProtocol from "./base";
+import BaseProtocol from './base'
 
 class WireguardProtocol extends BaseProtocol {
-
   /**
    * @returns {Object}
    */
-  envVariables () {
+  envVariables() {
     return Object.assign(super.envVariables(), {
-      'ACCOUNTS_COUNT': this.params.setting.numberOfAccounts
+      ACCOUNTS_COUNT: this.params.setting.numberOfAccounts,
     })
   }
-
 }
 
 export default WireguardProtocol

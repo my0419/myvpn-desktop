@@ -1,9 +1,8 @@
-import {sleep} from '../urils'
-import {ServerAgent} from "./agent";
-import Environment from "./environment";
+import { sleep } from '../urils'
+import { ServerAgent } from './agent'
+import Environment from './environment'
 
 export class Deployment {
-
   /**
    * @param sshIp
    * @param sshPort
@@ -12,7 +11,7 @@ export class Deployment {
    * @param sshPrivateKey
    * @param {BaseProtocol} protocol
    */
-  constructor (sshIp, sshPort, sshUser, sshPassword, sshPrivateKey, protocol) {
+  constructor(sshIp, sshPort, sshUser, sshPassword, sshPrivateKey, protocol) {
     let Client = require('ssh2').Client
     this.sshConn = new Client()
     this.connectionConfig = {
@@ -28,9 +27,7 @@ export class Deployment {
     }
 
     const variables = protocol.envVariables()
-    const bash = ServerAgent.startupCommand(
-      new Environment(variables)
-    )
+    const bash = ServerAgent.startupCommand(new Environment(variables))
 
     this.bash = `
         #!/bin/sh
@@ -44,12 +41,12 @@ export class Deployment {
     this.setupComplete = false
   }
 
-  async openConnection () {
+  async openConnection() {
     console.warn(`open connection: ${this.connectionConfig}`)
     let errorStr = null
     this.sshConn
-      .on('ready', () => this.connectionOpen = true)
-      .on('error', (err) => {
+      .on('ready', () => (this.connectionOpen = true))
+      .on('error', err => {
         console.warn('connection error event:', err)
         errorStr = err
       })
@@ -63,7 +60,7 @@ export class Deployment {
     console.warn(`connected ${this.connectionConfig}`)
   }
 
-  async setup () {
+  async setup() {
     if (this.connectionOpen === false) {
       this.openConnection()
     }
@@ -71,23 +68,27 @@ export class Deployment {
     let stderrText = ''
     await this.sshConn.exec(this.bash, (err, stream) => {
       stream.on('close', (code, signal) => {
-        this.setupComplete = (code === 0 || code === 24)
+        this.setupComplete = code === 0 || code === 24
         if (this.setupComplete === false && error === null) {
           // https://www.secureblackbox.com/kb/help/ref_err_ssherrorcodes.html
-          error = new Error(`Failed install software. Connection closed. Code: ${code}, Signal: ${signal}, STDERR: ${stderrText} `)
+          error = new Error(
+            `Failed install software. Connection closed. Code: ${code}, Signal: ${signal}, STDERR: ${stderrText} `,
+          )
           error.code = code
         }
       })
-      stream.on('data', (data) => {
-        if (data.toString('utf8').indexOf('Please login as the user') !== -1) {
-          error = new Error(data.toString('utf8'))
-          this.closeConnection()
-        }
-        console.log('STDOUT: ', data.toString('utf8'))
-      }).stderr.on('data', (data) => {
-        stderrText = data.toString('utf8')
-        console.log('STDERR: ', data.toString('utf8'))
-      })
+      stream
+        .on('data', data => {
+          if (data.toString('utf8').indexOf('Please login as the user') !== -1) {
+            error = new Error(data.toString('utf8'))
+            this.closeConnection()
+          }
+          console.log('STDOUT: ', data.toString('utf8'))
+        })
+        .stderr.on('data', data => {
+          stderrText = data.toString('utf8')
+          console.log('STDERR: ', data.toString('utf8'))
+        })
     })
 
     while (this.setupComplete === false && error === null) {
@@ -100,7 +101,7 @@ export class Deployment {
     return true
   }
 
-  closeConnection () {
+  closeConnection() {
     this.connectionOpen = false
     this.setupComplete = false
     this.sshConn.end()

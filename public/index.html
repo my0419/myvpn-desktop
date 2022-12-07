@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="apple-touch-icon" href="<%= BASE_URL %>img/logo-small.png">
+    <link rel="stylesheet" href="<%= BASE_URL %>fonts/style.css">
+    <link rel="stylesheet" href="<%= BASE_URL %>style.css">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>
+      <%= htmlWebpackPlugin.options.title %>
+    </title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="loading-logo">
+        <div class="loading-container">
+          <img src="<%= BASE_URL %>img/logo.svg" />
+          <div class="loader-wrapper">
+            <div class="loader">
+              <div class="dots">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- webpack builds are automatically injected -->
+  </body>
+</html>
+

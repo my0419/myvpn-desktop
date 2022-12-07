@@ -1,10 +1,10 @@
-import {ProviderCryptoServers} from './providerCryptoServers'
-import {ProviderDigitalOcean} from './providerDigitalOcean'
-import {ProviderLinodeServers} from './providerLinodeServers'
-import {ProviderHetznerCloud} from './providerHetznerCloud'
+import { ProviderCryptoServers } from './providerCryptoServers'
+import { ProviderDigitalOcean } from './providerDigitalOcean'
+import { ProviderLinodeServers } from './providerLinodeServers'
+import { ProviderHetznerCloud } from './providerHetznerCloud'
 
 export class ProviderFactory {
-  static register (name, config) {
+  static register(name, config) {
     switch (name) {
       case DIGITALOCEAN_KEY:
         return new ProviderDigitalOcean(config)

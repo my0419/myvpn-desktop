@@ -3,7 +3,7 @@ const CONSONANTS = 'bcdfghjklmnprstvwxyz'.split('')
 const VOWELS_LENGTH = VOWELS.length
 const CONSONANTS_LENGTH = CONSONANTS.length
 
-export function generateRandomString (length) {
+export function generateRandomString(length) {
   let result = ''
   let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   let charactersLength = characters.length
@@ -13,7 +13,7 @@ export function generateRandomString (length) {
   return result
 }
 
-export function generateHumanString (length) {
+export function generateHumanString(length) {
   let randomstring = ''
   let salt = Math.floor(Math.random() * 2)
   for (let i = length + salt, end = 0 + salt; i > end; i -= 1) {
@@ -26,6 +26,8 @@ export function generateHumanString (length) {
   return randomstring
 }
 
-export function validateIPaddress (ipaddress) {
-  return (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress))
+export function validateIPaddress(ipaddress) {
+  return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(
+    ipaddress,
+  )
 }
