@@ -13,8 +13,8 @@
             <th class="stats region_mean">{{ $t('Mean') }}</th>
             <th class="stats region_lowest">{{ $t('Min') }}</th>
             <th class="stats region_highest">{{ $t('Max') }}</th>
-            <th class="stats" :key="index" v-for="(_, index) in result">
-              {{ $t('Test') }} {{ index }}
+            <th class="stats" :key="resultIndex" v-for="(_, resultIndex) in result">
+              {{ $t('Test') }} {{ resultIndex }}
             </th>
           </tr>
           <tr :key="index" v-for="(region, index) in regions">
@@ -47,23 +47,21 @@
               >
               <i v-else class="el-icon-loading"></i>
             </td>
-            <template v-for="(step, index) in result">
-              <td class="test">
-                <template v-for="(val, regionIndex) in step">
-                  <span :key="regionIndex" v-if="regionIndex === index">
-                    <span
-                      class="color"
-                      v-if="val"
-                      v-bind:style="{ color: regionHighlight(val) }"
-                    >
-                      <span v-if="val >= 1000">N/A</span>
-                      <span v-else>{{ val }} {{ $t('ms') }}</span>
-                    </span>
-                    <i v-else class="el-icon-loading"></i>
+            <td :key="stepIndex" class="test" v-for="(step, stepIndex) in result">
+              <template v-for="(val, regionIndex) in step">
+                <span :key="regionIndex" v-if="regionIndex === index">
+                  <span
+                    class="color"
+                    v-if="val"
+                    v-bind:style="{ color: regionHighlight(val) }"
+                  >
+                    <span v-if="val >= 1000">N/A</span>
+                    <span v-else>{{ val }} {{ $t('ms') }}</span>
                   </span>
-                </template>
-              </td>
-            </template>
+                  <i v-else class="el-icon-loading"></i>
+                </span>
+              </template>
+            </td>
           </tr>
         </table>
       </div>
@@ -165,6 +163,7 @@ export default {
           result[row][index] = Date.now() - startTime
           this.result = {}
           this.result = result
+
           clearTimeout(timeout)
           if (this.running === true) {
             pingRegion(nextIndex > countRegions - 1 ? 0 : nextIndex, result)

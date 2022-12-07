@@ -72,6 +72,7 @@ import { localStorageService } from '@/lib/utils'
 import { CRYPTOSERVERS_KEY } from '@/lib/providers'
 
 const isElectron = process.env.IS_ELECTRON
+const isWeb = JSON.parse(process.env.VUE_APP_WEB || '')
 const isDev = process.env.NODE_ENV === 'development'
 
 let electron = null
@@ -191,7 +192,9 @@ export default {
     }
 
     if (!isElectron) {
-      try {
+      if (isWeb) {
+        initWebOAuth2(window.location.hash)
+      } else {
         const cordovaApp = {
           // Application Constructor
           initialize: function () {
@@ -211,9 +214,8 @@ export default {
             initWebOAuth2(eventData.url)
           },
         }
+
         cordovaApp.initialize()
-      } catch (err) {
-        initWebOAuth2(window.location.hash)
       }
     }
   },

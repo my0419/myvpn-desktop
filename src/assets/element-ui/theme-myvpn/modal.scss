@@ -38,6 +38,8 @@
   }
   .el-dialog__header,
   .el-dialog__body {
+    word-break: normal;
+    hyphens: auto;
     @include mq-max($XXS) {
       padding-left: 10px;
       padding-right: 10px;
