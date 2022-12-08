@@ -60,7 +60,8 @@ export class ProviderCryptoServers extends ProviderBase {
           data.networks = {
             v4: [
               {
-                ip_address: data.networks.filter(fv => fv.type === 'public')[0].ipAddress,
+                ip_address: data.networks.filter(fv => fv.type === 'public')[0]
+                  ?.ipAddress,
               },
             ],
           }
