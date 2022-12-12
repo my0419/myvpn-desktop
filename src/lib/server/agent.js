@@ -76,8 +76,7 @@ export class ServerAgent {
    */
   static startupCommand(environment) {
     const serviceEnvConfig = environment.convertToString('Environment=')
-    return `
-      #!/bin/sh
+    return `#!/bin/sh
       sudo wget -O /usr/local/bin/myvpn-agent https://github.com/my0419/myvpn-agent/releases/latest/download/myvpn-agent_linux_x86_64 &&
       chmod +x /usr/local/bin/myvpn-agent &&
       echo "[Unit]
@@ -90,7 +89,6 @@ export class ServerAgent {
 
       [Install]
       WantedBy=multi-user.target" > /etc/systemd/system/myvpn-agent.service &&
-      systemctl start myvpn-agent.service
-    `
+      systemctl start myvpn-agent.service`
   }
 }

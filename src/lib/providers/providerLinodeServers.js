@@ -167,6 +167,7 @@ export class ProviderLinodeServers extends ProviderBase {
   async checkServer(id) {
     let locked = true
     let droplet = null
+    let checkAttempts = 10
     while (locked) {
       await sleep(5000)
       console.warn('check status for', id)
@@ -175,7 +176,10 @@ export class ProviderLinodeServers extends ProviderBase {
           return res.data
         },
         res => {
-          throw new Error('Failed check status')
+          checkAttempts -= 1
+          if (checkAttempts < 0) {
+            throw new Error('Failed check status')
+          }
         },
       )
       if (droplet.status === 'running') {

@@ -25,7 +25,7 @@ import launcherServiceWorker from './launcherServiceWorker'
 import manuals from '@/lib/manuals'
 import { getBrowserName } from '@/lib/utils'
 
-const isWeb = JSON.parse(process.env.VUE_APP_WEB || '')
+const isWeb = JSON.parse(process.env.VUE_APP_WEB || 'false')
 const isElectron = process.env.IS_ELECTRON
 let electron = null
 
