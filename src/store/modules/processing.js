@@ -58,7 +58,8 @@ const actions = {
       sshPrivateKey,
       protocolInstance,
     )
-    const isBrowser = process.browser
+    const isBrowser = document.getElementById('app').getAttribute('data-target') === 'web'
+
     let result = null
     try {
       await deploy.openConnection()
@@ -69,8 +70,9 @@ const actions = {
 
       const agent = new ServerAgent(sshIp, configuration.aesKey)
       while (result === null) {
-        result = await agent.getState().then(
-          data => {
+        result = await agent
+          .getState()
+          .then(data => {
             console.log('myvpn agent response:', data)
             const status = data.status
             if (typeof status !== 'object') {
@@ -95,8 +97,8 @@ const actions = {
                 break
             }
             return null
-          },
-          err => {
+          })
+          .catch(err => {
             console.log('myvpn agent http failed:', err)
             commit(
               'PROCESSING_ERROR',
@@ -105,8 +107,7 @@ const actions = {
                 ' is not available.',
             )
             return err
-          },
-        )
+          })
         if (result === null) {
           await sleep(5000)
         }
@@ -135,7 +136,9 @@ const actions = {
       console.log('[bash] agent startup', startupCommand)
 
       const sshKeyId = await client.addSshKey(sshKey)
+
       let cancelled = false
+
       const createServerProcessing = async () => {
         server = null
         result = null
@@ -168,9 +171,11 @@ const actions = {
 
           /* MyVPN Agent */
           const agent = new ServerAgent(server.ipv4, configuration.aesKey)
+
           while (result === null) {
-            result = await agent.getState().then(
-              data => {
+            result = await agent
+              .getState()
+              .then(data => {
                 console.log('myvpn agent response:', data)
                 const status = data.status
                 if (typeof status !== 'object') {
@@ -197,14 +202,13 @@ const actions = {
                     break
                 }
                 return null
-              },
-              err => {
+              })
+              .catch(err => {
                 console.log('myvpn agent http failed:', err)
                 commit('PROCESSING_FAILED_CONNECTION')
                 client.deleteServer(server.slug)
                 return err
-              },
-            )
+              })
             if (result === null) {
               await sleep(5000)
             }
