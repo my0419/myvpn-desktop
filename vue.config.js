@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+const { DefinePlugin } = require('webpack')
 const { defineConfig } = require('@vue/cli-service')
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 const path = require('path')
@@ -49,8 +50,13 @@ module.exports = defineConfig({
       },
     },
   },
-  configureWebpack: {
-    plugins: [new NodePolyfillPlugin({ excludeAliases: ['process'] })],
+  configureWebpack: config => ({
+    plugins: [
+      new NodePolyfillPlugin({ excludeAliases: ['process'] }),
+      new DefinePlugin({
+        __IS_WEB_APP: process.env.VUE_APP_WEB === 'true',
+      }),
+    ],
     resolve: {
       fallback: {
         fs: false,
@@ -77,5 +83,5 @@ module.exports = defineConfig({
         vue$: 'vue/dist/vue.esm.js',
       },
     },
-  },
+  }),
 })

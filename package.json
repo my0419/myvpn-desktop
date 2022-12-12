@@ -14,7 +14,7 @@
     "build:android-release": "cross-env npm run cordova:prepare && cd cordova && cordova build android --release -- --buildConfig && cd ..",
     "build:linux": "vue-cli-service electron:build --linux",
     "build:mac": "vue-cli-service electron:build --mac",
-    "build:web": "cross-env BUILD_TARGET=web VUE_APP_WEB=true vue-cli-service build",
+    "build:web": "cross-env VUE_APP_WEB=true, BUILD_TARGET=web vue-cli-service build",
     "build:windows": "vue-cli-service electron:build --windows --x64",
     "cordova:build-android": "cross-env CORDOVA_PLATFORM=android vue-cli-service cordova-build-android",
     "cordova:prepare": "vue-cli-service cordova-prepare",
@@ -86,7 +86,8 @@
     "vue-cli-plugin-cordova": "~2.4.1",
     "vue-cli-plugin-electron-builder": "^2.1.1",
     "vue-style-loader": "^4.1.3",
-    "vue-template-compiler": "2.6.14"
+    "vue-template-compiler": "2.6.14",
+    "webpack": "^5.75.0"
   },
   "eslintConfig": {
     "root": true,

@@ -76,6 +76,8 @@ const isDev = process.env.NODE_ENV === 'development'
 
 let electron = null
 
+console.log('__IS_WEB_APP', __IS_WEB_APP)
+
 if (isElectron) {
   const remote = require('@electron/remote')
   const app = remote.app
@@ -191,8 +193,7 @@ export default {
     }
 
     if (!isElectron) {
-      const isWeb = document.getElementById('app').getAttribute('data-target') === 'web'
-      if (isWeb) {
+      if (__IS_WEB_APP) {
         initWebOAuth2(window.location.hash)
       } else {
         const cordovaApp = {
