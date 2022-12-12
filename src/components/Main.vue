@@ -72,7 +72,6 @@ import { localStorageService } from '@/lib/utils'
 import { CRYPTOSERVERS_KEY } from '@/lib/providers'
 
 const isElectron = process.env.IS_ELECTRON
-const isWeb = JSON.parse(process.env.VUE_APP_WEB || 'false')
 const isDev = process.env.NODE_ENV === 'development'
 
 let electron = null
@@ -192,6 +191,7 @@ export default {
     }
 
     if (!isElectron) {
+      const isWeb = document.getElementById('app').getAttribute('data-target') === 'web'
       if (isWeb) {
         initWebOAuth2(window.location.hash)
       } else {

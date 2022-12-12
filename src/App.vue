@@ -25,7 +25,6 @@ import launcherServiceWorker from './launcherServiceWorker'
 import manuals from '@/lib/manuals'
 import { getBrowserName } from '@/lib/utils'
 
-const isWeb = JSON.parse(process.env.VUE_APP_WEB || 'false')
 const isElectron = process.env.IS_ELECTRON
 let electron = null
 
@@ -40,6 +39,7 @@ export default {
   name: 'vpn',
   components: { Header, PWAPopup, PWAInstruction },
   data() {
+    const isWeb = document.getElementById('app').getAttribute('data-target') === 'web'
     return {
       target: isWeb ? 'web' : 'any',
       imgPath: `${process.env.BASE_URL}/img/`,
