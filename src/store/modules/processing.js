@@ -58,13 +58,12 @@ const actions = {
       sshPrivateKey,
       protocolInstance,
     )
-    const isBrowser = document.getElementById('app').getAttribute('data-target') === 'web'
 
     let result = null
     try {
       await deploy.openConnection()
 
-      dispatch('log', `Connect to MyVPN Agent ${sshIp}:${isBrowser ? 443 : 8400}`)
+      dispatch('log', `Connect to MyVPN Agent ${sshIp}:${__IS_WEB_APP ? 443 : 8400}`)
 
       await deploy.setup()
 
@@ -103,7 +102,7 @@ const actions = {
             commit(
               'PROCESSING_ERROR',
               'Failed to connect to MyVPN Agent, ' +
-                (isBrowser ? 443 : 8400) +
+                (__IS_WEB_APP ? 443 : 8400) +
                 ' is not available.',
             )
             return err

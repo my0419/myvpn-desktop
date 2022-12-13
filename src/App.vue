@@ -39,9 +39,8 @@ export default {
   name: 'vpn',
   components: { Header, PWAPopup, PWAInstruction },
   data() {
-    const isWeb = document.getElementById('app').getAttribute('data-target') === 'web'
     return {
-      target: isWeb ? 'web' : 'any',
+      target: __IS_WEB_APP ? 'web' : 'any',
       imgPath: `${process.env.BASE_URL}/img/`,
       manual: manuals[getBrowserName()] || manuals['Other'],
     }
