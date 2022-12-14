@@ -5,6 +5,8 @@ const { defineConfig } = require('@vue/cli-service')
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 const path = require('path')
 
+const __IS_WEB_APP = process.env.VUE_APP_WEB === 'true'
+
 module.exports = defineConfig({
   publicPath: './',
   runtimeCompiler: true,
@@ -52,10 +54,12 @@ module.exports = defineConfig({
   },
   configureWebpack: config => ({
     plugins: [
-      new NodePolyfillPlugin({ excludeAliases: ['process'] }),
-      new DefinePlugin({
-        __IS_WEB_APP: process.env.VUE_APP_WEB === 'true',
-      }),
+      new NodePolyfillPlugin(
+        __IS_WEB_APP
+          ? { includeAliases: ['process', 'Buffer'] }
+          : { excludeAliases: ['process'] },
+      ),
+      new DefinePlugin({ __IS_WEB_APP }),
     ],
     resolve: {
       fallback: {

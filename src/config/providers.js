@@ -161,7 +161,7 @@ const providers = {
       website: 'https://www.hetzner.com/cloud',
       faq: 'https://myvpn.run/faq/setup/hetznerCloud',
       viaKey: true,
-    },
+    }
   ],
 }
 

@@ -76,8 +76,6 @@ const isDev = process.env.NODE_ENV === 'development'
 
 let electron = null
 
-console.log('__IS_WEB_APP', __IS_WEB_APP)
-
 if (isElectron) {
   const remote = require('@electron/remote')
   const app = remote.app

@@ -2,7 +2,7 @@
   <div>
     <el-tabs
       v-if="mq.type !== 'xs'"
-      v-model="activeTab"
+      :v-model="activeTab"
       :value="selectedProvider"
       @tab-click="handleChangeProvider"
       class="providers"
@@ -32,9 +32,10 @@
     </el-tabs>
     <div v-else>
       <el-select
-        v-model="activeTab"
-        placeholder="Choose a provider"
+        :v-model="activeTab"
         :disabled="apikey.length > 0"
+        :value="selectedProvider"
+        placeholder="Choose a provider"
       >
         <el-option
           v-for="provider in providers"
@@ -141,11 +142,14 @@ export default {
   },
   data() {
     return {
-      imgPath: `${process.env.BASE_URL}img/`,
       activeTab: defaultProvider.name,
+      imgPath: `${process.env.BASE_URL}img/`,
       providers: providers[platform],
       mq: null,
     }
+  },
+  mounted() {
+    this.activeTab = this.$store.state.provider.name
   },
   methods: {
     activeProvider() {
