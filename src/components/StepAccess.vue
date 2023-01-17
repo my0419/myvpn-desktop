@@ -103,7 +103,7 @@
                             </el-col>
                             <el-col :span="10" class="step-access__form-col">
                               <h2>{{ $t('Connect using QR Code') }}</h2>
-                              <qrcode-vue class="m-top" :value="selectedAccountConfig" :size="300" level="L"></qrcode-vue>
+                              <qrcode-vue class="m-top qr-code-container" :value="selectedAccountConfig" :size="300" level="L"></qrcode-vue>
                               <div class="m-top">
                                 <a href="#" v-on:click.prevent="saveQrCode">
                                   <i class="el-icon-download"></i> {{ $t('Save QR Code') }}
@@ -160,7 +160,7 @@
                             </el-col>
                             <el-col :span="10" class="step-access__form-col">
                               <h2>{{ $t('Connect using QR Code') }}</h2>
-                              <qrcode-vue :value="shadowsocksConnect" :size="300" level="L"></qrcode-vue>
+                              <qrcode-vue :value="shadowsocksConnect" :size="300" class="qr-code-container" level="L"></qrcode-vue>
                               <div class="m-top">
                                 <a href="#" v-on:click.prevent="saveQrCode">
                                   <i class="el-icon-download"></i> {{ $t('Save QR Code') }}
@@ -329,6 +329,12 @@
   position: relative;
   top: 6px;
 }
+.qr-code-container {
+    padding: 15px;
+    max-width: 300px;
+    background-color: #fff;
+    text-align: center;
+  }
 .step-access__form {
   &-wrapper {
     @include mq-max($XS) {
@@ -447,9 +453,14 @@
 
   function saveFileHandler(filename, fileData) {
     if (isElectron) {
-      const savePath = electron.remote.dialog.showSaveDialog({defaultPath: filename})
-      fs.writeFile(savePath, fileData, 'binary', (err) => {
-        err !== null ? displayErrorMessage.call(this, err) : displaySuccessfulMessage.call(this)
+      const openSaveDialog = electron.remote.dialog.showSaveDialog({defaultPath: filename})
+
+      openSaveDialog.then(({ filePath, canceled }) => {
+        if (!canceled) {
+          fs.writeFile(filePath, fileData, 'binary', (err) => {
+            err !== null ? displayErrorMessage.call(this, err) : displaySuccessfulMessage.call(this)
+          })
+        }
       })
     } else {
       try {
