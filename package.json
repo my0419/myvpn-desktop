@@ -41,7 +41,7 @@
     "moment": "^2.29.4",
     "qrcode.vue": "^1.7.0",
     "register-service-worker": "^1.7.2",
-    "ssh2": "^0.8.9",
+    "ssh2": "^1.4.0",
     "v-clipboard": "^2.2.3",
     "v-offline": "2.3.0",
     "vue": "2.6.14",
