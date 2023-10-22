@@ -114,7 +114,7 @@ export class ProviderCryptoServers extends ProviderBase {
       region,
       ssh_key_id: sshKeyId,
       user_data: startupCommand,
-      image: 'debian-11-x64',
+      image: 'debian-12-x64',
     }
     let droplet = await this.client.post('/droplet/create', params).then(
       res => {

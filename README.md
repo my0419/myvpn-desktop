@@ -13,7 +13,6 @@ https://tool.myvpn.run
 ### Preview
 
 ![Screenshot](preview.png)
-![Screenshot](preview2.png)
 
 ### Stack
 
@@ -34,12 +33,14 @@ https://tool.myvpn.run
 
 ### VPN protocols
 
-* L2TP
-* PPTP
-* OpenVPN
-* [WireGuard](https://www.wireguard.com/)
-* Shadowsocks (with optional V2Ray Plugin)
-* SOCKS5
+1. L2TP/IPSec
+2. IKEv2/IPSec
+3. OpenConnect
+4. PPTP
+5. OpenVPN
+6. [WireGuard](https://www.wireguard.com/)
+7. Shadowsocks (Support V2Ray Plugin)
+8. SOCKS5
 
 ### Other Software
 

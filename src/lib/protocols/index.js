@@ -1,8 +1,10 @@
 import L2tpProtocol from './l2tp'
+import Ikev2Protocol from './ikev2'
 import PptpProtocol from './pptp'
 import OpenvpnProtocol from './openvpn'
 import WireguardProtocol from './wireguard'
 import ShadowsocksProtocol from './shadowsocks'
+import OpenConnectProtocol from './openconnect'
 import Socks5Protocol from './socks5'
 import OwncloudProtocol from './owncloud'
 import NextcloudProtocol from './nextcloud'
@@ -18,12 +20,18 @@ export const TYPE_SOCKS5 = 'socks5'
 export const TYPE_OWNCLOUD = 'owncloud'
 export const TYPE_NEXTCLOUD = 'nextcloud'
 export const TYPE_TORBRIDGE = 'torbridge'
+export const TYPE_IKEV2 = 'ikev2'
+export const TYPE_OPENCONNECT = 'openconnect'
 
 export class ProtocolFactory {
   static create(name, params) {
     switch (name) {
       case TYPE_L2TP:
         return new L2tpProtocol(params)
+      case TYPE_IKEV2:
+        return new Ikev2Protocol(params)
+      case TYPE_OPENCONNECT:
+        return new OpenConnectProtocol(params)
       case TYPE_PPTP:
         return new PptpProtocol(params)
       case TYPE_OPENVPN:
@@ -56,12 +64,22 @@ export const PROTOCOL_CODES = [
   { code: 7, type: TYPE_OWNCLOUD },
   { code: 8, type: TYPE_NEXTCLOUD },
   { code: 9, type: TYPE_TORBRIDGE },
+  { code: 10, type: TYPE_IKEV2 },
+  { code: 11, type: TYPE_OPENCONNECT },
 ]
 
 export const PROTOCOL_LIST = [
   {
     key: TYPE_L2TP,
-    title: 'L2TP',
+    title: 'L2TP/IPSec',
+  },
+  {
+    key: TYPE_IKEV2,
+    title: 'IKEv2/IPSec',
+  },
+  {
+    key: TYPE_OPENCONNECT,
+    title: 'OpenConnect',
   },
   {
     key: TYPE_PPTP,

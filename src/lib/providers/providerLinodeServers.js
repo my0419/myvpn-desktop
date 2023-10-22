@@ -141,7 +141,7 @@ export class ProviderLinodeServers extends ProviderBase {
         root_pass: this.rootPassword,
         authorized_keys: [this.sshKey],
         stackscript_id: this.stackScriptId,
-        image: 'linode/debian11',
+        image: 'linode/debian12',
       })
       .then(
         res => {
@@ -197,7 +197,7 @@ export class ProviderLinodeServers extends ProviderBase {
   async createStackScript(script) {
     return await this.client
       .post('linode/stackscripts', {
-        images: ['linode/debian11'],
+        images: ['linode/debian12'],
         label: `myvpn-agent-${generateRandomString(8)}`,
         script,
         is_public: false,

@@ -1,7 +1,7 @@
 {
   "name": "myvpn",
-  "version": "0.5.2",
-  "description": "MyVPN - VPN for myself",
+  "version": "0.5.3",
+  "description": "MyVPN - Create your own personal VPN server ",
   "author": {
     "name": "MyVPN",
     "email": "support@myvpn.run"
@@ -19,7 +19,7 @@
     "cordova:build-android": "cross-env CORDOVA_PLATFORM=android vue-cli-service cordova-build-android",
     "cordova:prepare": "vue-cli-service cordova-prepare",
     "cordova:serve-android": "cross-env CORDOVA_PLATFORM=android vue-cli-service cordova-serve-android",
-    "dev": "vue-cli-service electron:serve",
+    "dev": "HOST=127.0.0.1 vue-cli-service electron:serve",
     "dev:android": "npm run cordova:serve-android --debug",
     "dev:android-release": "npm run cordova:serve-android --release -- --buildConfig",
     "dev:web": "cross-env VUE_APP_WEB=true vue-cli-service serve",
@@ -41,7 +41,6 @@
     "moment": "^2.29.4",
     "qrcode.vue": "^1.7.0",
     "register-service-worker": "^1.7.2",
-    "ssh2": "^0.8.9",
     "v-clipboard": "^2.2.3",
     "v-offline": "2.3.0",
     "vue": "2.6.14",
@@ -75,6 +74,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.0.3",
+    "node-loader": "^2.0.0",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "postcss-loader": "^7.0.1",
     "prettier": "^2.4.1",
@@ -145,5 +145,9 @@
   },
   "resolutions": {
     "vue-cli-plugin-electron-builder/electron-builder": "^23.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/my0419/myvpn-desktop.git"
   }
 }

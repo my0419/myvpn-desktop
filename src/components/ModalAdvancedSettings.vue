@@ -14,6 +14,20 @@
         </el-form-item>
       </el-form>
 
+      <el-form v-if="protocol === 'ikev2'" ref="form">
+        <h3>IKEv2/IPSec</h3>
+        <el-form-item :label="this.$root.$t('Accounts')">
+          <el-input-number v-model="numberOfAccounts" :min="1" :max="5"></el-input-number>
+        </el-form-item>
+      </el-form>
+
+      <el-form v-if="protocol === 'openconnect'" ref="form">
+        <h3>{{ protocol }}</h3>
+        <el-form-item :label="this.$root.$t('Accounts')">
+          <el-input-number v-model="numberOfAccounts" :min="1" :max="5"></el-input-number>
+        </el-form-item>
+      </el-form>
+
       <el-form v-if="protocol === 'socks5'" ref="form">
         <h3>{{ protocol }}</h3>
         <el-form-item :label="this.$root.$t('Port')">
@@ -232,8 +246,8 @@ export default {
         info.push(this.$root.$t('Email'))
       }
 
-      if (['shadowsocks', 'wireguard'].includes(this.protocol)) {
-        info.push(`${this.$root.$t('Accounts')}:${this.numberOfAccounts}`)
+      if (['shadowsocks', 'wireguard', 'ikev2', 'openconnect'].includes(this.protocol)) {
+        info.push(`${this.$root.$t('Accounts')}: ${this.numberOfAccounts}`)
       }
 
       if (this.protocol === 'nextcloud') {

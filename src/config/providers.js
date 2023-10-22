@@ -101,11 +101,12 @@ const providers = {
       faq: 'https://myvpn.run/faq/setup/hetznerCloud',
       viaKey: true,
     },
-    {
+    /*{
       name: 'custom',
       title: 'Other Server',
       logo: 'providers/custom.svg',
     },
+     */
   ],
 
   web: [

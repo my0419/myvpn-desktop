@@ -77,7 +77,7 @@ export class ProviderDigitalOcean extends ProviderBase {
       name,
       region,
       size: minimalSize.slug,
-      image: 'debian-11-x64',
+      image: 'debian-12-x64',
       ssh_keys: [sshKeyId],
       user_data: startupCommand,
       backups: false,

@@ -11,7 +11,7 @@ class BaseProtocol {
     const isDev = typeof process != 'undefined' && process.env.NODE_ENV === 'development'
     return {
       VPN_TYPE: this.params.protocol,
-      VPN_OS: 'debian11',
+      VPN_OS: 'debian12',
       DNS_PRIMARY: this.params.setting.dns.first,
       DNS_SECONDARY: this.params.setting.dns.second,
       ENCRYPT_KEY: this.params.aesKey,

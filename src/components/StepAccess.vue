@@ -11,7 +11,7 @@
                     <div v-if="connectionType === 'l2tp'">
                         <el-form class="step-access__form step-access__form-vpn">
                             <el-form-item :label="$root.$t('Type of connection')">
-                                L2TP / IPsec
+                              IPSec/L2TP
                             </el-form-item>
                             <el-form-item :label="$root.$t('IP address')">
                                <Copied :text="serverIp" />
@@ -25,6 +25,65 @@
                             <el-form-item :label="$root.$t('PSK key')">
                                <Copied :text="accountPskKey" />
                             </el-form-item>
+                        </el-form>
+                    </div>
+                    <div v-if="connectionType === 'ikev2'">
+                        <el-form class="step-access__form step-access__form-vpn">
+                            <el-form-item :label="$root.$t('Type of connection')">
+                                IKEv2/IPSec
+                            </el-form-item>
+                            <el-form-item :label="$root.$t('IP address')">
+                               <Copied :text="serverIp" />
+                            </el-form-item>
+                            <el-form-item :label="$root.$t('Certificate')">
+                              <el-input type="textarea" :value="clientConfig[0]" :readonly="true"/>
+
+                              <el-form-item>
+                                <el-button size="small"  type="primary" icon="el-icon-document-copy" v-clipboard="clientConfig[0]" v-clipboard:success="clipboardSuccessHandler">{{ $t('Copy Certificate') }}</el-button>
+                                <el-button size="small"  type="primary" icon="el-icon-download" v-on:click="() => saveClientConfig('myvpn-ikev2-cert.pem')">{{ $t('Save Certificate') }}</el-button>
+                              </el-form-item>
+                            </el-form-item>
+                          <el-form-item :label="$root.$t('Accounts')">
+                            <div v-if="accounts.length > 1">
+                              <el-input type="textarea" :value="accountsText" :readonly="true"/>
+                              <Copied :text="accountsText" :hiddenText="true" />
+                            </div>
+                            <div v-else>
+                              <el-form-item :label="$root.$t('Username')">
+                                <Copied :text="accountUsername" />
+                              </el-form-item>
+                              <el-form-item :label="$root.$t('Password')">
+                                <Copied :text="accountPassword" />
+                              </el-form-item>
+                            </div>
+                          </el-form-item>
+                        </el-form>
+                    </div>
+                    <div v-if="connectionType === 'openconnect'">
+                        <el-form class="step-access__form step-access__form-vpn">
+                            <el-form-item :label="$root.$t('Type of connection')">
+                                IKEv2/IPSec
+                            </el-form-item>
+                            <el-form-item :label="$root.$t('IP address')">
+                               <Copied :text="serverIp" />
+                            </el-form-item>
+                            <el-form-item :label="$root.$t('OpenConnect Gateway')">
+                               <Copied :text="`https://${serverIp}:4443`" />
+                            </el-form-item>
+                          <el-form-item :label="$root.$t('Accounts')">
+                            <div v-if="accounts.length > 1">
+                              <el-input type="textarea" :value="accountsText" :readonly="true"/>
+                              <Copied :text="accountsText" :hiddenText="true" />
+                            </div>
+                            <div v-else>
+                              <el-form-item :label="$root.$t('Username')">
+                                <Copied :text="accountUsername" />
+                              </el-form-item>
+                              <el-form-item :label="$root.$t('Password')">
+                                <Copied :text="accountPassword" />
+                              </el-form-item>
+                            </div>
+                          </el-form-item>
                         </el-form>
                     </div>
                     <div v-if="connectionType === 'pptp'">
@@ -200,7 +259,7 @@
                           TorBridge
                         </el-form-item>
                         <el-form-item :label="$root.$t('Bridge Address')">
-                          <el-input  type="textarea" :value="clientConfig" :readonly="true"/>
+                          <el-input type="textarea" :value="clientConfig" :readonly="true"/>
                           <Copied :text="clientConfig" :hiddenText="true" />
                           <div class="note-block">
                             {{ $t('Note') }}:<br />
@@ -495,6 +554,11 @@
           return this.$store.state.setting.torbridge
         }
       },
+      accountsText: {
+        get () {
+          return this.accounts.map((v) => `Username: ${v.username} Password: ${v.password}`).join('\n')
+        }
+      },
       accountUsername: {
         get () {
           return this.$store.state.account.accounts[this.selectedAccountNumber].username || 'N/A'
@@ -583,6 +647,9 @@ ssh -i myvpn.key root@${state.server.ipv4}`
       },
       saveServerAccess: function () {
         this.saveFile('myvpn-server.txt', this.serverAccess)
+      },
+      saveClientConfig: function (filename) {
+        this.saveFile(filename, this.clientConfig[0])
       },
       saveFile: saveFileHandler,
       saveQrCode: function () {

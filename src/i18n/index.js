@@ -130,7 +130,7 @@ export default {
     'Private Key Authorization': 'Авторизация по приватному ключу',
     'Paste in the server private key': 'Вставьте приватный ключ',
     'IP field is not filled in correctly': 'Неверно заполнено поле IP',
-    'Requires a clean Debian 11 server': 'Требуется чистый Debian 11 сервер',
+    'Requires a clean Debian 12 server': 'Требуется чистый Debian 12 сервер',
     'Server Port': 'Порт сервера',
     'Local Port': 'Порт локальный',
     'Encryption method': 'Метод шифрования',

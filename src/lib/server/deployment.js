@@ -26,6 +26,8 @@ export class Deployment {
       this.connectionConfig.password = sshPassword
     }
 
+    console.log(this.connectionConfig)
+
     const variables = protocol.envVariables()
     const bash = ServerAgent.startupCommand(new Environment(variables))
 

@@ -2,7 +2,7 @@
   <div>
     <h3 class="title">{{ $t('Setup SSH Connection') }}</h3>
     <div class="notice">
-      <i class="el-icon-warning"></i> {{ $t('Requires a clean Debian 11 server') }}
+      <i class="el-icon-warning"></i> {{ $t('Requires a clean Debian 12 server') }}
     </div>
     <el-form :inline="true" class="provider-self-form">
       <el-form-item :label="$t('User')">

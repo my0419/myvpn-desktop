@@ -1,5 +1,4 @@
 import { ServerAgent } from '@/lib/server/agent'
-import { Deployment } from '@/lib/server/deployment'
 import Environment from '@/lib/server/environment'
 import { sleep } from '@/lib/urils'
 import { ProtocolFactory } from '@/lib/protocols'

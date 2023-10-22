@@ -17,6 +17,22 @@ module.exports = defineConfig({
     electronBuilder: {
       nodeIntegration: true,
       outputDir: path.resolve(__dirname, 'dist'),
+      chainWebpackMainProcess: config => {
+        config.module
+          .rule('node')
+          .test(/\.node$/)
+          .use('node-loader')
+          .loader('node-loader')
+          .end()
+      },
+      chainWebpackRendererProcess: config => {
+        config.module
+          .rule('node')
+          .test(/\.node$/)
+          .use('node-loader')
+          .loader('node-loader')
+          .end()
+      },
       builderOptions: {
         icon: path.resolve(__dirname, 'build/icons/icon.png'),
         productName: 'MyVPN',

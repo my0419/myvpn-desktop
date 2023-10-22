@@ -209,7 +209,7 @@ export default {
     },
   },
   beforeRouteLeave(to, from, next) {
-    if (from.name === 'processing' && to.name === 'main') {
+    if (from.name === 'processing' && to.name === 'main' && this.$store.state.provider.name !== 'custom') {
       this.$message({
         message: this.$root.$t('Wait for the server creation process to complete.'),
         type: 'error',
