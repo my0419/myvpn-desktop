@@ -1,0 +1,152 @@
+@import "mixins.scss";
+
+.root-app {
+  font-family: 'Roboto Mono';
+  word-spacing: -2px;
+  background: linear-gradient(5.41deg,#191919,#313131) no-repeat;
+  background-attachment: fixed;
+  .app-page {
+    -webkit-user-select: none;
+    padding: 20px;
+    padding-top: 40px;
+    background-image: url('/public/img/background.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position-x: 50px;
+    background-position-y: -100px;
+    min-height: calc(100vh - 64px);
+    @include mq-max($XS) {
+      padding-left: 10px;
+      padding-right: 10px;
+      background-size: cover;
+      background-position-x: 30%;
+      background-position-y: -50px;
+    }
+  }
+  .el-aside {
+    height: 100vh;
+  }
+  .el-steps {
+    -webkit-user-select: none;
+    cursor: default;
+  }
+  .el-collapse {
+    border: none !important;
+  }
+  .selectable {
+    -webkit-user-select: initial;
+  }
+  .cell, h3, .el-alert__content {
+    cursor: default;
+  }
+  .m-top {
+    margin-top: 15px;
+  }
+  h3 {
+    font-weight: 400;
+  }
+  .action-journal textarea {
+    resize: none;
+    background: #F5F7FA;
+    color: #6a6a6a;
+    border: none;
+    border-radius: 0;
+    height: 150px;
+    padding: 5px;
+  }
+  .text-center {
+    text-align: center;
+  }
+  .logo__image {
+    height: 80px;
+  }
+  .text-warning {
+    color: #dd7b00;
+  }
+  .app-version {
+    position: absolute;
+    bottom: 15px;
+    font-size: 10px;
+    right: 20px;
+    color: #575757;
+    user-select: none;
+    font-weight: 100;
+  }
+  .btn-group {
+    @include mq-max($XXS) {
+      display: flex;
+      justify-content: space-between;
+    }
+    &-item {
+      @include mq-max($XXS) {
+        width: calc(50% - 5px);
+        margin-left: 0;
+        margin-right: 0;
+      }
+      &--fill {
+        @include mq-max($XXS) {
+            width: 100%;
+        }
+      }
+      &--left {
+        @include mq-max($XXS) {
+            margin-right: auto;
+        }
+      }
+      &--right {
+        @include mq-max($XXS) {
+            margin-left: auto;
+        }
+      }
+    }
+  }
+}
+
+.note-block {
+  line-height: 22px;
+  font-size: 12px;
+  ol {
+    padding-left: 20px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-button {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #535353;
+  border: 71px none #2f2f2f;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2f2f2f;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #6a6a6a;
+}
+
+::-webkit-scrollbar-track {
+  background: #828282;
+  border: 65px none #535353;
+}
+
+::-webkit-scrollbar-track:hover {
+  background: #8e8e8e;
+}
+
+::-webkit-scrollbar-track:active {
+  background: #aaa;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+

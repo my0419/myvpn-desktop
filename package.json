@@ -1,0 +1,153 @@
+{
+  "name": "myvpn",
+  "version": "0.5.3",
+  "description": "MyVPN - Create your own personal VPN server ",
+  "author": {
+    "name": "MyVPN",
+    "email": "support@myvpn.run"
+  },
+  "scripts": {
+    "build": "vue-cli-service electron:build",
+    "lint": "vue-cli-service lint",
+    "build:android": "npm run cordova:prepare && npm run cordova:build-android",
+    "build:android-debug": "cross-env npm run cordova:prepare && cd cordova && cordova build android --debug -- --buildConfig && cd ..",
+    "build:android-release": "cross-env npm run cordova:prepare && cd cordova && cordova build android --release -- --buildConfig && cd ..",
+    "build:linux": "vue-cli-service electron:build --linux",
+    "build:mac": "vue-cli-service electron:build --mac",
+    "build:web": "cross-env VUE_APP_WEB=true vue-cli-service build",
+    "build:windows": "vue-cli-service electron:build --windows --x64",
+    "cordova:build-android": "cross-env CORDOVA_PLATFORM=android vue-cli-service cordova-build-android",
+    "cordova:prepare": "vue-cli-service cordova-prepare",
+    "cordova:serve-android": "cross-env CORDOVA_PLATFORM=android vue-cli-service cordova-serve-android",
+    "dev": "HOST=127.0.0.1 vue-cli-service electron:serve",
+    "dev:android": "npm run cordova:serve-android --debug",
+    "dev:android-release": "npm run cordova:serve-android --release -- --buildConfig",
+    "dev:web": "cross-env VUE_APP_WEB=true vue-cli-service serve",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps"
+  },
+  "main": "background.js",
+  "dependencies": {
+    "@electron/remote": "^2.0.8",
+    "aes-js": "^3.1.2",
+    "axios": "^0.27.2",
+    "axios-retry": "^3.3.1",
+    "core-js": "^3.8.3",
+    "digitalocean": "^1.2.1",
+    "dotenv": "^16.0.1",
+    "element-ui": "^2.15.9",
+    "isipaddress": "^0.0.2",
+    "keypair": "^1.0.4",
+    "moment": "^2.29.4",
+    "qrcode.vue": "^1.7.0",
+    "register-service-worker": "^1.7.2",
+    "v-clipboard": "^2.2.3",
+    "v-offline": "2.3.0",
+    "vue": "2.6.14",
+    "vue-i18n": "^8.27.2",
+    "vue-router": "3.0.1",
+    "vuex": "^3.6.2",
+    "vuex-electron": "^1.0.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@types/vue": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-pwa": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "@vue/composition-api": "^1.7.0",
+    "@vue/eslint-config-typescript": "^9.1.0",
+    "babel-plugin-component": "^1.1.1",
+    "cordova": "^11.0.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.7.1",
+    "electron": "13.6.9",
+    "electron-devtools-installer": "^3.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "node-loader": "^2.0.0",
+    "node-polyfill-webpack-plugin": "^2.0.1",
+    "postcss-loader": "^7.0.1",
+    "prettier": "^2.4.1",
+    "sass": "^1.32.7",
+    "sass-loader": "^12.0.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "~8.2.0",
+    "typescript": "~4.5.5",
+    "vue-cli-plugin-cordova": "~2.4.1",
+    "vue-cli-plugin-electron-builder": "^2.1.1",
+    "vue-style-loader": "^4.1.3",
+    "vue-template-compiler": "2.6.14",
+    "webpack": "^5.75.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended",
+      "plugin:prettier/recommended",
+      "@vue/typescript"
+    ],
+    "parserOptions": {
+      "parser": "@typescript-eslint/parser"
+    },
+    "rules": {
+      "vue/multi-word-component-names": 0,
+      "vue/no-unused-components": 1,
+      "vue/require-v-for-key": 1,
+      "prettier/prettier": "warn",
+      "indent": [
+        0,
+        2,
+        {
+          "SwitchCase": 1
+        }
+      ],
+      "linebreak-style": [
+        "warn",
+        "unix"
+      ],
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "semi": [
+        "error",
+        "never"
+      ],
+      "no-undef": "warn",
+      "no-unused-vars": "warn"
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "category": "Network",
+  "homepage": "https://myvpn.run",
+  "license": null,
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "resolutions": {
+    "vue-cli-plugin-electron-builder/electron-builder": "^23.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/my0419/myvpn-desktop.git"
+  }
+}

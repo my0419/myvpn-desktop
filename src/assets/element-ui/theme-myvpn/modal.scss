@@ -1,0 +1,64 @@
+.root-app {
+  .el-message-box {
+    background-color: #1e1e1e;
+    border: 1px solid #fa7600;
+    &__title {
+      color: #fa7600;
+    }
+    &__message {
+      color: #c1c1c1;
+    }
+  }
+  .el-message-box__headerbtn:focus .el-message-box__close,
+  .el-message-box__headerbtn:hover .el-message-box__close {
+    color: #fa7600;
+  }
+  .el-dialog {
+    margin-top: 0 !important;
+    width: 510px;
+    background: linear-gradient(5.41deg,#191919,#313131);
+    @include mq-max($XS) {
+      width: calc(100% - 20px);
+      margin-top: auto !important;
+      margin-bottom: auto;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    &__title {
+      color: #c1c1c1;
+    }
+  }
+  .el-dialog__wrapper {
+    padding-top: 10vh;
+    padding-bottom: 10px;
+    @include mq-max($XS) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  .el-dialog__header,
+  .el-dialog__body {
+    word-break: normal;
+    hyphens: auto;
+    @include mq-max($XXS) {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+  .el-dialog__body {
+    max-height: 60vh;
+    overflow-y: auto;
+    @include mq-max($XS) {
+      max-height: 70vh;
+    }
+    @include mq-max($XXS) {
+      padding-bottom: 10px;
+    }
+  }
+}
+
+.v-modal {
+  opacity: 0.6;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}

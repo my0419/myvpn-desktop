@@ -1,0 +1,46 @@
+.root-app {
+  input, select, strong {
+    font-family: 'Roboto Mono';
+    word-spacing: -2px;
+  }
+  h1, h2, h3 {
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: #c1c1c1;
+    font-family: 'Roboto Mono';
+  }
+  a {
+    color: #d4682c;
+    font-weight: normal;
+    word-spacing: -2px;
+    text-decoration: none;
+    &:focus, &:hover {
+      color: #ff9254;
+      opacity: .8;
+    }
+  }
+  strong {
+    font-weight: 200;
+  }
+  .el-link.is-underline:hover:after {
+    border-color: #ff9254;
+  }
+  .el-link.el-link--default {
+    color: #d4682c;
+    &:hover {
+      color: #ff9254;
+    }
+  }
+  .el-divider {
+    background-color: #343434;
+  }
+  .el-link {
+    font-weight: 400;
+  }
+  hr {
+    border-top: 1px solid #343434;
+  }
+
+}

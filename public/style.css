@@ -1,0 +1,122 @@
+body {
+  width: 100%;
+  background-attachment: fixed;
+}
+html, body {
+  position: fixed;
+  overflow: hidden;
+  background: linear-gradient(5.41deg, #191919, #313131) no-repeat;
+}
+#app, html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  -webkit-overflow-scrolling: auto;
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: none;
+}
+#app {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.loading-logo {
+  height: 100%;
+  display: flex;
+  margin-left: -10vw;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.loading-logo img {
+  display: block;
+  width: 60vw;
+}
+.loading-container {
+  position: relative;
+}
+body .loader-wrapper {
+  position: absolute;
+  bottom: 1.6vw;
+  left: 100%;
+  margin-left: 1.5vw;
+}
+body .loader {
+  display: flex;
+  font-size: 2em;
+}
+body .loader .dots {
+  display: flex;
+  position: relative;
+  left: -1vw;
+  width: 10vw;
+  animation: dots 2s ease infinite 1s;
+}
+body .loader .dots div {
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  width: 1vw;
+  height: 1vw;
+  margin-right: 1vw;
+  border-radius: 50%;
+  background-color: #0086d8;
+}
+body .loader .dots div:nth-child(1) {
+  width: 0;
+  height: 0;
+  margin: 0;
+  margin-right: 1.5vw;
+  animation: show-dot 2s ease-out infinite 1s;
+}
+body .loader .dots div:nth-child(4) {
+  background-color: transparent;
+  animation: dot-fall-left 2s linear infinite 1s;
+}
+body .loader .dots div:nth-child(4):before {
+  position: absolute;
+  width: 1vw;
+  height: 1vw;
+  margin-right: 1vw;
+  border-radius: 100%;
+  background-color: #0086d8;
+  content: '';
+  animation: dot-fall-top 2s cubic-bezier(0.46, 0.02, 0.94, 0.54) infinite 1s;
+}
+
+@keyframes dots {
+  0% {
+    left: -1vw;
+  }
+  20%, 100% {
+    left: 1vw;
+  }
+}
+@keyframes show-dot {
+  0%, 20% {
+    width: 0;
+    height: 0;
+    margin-right: 1.5vw;
+  }
+  30%, 100% {
+    width: 1vw;
+    height: 1vw;
+    margin-right: 1vw;
+  }
+}
+@keyframes dot-fall-left {
+  0%, 5% {
+    left: 0;
+  }
+  100% {
+    left: 1vw;
+  }
+}
+@keyframes dot-fall-top {
+  0%, 5% {
+    top: 0;
+  }
+  30%, 100% {
+    top: 40vh;
+  }
+}
